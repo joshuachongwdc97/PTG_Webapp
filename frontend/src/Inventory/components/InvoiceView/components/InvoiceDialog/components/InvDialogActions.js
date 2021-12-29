@@ -5,7 +5,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 
 // ICONS
 import SendRoundedIcon from "@mui/icons-material/SendRounded";
-import RestartAltRoundedIcon from '@mui/icons-material/RestartAltRounded';
+import RestartAltRoundedIcon from "@mui/icons-material/RestartAltRounded";
 
 const InvDialogActions = (props) => {
   return (
@@ -19,7 +19,7 @@ const InvDialogActions = (props) => {
               color="primary"
               onClick={props.resetInputState}
               size="large"
-              endIcon={<RestartAltRoundedIcon/>}
+              startIcon={<RestartAltRoundedIcon />}
             >
               Reset
             </Button>
