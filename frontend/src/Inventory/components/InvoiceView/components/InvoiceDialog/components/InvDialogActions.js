@@ -6,6 +6,11 @@ import LoadingButton from "@mui/lab/LoadingButton";
 // ICONS
 import SendRoundedIcon from "@mui/icons-material/SendRounded";
 import RestartAltRoundedIcon from "@mui/icons-material/RestartAltRounded";
+import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
+import EditRoundedIcon from '@mui/icons-material/EditRounded';
+import InventoryRoundedIcon from '@mui/icons-material/InventoryRounded';
+import EngineeringRoundedIcon from '@mui/icons-material/EngineeringRounded';
+import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 
 const InvDialogActions = (props) => {
   return (
@@ -46,6 +51,7 @@ const InvDialogActions = (props) => {
               color="error"
               onClick={props.close}
               size="large"
+              startIcon={<CancelRoundedIcon />}
             >
               Cancel
             </Button>
@@ -65,6 +71,7 @@ const InvDialogActions = (props) => {
               onClick={props.submitHandler}
               disabled={!props.modifiable}
               size="large"
+              startIcon={<EditRoundedIcon />}
             >
               Modify
             </LoadingButton>
@@ -76,6 +83,7 @@ const InvDialogActions = (props) => {
               color="error"
               onClick={props.cancelEditHandler}
               size="large"
+              startIcon={<CancelRoundedIcon />}
             >
               Cancel
             </Button>
@@ -92,6 +100,7 @@ const InvDialogActions = (props) => {
               color="primary"
               onClick={props.editHandler}
               size="large"
+              startIcon={<EditRoundedIcon />}
             >
               Edit
             </LoadingButton>
@@ -103,6 +112,7 @@ const InvDialogActions = (props) => {
               color={props.status === "Active" ? "success" : "warning"}
               onClick={props.returnToggleHandler}
               size="large"
+              endIcon={props.status === "Active" ? (<InventoryRoundedIcon />) : (<EngineeringRoundedIcon />)}
             >
               {props.status === "Active"
                 ? "Mark as Returned"
@@ -116,6 +126,7 @@ const InvDialogActions = (props) => {
               color="error"
               onClick={props.delHandler}
               size="large"
+              startIcon={<DeleteRoundedIcon />}
             >
               Delete
             </Button>
