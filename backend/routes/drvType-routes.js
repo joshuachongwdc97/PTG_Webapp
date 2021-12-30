@@ -8,9 +8,9 @@ const drvTypeController = require("../controller/drvType-controller");
 router.get("/", drvTypeController.getDrvTypes);
 
 router.post(
-  "/add",
-  [check("type").not().isEmpty()],
-  drvTypeController.addDrvType
+	"/add",
+	[check("type").not().isEmpty()],
+	drvTypeController.addDrvType
 );
 
 module.exports = router;

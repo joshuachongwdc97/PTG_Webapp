@@ -20,9 +20,9 @@ router.get("/", driveController.getDrives);
 // );
 
 router.post(
-  "/add",
-  [check("drives").not().isEmpty()],
-  driveController.addDrives
+	"/add",
+	[check("drives").not().isEmpty()],
+	driveController.addDrives
 );
 
 router.delete("/", driveController.deleteDrives);

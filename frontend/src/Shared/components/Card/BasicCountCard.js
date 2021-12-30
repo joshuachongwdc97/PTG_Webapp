@@ -4,30 +4,30 @@ import { Typography, Grid, Avatar } from "@mui/material";
 import BasicCard from "./BasicCard";
 
 const CountCard = (props) => {
-  return (
-    <BasicCard minWidth={200} maxWidth={800} click onClick={props.onClick}>
-      <Grid
-        container
-        alignItems="center"
-        rowSpacing={2.5}
-        justifyContent="center"
-      >
-        <Grid item xs={12}>
-          <Typography variant="subtitle2" color="textSecondary">
-            {props.title}
-          </Typography>
-        </Grid>
-        <Grid item xs={9}>
-          <Typography variant="h3">{props.data}</Typography>
-        </Grid>
-        <Grid item xs={3} align="right">
-          <Avatar variant="rounded" sx={{ bgcolor: props.color }}>
-            {props.icon}
-          </Avatar>
-        </Grid>
-      </Grid>
-    </BasicCard>
-  );
+	return (
+		<BasicCard minWidth={200} maxWidth={800} click onClick={props.onClick}>
+			<Grid
+				container
+				alignItems="center"
+				rowSpacing={2.5}
+				justifyContent="center"
+			>
+				<Grid item xs={12}>
+					<Typography variant="subtitle2" color="textSecondary">
+						{props.title}
+					</Typography>
+				</Grid>
+				<Grid item xs={9}>
+					<Typography variant="h3">{props.data}</Typography>
+				</Grid>
+				<Grid item xs={3} align="right">
+					<Avatar variant="rounded" sx={{ bgcolor: props.color }}>
+						{props.icon}
+					</Avatar>
+				</Grid>
+			</Grid>
+		</BasicCard>
+	);
 };
 
 export default CountCard;

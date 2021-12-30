@@ -10,18 +10,18 @@ router.get("/all", testController.getTests);
 router.get("/:id", testController.getTest);
 
 router.post(
-  "/add",
-  [check("test").not().isEmpty()],
-  [check("modes").not().isEmpty()],
-  [check("drvPrgm").not().isEmpty()],
-  [check("drvType").not().isEmpty()],
-  testController.addTest
+	"/add",
+	[check("test").not().isEmpty()],
+	[check("modes").not().isEmpty()],
+	[check("drvPrgm").not().isEmpty()],
+	[check("drvType").not().isEmpty()],
+	testController.addTest
 );
 
 router.patch(
-  "/:id",
-  [check("test").not().isEmpty(), check("modes").not().isEmpty()],
-  testController.editTest
+	"/:id",
+	[check("test").not().isEmpty(), check("modes").not().isEmpty()],
+	testController.editTest
 );
 
 router.delete("/:id", testController.deleteTest);

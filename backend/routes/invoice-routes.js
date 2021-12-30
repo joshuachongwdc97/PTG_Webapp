@@ -8,31 +8,31 @@ const invoiceController = require("../controller/invoice-controller");
 router.get("/", invoiceController.getInvoices);
 
 router.post(
-  "/add",
-  [
-    check("name").not().isEmpty(),
-    check("invid").not().isEmpty(),
-    check("requestor").not().isEmpty(),
-    check("origin").not().isEmpty(),
-    check("status").not().isEmpty(),
-    check("dateReceived").not().isEmpty(),
-    check("drvPrgm").not().isEmpty(),
-  ],
-  invoiceController.addInvoice
+	"/add",
+	[
+		check("name").not().isEmpty(),
+		check("invid").not().isEmpty(),
+		check("requestor").not().isEmpty(),
+		check("origin").not().isEmpty(),
+		check("status").not().isEmpty(),
+		check("dateReceived").not().isEmpty(),
+		check("drvPrgm").not().isEmpty(),
+	],
+	invoiceController.addInvoice
 );
 
 router.patch(
-  "/:id",
-  [
-    check("name").not().isEmpty(),
-    check("invid").not().isEmpty(),
-    check("requestor").not().isEmpty(),
-    check("origin").not().isEmpty(),
-    check("status").not().isEmpty(),
-    check("dateReceived").not().isEmpty(),
-    check("drvPrgm").not().isEmpty(),
-  ],
-  invoiceController.updateInvoice
+	"/:id",
+	[
+		check("name").not().isEmpty(),
+		check("invid").not().isEmpty(),
+		check("requestor").not().isEmpty(),
+		check("origin").not().isEmpty(),
+		check("status").not().isEmpty(),
+		check("dateReceived").not().isEmpty(),
+		check("drvPrgm").not().isEmpty(),
+	],
+	invoiceController.updateInvoice
 );
 
 router.delete("/:id", invoiceController.deleteInvoice);

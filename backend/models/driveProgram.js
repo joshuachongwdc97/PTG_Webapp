@@ -4,8 +4,8 @@ const uniqueValidator = require("mongoose-unique-validator");
 const Schema = mongoose.Schema;
 
 const drvProgramSchema = new Schema({
-  drvPrgm: { type: String, required: true },
-  alias: { type: String, required: true, unique: true },
+	drvPrgm: { type: String, required: true },
+	alias: { type: String, required: true, unique: true },
 });
 
 drvProgramSchema.plugin(uniqueValidator);
