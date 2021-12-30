@@ -7,312 +7,312 @@ const System = require("../models/system");
 const Qual = require("../models/qual");
 
 const getSystems = async (req, res, next) => {
-	let systems;
+  let systems;
 
-	try {
-		systems = await System.find({});
-	} catch (err) {
-		const error = new HttpError("System Fetching Failed", 500);
-		return next(error);
-	}
+  try {
+    systems = await System.find({});
+  } catch (err) {
+    const error = new HttpError("System Fetching Failed", 500);
+    return next(error);
+  }
 
-	res.json({
-		systems: systems.map((sys) => sys.toObject({ getters: true })),
-	});
+  res.json({
+    systems: systems.map((sys) => sys.toObject({ getters: true })),
+  });
 };
 
 const addSystems = async (req, res, next) => {
-	const { systems } = req.body;
+  const { systems } = req.body;
 
-	let existingSystems;
+  let existingSystems;
 
-	try {
-		existingSystems = await System.find({});
-		existingSystems = existingSystems.map((sys) =>
-			sys.toObject({ getters: true })
-		);
-	} catch (err) {
-		const error = new HttpError("System Fetching Failed", 500);
-		return next(error);
-	}
+  try {
+    existingSystems = await System.find({});
+    existingSystems = existingSystems.map((sys) =>
+      sys.toObject({ getters: true })
+    );
+  } catch (err) {
+    const error = new HttpError("System Fetching Failed", 500);
+    return next(error);
+  }
 
-	let newSystemsID;
+  let newSystemsID;
 
-	newSystemsID = systems.map((sys) => {
-		return sys.sysId;
-	});
+  newSystemsID = systems.map((sys) => {
+    return sys.sysId;
+  });
 
-	try {
-		const sess = await mongoose.startSession();
-		sess.startTransaction();
-		existingSystems.map(async (sys) => {
-			if (newSystemsID.includes(sys.sysId)) {
-				sysToPatch = await System.findById(sys.id);
+  try {
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+    existingSystems.map(async (sys) => {
+      if (newSystemsID.includes(sys.sysId)) {
+        sysToPatch = await System.findById(sys.id);
 
-				newSys = systems.filter((sys) => {
-					return sys.sysId === sysToPatch.sysId;
-				})[0];
+        newSys = systems.filter((sys) => {
+          return sys.sysId === sysToPatch.sysId;
+        })[0];
 
-				sysToPatch.sysId = newSys.sysId;
-				sysToPatch.rackNo = newSys.rackNo;
-				sysToPatch.rackRow = newSys.rackRow;
-				sysToPatch.rackLoc = newSys.rackLoc;
-				sysToPatch.chipset = newSys.chipset;
-				sysToPatch.hba = newSys.hba;
-				sysToPatch.label = newSys.label;
-				sysToPatch.ip = newSys.ip;
-				sysToPatch.status = newSys.status;
-				sysToPatch.description = newSys.description;
-				sysToPatch.mac = newSys.mac;
+        sysToPatch.sysId = newSys.sysId;
+        sysToPatch.rackNo = newSys.rackNo;
+        sysToPatch.rackRow = newSys.rackRow;
+        sysToPatch.rackLoc = newSys.rackLoc;
+        sysToPatch.chipset = newSys.chipset;
+        sysToPatch.hba = newSys.hba;
+        sysToPatch.label = newSys.label;
+        sysToPatch.ip = newSys.ip;
+        sysToPatch.status = newSys.status;
+        sysToPatch.description = newSys.description;
+        sysToPatch.mac = newSys.mac;
 
-				await sysToPatch.save({ session: sess });
-			}
-		});
-		await sess.commitTransaction();
-	} catch (err) {
-		const error = new HttpError("System Patching Failed", 500);
-		return next(error);
-	}
+        await sysToPatch.save({ session: sess });
+      }
+    });
+    await sess.commitTransaction();
+  } catch (err) {
+    const error = new HttpError("System Patching Failed", 500);
+    return next(error);
+  }
 
-	let existingSysID = existingSystems.map((sys) => {
-		return sys.sysId;
-	});
+  let existingSysID = existingSystems.map((sys) => {
+    return sys.sysId;
+  });
 
-	let filteredSys = [];
+  let filteredSys = [];
 
-	filteredSys = systems.filter((sys) => {
-		return !existingSysID.includes(sys.sysId);
-	});
+  filteredSys = systems.filter((sys) => {
+    return !existingSysID.includes(sys.sysId);
+  });
 
-	if (filteredSys.length > 0) {
-		try {
-			await System.insertMany(filteredSys);
-		} catch (err) {
-			const error = new HttpError("Adding System Failed", 500);
-			return next(error);
-		}
+  if (filteredSys.length > 0) {
+    try {
+      await System.insertMany(filteredSys);
+    } catch (err) {
+      const error = new HttpError("Adding System Failed", 500);
+      return next(error);
+    }
 
-		res.status(201).json("Systems Added");
-	} else {
-		res.status(201).json("No Systems Added");
-	}
+    res.status(201).json("Systems Added");
+  } else {
+    res.status(201).json("No Systems Added");
+  }
 };
 
 const deleteSystems = async (req, res, next) => {
-	const { ids } = req.body;
+  const { ids } = req.body;
 
-	try {
-		await System.deleteMany({ _id: ids });
-	} catch (err) {
-		const error = new HttpError("Deleting Systems Failed", 500);
-		return next(error);
-	}
+  try {
+    await System.deleteMany({ _id: ids });
+  } catch (err) {
+    const error = new HttpError("Deleting Systems Failed", 500);
+    return next(error);
+  }
 
-	res.status(201).json("Systems Deleted");
+  res.status(201).json("Systems Deleted");
 };
 
 const systemReport = async (req, res, next) => {
-	const { mac, ip, os, drive } = req.body;
+  const { mac, ip, os, drive } = req.body;
 
-	const date = new Date();
+  const date = new Date();
 
-	let system = [];
+  let system = [];
 
-	try {
-		system = await System.find({ mac: mac });
-	} catch (err) {
-		const error = new HttpError("System Fetching Failed", 500);
-		return next(error);
-	}
+  try {
+    system = await System.find({ mac: mac });
+  } catch (err) {
+    const error = new HttpError("System Fetching Failed", 500);
+    return next(error);
+  }
 
-	if (system.length > 0) {
-		try {
-			system = await System.findById(system[0].id);
-		} catch (err) {
-			const error = new HttpError("System Fetching Failed", 500);
-			return next(error);
-		}
+  if (system.length > 0) {
+    try {
+      system = await System.findById(system[0].id);
+    } catch (err) {
+      const error = new HttpError("System Fetching Failed", 500);
+      return next(error);
+    }
 
-		system.lastSeen = date;
-		system.ip = ip;
-		system.os = os;
-		if (drive != "None") {
-			system.drive = drive;
-		} else {
-			system.drive = undefined;
-		}
+    system.lastSeen = date;
+    system.ip = ip;
+    system.os = os;
+    if (drive != "None") {
+      system.drive = drive;
+    } else {
+      system.drive = undefined;
+    }
 
-		try {
-			await system.save();
-		} catch (err) {
-			const error = new HttpError("Updating System Failed", 500);
-			return next(error);
-		}
+    try {
+      await system.save();
+    } catch (err) {
+      const error = new HttpError("Updating System Failed", 500);
+      return next(error);
+    }
 
-		res.status(201).json("System Reported");
-	}
+    res.status(201).json("System Reported");
+  }
 };
 
 const systemsReserve = async (req, res, next) => {
-	const { IDs, user } = req.body;
+  const { IDs, user } = req.body;
 
-	IDs.map(async (id) => {
-		try {
-			system = await System.findById(id);
-		} catch (err) {
-			const error = new HttpError("System Fetching Failed", 500);
-			return next(error);
-		}
+  IDs.map(async (id) => {
+    try {
+      system = await System.findById(id);
+    } catch (err) {
+      const error = new HttpError("System Fetching Failed", 500);
+      return next(error);
+    }
 
-		system.status = "Reserved by " + user;
+    system.status = "Reserved by " + user;
 
-		try {
-			await system.save();
-		} catch (err) {
-			const error = new HttpError("Reserving System Failed", 500);
-			return next(error);
-		}
-	});
+    try {
+      await system.save();
+    } catch (err) {
+      const error = new HttpError("Reserving System Failed", 500);
+      return next(error);
+    }
+  });
 
-	res.status(201).json("Systems Reserved");
+  res.status(201).json("Systems Reserved");
 };
 
 const systemsRelease = async (req, res, next) => {
-	const { IDs } = req.body;
+  const { IDs } = req.body;
 
-	IDs.map(async (id) => {
-		try {
-			system = await System.findById(id);
-		} catch (err) {
-			const error = new HttpError("System Fetching Failed", 500);
-			return next(error);
-		}
+  IDs.map(async (id) => {
+    try {
+      system = await System.findById(id);
+    } catch (err) {
+      const error = new HttpError("System Fetching Failed", 500);
+      return next(error);
+    }
 
-		system.status = undefined;
+    system.status = undefined;
 
-		try {
-			await system.save();
-		} catch (err) {
-			const error = new HttpError("Releasing System Failed", 500);
-			return next(error);
-		}
-	});
+    try {
+      await system.save();
+    } catch (err) {
+      const error = new HttpError("Releasing System Failed", 500);
+      return next(error);
+    }
+  });
 
-	res.status(201).json("Systems Released");
+  res.status(201).json("Systems Released");
 };
 
 const testStart = async (req, res, next) => {
-	const { mac, drive, soda, testMode } = req.body;
+  const { mac, drive, soda, testMode } = req.body;
 
-	let system = [];
-	let qual = [];
+  let system = [];
+  let qual = [];
 
-	try {
-		system = await System.find({ mac: mac });
-		qual = await Qual.find({ soda: soda });
-	} catch (err) {
-		const error = new HttpError("System and Qual Fetching Failed", 500);
-		return next(error);
-	}
+  try {
+    system = await System.find({ mac: mac });
+    qual = await Qual.find({ soda: soda });
+  } catch (err) {
+    const error = new HttpError("System and Qual Fetching Failed", 500);
+    return next(error);
+  }
 
-	if (system.length > 0) {
-		try {
-			system = await System.findById(system[0].id);
-		} catch (err) {
-			const error = new HttpError("System Fetching Failed using ID", 500);
-			return next(error);
-		}
+  if (system.length > 0) {
+    try {
+      system = await System.findById(system[0].id);
+    } catch (err) {
+      const error = new HttpError("System Fetching Failed using ID", 500);
+      return next(error);
+    }
 
-		let qualID;
-		if (qual.length > 0) {
-			qualID = qual[0].id;
-		}
+    let qualID;
+    if (qual.length > 0) {
+      qualID = qual[0].id;
+    }
 
-		system.drive = drive;
-		system.qual = qualID;
-		system.testMode = testMode;
-		system.testStart = new Date();
+    system.drive = drive;
+    system.qual = qualID;
+    system.testMode = testMode;
+    system.testStart = new Date();
 
-		try {
-			await system.save();
-		} catch (err) {
-			const error = new HttpError("Track Test Start Failed", 500);
-			return next(error);
-		}
+    try {
+      await system.save();
+    } catch (err) {
+      const error = new HttpError("Track Test Start Failed", 500);
+      return next(error);
+    }
 
-		res.status(201).json("Test Start Tracked");
-	}
+    res.status(201).json("Test Start Tracked");
+  }
 };
 
 const testEnd = async (req, res, next) => {
-	const { mac } = req.body;
+  const { mac } = req.body;
 
-	const now = new Date();
+  const now = new Date();
 
-	let system = [];
+  let system = [];
 
-	try {
-		system = await System.find({ mac: mac });
-	} catch (err) {
-		const error = new HttpError("System Fetching Failed Using MAC", 500);
-		return next(error);
-	}
+  try {
+    system = await System.find({ mac: mac });
+  } catch (err) {
+    const error = new HttpError("System Fetching Failed Using MAC", 500);
+    return next(error);
+  }
 
-	if (system.length > 0) {
-		try {
-			system = await System.findById(system[0].id);
-		} catch (err) {
-			const error = new HttpError("System Fetching Failed using ID", 500);
-			return next(error);
-		}
+  if (system.length > 0) {
+    try {
+      system = await System.findById(system[0].id);
+    } catch (err) {
+      const error = new HttpError("System Fetching Failed using ID", 500);
+      return next(error);
+    }
 
-		system.testEnd = now;
+    system.testEnd = now;
 
-		try {
-			await system.save();
-		} catch (err) {
-			const error = new HttpError("Track Test End Failed", 500);
-			return next(error);
-		}
+    try {
+      await system.save();
+    } catch (err) {
+      const error = new HttpError("Track Test End Failed", 500);
+      return next(error);
+    }
 
-		res.status(201).json("Test End Tracked");
-	}
+    res.status(201).json("Test End Tracked");
+  }
 };
 
 const testReset = async (req, res, next) => {
-	const { mac } = req.body;
+  const { mac } = req.body;
 
-	let system = [];
+  let system = [];
 
-	try {
-		system = await System.find({ mac: mac });
-	} catch (err) {
-		const error = new HttpError("System Fetching Failed Using MAC", 500);
-		return next(error);
-	}
+  try {
+    system = await System.find({ mac: mac });
+  } catch (err) {
+    const error = new HttpError("System Fetching Failed Using MAC", 500);
+    return next(error);
+  }
 
-	if (system.length > 0) {
-		try {
-			sysToUpdate = await System.findById(system[0].id);
-		} catch (err) {
-			const error = new HttpError("System Fetching Failed using ID", 500);
-			return next(error);
-		}
+  if (system.length > 0) {
+    try {
+      sysToUpdate = await System.findById(system[0].id);
+    } catch (err) {
+      const error = new HttpError("System Fetching Failed using ID", 500);
+      return next(error);
+    }
 
-		sysToUpdate.qual = undefined;
-		sysToUpdate.testMode = undefined;
-		sysToUpdate.testStart = undefined;
-		sysToUpdate.testEnd = undefined;
+    sysToUpdate.qual = undefined;
+    sysToUpdate.testMode = undefined;
+    sysToUpdate.testStart = undefined;
+    sysToUpdate.testEnd = undefined;
 
-		try {
-			await sysToUpdate.save();
-		} catch (err) {
-			const error = new HttpError("Test Status Reset Failed", 500);
-			return next(error);
-		}
+    try {
+      await sysToUpdate.save();
+    } catch (err) {
+      const error = new HttpError("Test Status Reset Failed", 500);
+      return next(error);
+    }
 
-		res.status(201).json("Test Status Reset Successful");
-	}
+    res.status(201).json("Test Status Reset Successful");
+  }
 };
 
 exports.addSystems = addSystems;

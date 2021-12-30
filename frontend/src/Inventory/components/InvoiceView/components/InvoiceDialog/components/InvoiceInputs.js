@@ -3,10 +3,10 @@ import React, { useState, useEffect } from "react";
 import { useHttpClient } from "../../../../../../Shared/hooks/http-hook";
 import { Grid, Divider } from "@mui/material";
 import {
-	AccountCircle,
-	BadgeRounded,
-	AccountBoxRounded,
-	LocationOnRounded,
+  AccountCircle,
+  BadgeRounded,
+  AccountBoxRounded,
+  LocationOnRounded,
 } from "@mui/icons-material";
 
 // COMPONENTS
@@ -15,135 +15,135 @@ import SelectMenu from "../../../../../../Shared/components/Input/SelectMenu";
 import DatePicker from "../../../../../../Shared/components/Input/DatePicker";
 
 const InvoiceInputs = (props) => {
-	const [drvPrgms, setDrvPrgms] = useState([]);
-	const [dataReady, setDataReady] = useState(false);
-	const { sendRequest } = useHttpClient();
+  const [drvPrgms, setDrvPrgms] = useState([]);
+  const [dataReady, setDataReady] = useState(false);
+  const { sendRequest } = useHttpClient();
 
-	let selectData;
-	dataReady &&
-		(selectData = drvPrgms.map((prgm) => {
-			return {
-				value: prgm.id,
-				label: prgm.drvPrgm + " (" + prgm.alias + ") ",
-			};
-		}));
+  let selectData;
+  dataReady &&
+    (selectData = drvPrgms.map((prgm) => {
+      return {
+        value: prgm.id,
+        label: prgm.drvPrgm + " (" + prgm.alias + ") ",
+      };
+    }));
 
-	// GET DRIVE PROGRAMS
-	const getDrvPrgms = async () => {
-		try {
-			let responseData = await sendRequest(
-				"http://mps-ed-ptgval.ad.shared:5000/api/drvProgram"
-			);
-			setDrvPrgms(responseData.programs);
-		} catch (err) {}
+  // GET DRIVE PROGRAMS
+  const getDrvPrgms = async () => {
+    try {
+      let responseData = await sendRequest(
+        "http://mps-ed-ptgval.ad.shared:5000/api/drvProgram"
+      );
+      setDrvPrgms(responseData.programs);
+    } catch (err) {}
 
-		console.log("Drive Programs fetched from server");
-		setDataReady(true);
-	};
+    console.log("Drive Programs fetched from server");
+    setDataReady(true);
+  };
 
-	let disabled;
-	let invIDInputDisabled;
-	props.invDialogState === "view" ? (disabled = true) : (disabled = false);
-	props.invDialogState === "new"
-		? (invIDInputDisabled = false)
-		: (invIDInputDisabled = true);
+  let disabled;
+  let invIDInputDisabled;
+  props.invDialogState === "view" ? (disabled = true) : (disabled = false);
+  props.invDialogState === "new"
+    ? (invIDInputDisabled = false)
+    : (invIDInputDisabled = true);
 
-	useEffect(
-		() => {
-			getDrvPrgms();
-		},
-		// eslint-disable-next-line
-		[]
-	);
+  useEffect(
+    () => {
+      getDrvPrgms();
+    },
+    // eslint-disable-next-line
+    []
+  );
 
-	const InvIDArr = props.invoices.map((inv) => {
-		return inv.invid;
-	});
+  const InvIDArr = props.invoices.map((inv) => {
+    return inv.invid;
+  });
 
-	return (
-		<React.Fragment>
-			<Grid container spacing={2.5}>
-				<Grid item xs={12}>
-					<TextFieldWIcon
-						required
-						label="Invoice ID"
-						icon={<AccountCircle />}
-						name="invid"
-						value={props.inputState.invid}
-						onChange={props.inputHandler}
-						unique
-						uniqueArr={InvIDArr}
-						disabled={invIDInputDisabled}
-						autoComplete="off"
-					></TextFieldWIcon>
-				</Grid>
-				<Grid item xs={12}>
-					<TextFieldWIcon
-						required
-						label="Name"
-						icon={<BadgeRounded />}
-						name="name"
-						value={props.inputState.name}
-						onChange={props.inputHandler}
-						disabled={disabled}
-						autoComplete="off"
-					></TextFieldWIcon>
-				</Grid>
+  return (
+    <React.Fragment>
+      <Grid container spacing={2.5}>
+        <Grid item xs={12}>
+          <TextFieldWIcon
+            required
+            label="Invoice ID"
+            icon={<AccountCircle />}
+            name="invid"
+            value={props.inputState.invid}
+            onChange={props.inputHandler}
+            unique
+            uniqueArr={InvIDArr}
+            disabled={invIDInputDisabled}
+            autoComplete="off"
+          ></TextFieldWIcon>
+        </Grid>
+        <Grid item xs={12}>
+          <TextFieldWIcon
+            required
+            label="Name"
+            icon={<BadgeRounded />}
+            name="name"
+            value={props.inputState.name}
+            onChange={props.inputHandler}
+            disabled={disabled}
+            autoComplete="off"
+          ></TextFieldWIcon>
+        </Grid>
 
-				{/* SOURCE */}
-				<Grid item xs={12}>
-					<Divider>Source</Divider>
-				</Grid>
-				<Grid item xs={6}>
-					<TextFieldWIcon
-						required
-						label="Requestor"
-						icon={<AccountBoxRounded />}
-						name="requestor"
-						value={props.inputState.requestor}
-						onChange={props.inputHandler}
-						disabled={disabled}
-					></TextFieldWIcon>
-				</Grid>
-				<Grid item xs={6}>
-					<TextFieldWIcon
-						required
-						label="Origin"
-						icon={<LocationOnRounded />}
-						name="origin"
-						value={props.inputState.origin}
-						onChange={props.inputHandler}
-						disabled={disabled}
-					></TextFieldWIcon>
-				</Grid>
+        {/* SOURCE */}
+        <Grid item xs={12}>
+          <Divider>Source</Divider>
+        </Grid>
+        <Grid item xs={6}>
+          <TextFieldWIcon
+            required
+            label="Requestor"
+            icon={<AccountBoxRounded />}
+            name="requestor"
+            value={props.inputState.requestor}
+            onChange={props.inputHandler}
+            disabled={disabled}
+          ></TextFieldWIcon>
+        </Grid>
+        <Grid item xs={6}>
+          <TextFieldWIcon
+            required
+            label="Origin"
+            icon={<LocationOnRounded />}
+            name="origin"
+            value={props.inputState.origin}
+            onChange={props.inputHandler}
+            disabled={disabled}
+          ></TextFieldWIcon>
+        </Grid>
 
-				{/* MISCELLANEOUS */}
-				<Grid item xs={12}>
-					<Divider>Miscellaneous</Divider>
-				</Grid>
-				<Grid item xs={6}>
-					<SelectMenu
-						required
-						label="Drive Program"
-						data={selectData}
-						onChange={props.inputHandler}
-						value={dataReady ? props.inputState.drvPrgm : ""}
-						name="drvPrgm"
-						disabled={disabled}
-					></SelectMenu>
-				</Grid>
-				<Grid item xs={6}>
-					<DatePicker
-						required
-						label="Date Received"
-						value={new Date(props.inputState.dateReceived)}
-						onChange={props.dateHandler}
-						disabled={disabled}
-					/>
-				</Grid>
-			</Grid>
-		</React.Fragment>
-	);
+        {/* MISCELLANEOUS */}
+        <Grid item xs={12}>
+          <Divider>Miscellaneous</Divider>
+        </Grid>
+        <Grid item xs={6}>
+          <SelectMenu
+            required
+            label="Drive Program"
+            data={selectData}
+            onChange={props.inputHandler}
+            value={dataReady ? props.inputState.drvPrgm : ""}
+            name="drvPrgm"
+            disabled={disabled}
+          ></SelectMenu>
+        </Grid>
+        <Grid item xs={6}>
+          <DatePicker
+            required
+            label="Date Received"
+            value={new Date(props.inputState.dateReceived)}
+            onChange={props.dateHandler}
+            disabled={disabled}
+          />
+        </Grid>
+      </Grid>
+    </React.Fragment>
+  );
 };
 
 export default InvoiceInputs;

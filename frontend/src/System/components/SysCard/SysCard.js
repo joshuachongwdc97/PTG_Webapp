@@ -9,26 +9,26 @@ import BasicCountCard from "../../../Shared/components/Card/BasicCountCard";
 import SysStatus from "../../../Shared/functions/SysStatus";
 
 const SysCard = (props) => {
-	const [availSys, setAvailSys] = useState([]);
+  const [availSys, setAvailSys] = useState([]);
 
-	useEffect(() => {
-		setAvailSys(
-			props.sys.filter((sys) => {
-				const status = SysStatus(sys);
-				return status === "online";
-			})
-		);
-	}, [setAvailSys, props.sys]);
+  useEffect(() => {
+    setAvailSys(
+      props.sys.filter((sys) => {
+        const status = SysStatus(sys);
+        return status === "online";
+      })
+    );
+  }, [setAvailSys, props.sys]);
 
-	return (
-		<BasicCountCard
-			title="Available Systems"
-			data={availSys.length}
-			icon={<SdStorageIcon />}
-			color={blue[400]}
-			onClick={props.onClick}
-		/>
-	);
+  return (
+    <BasicCountCard
+      title="Available Systems"
+      data={availSys.length}
+      icon={<SdStorageIcon />}
+      color={blue[400]}
+      onClick={props.onClick}
+    />
+  );
 };
 
 export default SysCard;

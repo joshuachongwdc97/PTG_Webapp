@@ -10,34 +10,34 @@ import { Grid } from "@mui/material";
 import PlaylistAddCircleRoundedIcon from "@mui/icons-material/PlaylistAddCircleRounded";
 
 const AddSysDialog = (props) => {
-	const [uploadedSys, setUploadedSys] = useState([]);
+  const [uploadedSys, setUploadedSys] = useState([]);
 
-	useEffect(() => {
-		if (!props.open) {
-			setUploadedSys([]);
-		}
-	}, [props.open]);
+  useEffect(() => {
+    if (!props.open) {
+      setUploadedSys([]);
+    }
+  }, [props.open]);
 
-	const sysUploadHandler = (systems) => {
-		setUploadedSys(systems);
-	};
+  const sysUploadHandler = (systems) => {
+    setUploadedSys(systems);
+  };
 
-	return (
-		<BasicDialog open={props.open} close={props.close} maxWidth="md">
-			<Grid container spacing={1}>
-				<Grid item xs={12}>
-					<CSVUpload
-						title="Upload via CSV"
-						icon={<PlaylistAddCircleRoundedIcon />}
-						uploadedDataHandler={sysUploadHandler}
-					/>
-				</Grid>
-				<Grid item xs={12}>
-					<SysTable data={uploadedSys} />
-				</Grid>
-			</Grid>
-		</BasicDialog>
-	);
+  return (
+    <BasicDialog open={props.open} close={props.close} maxWidth="md">
+      <Grid container spacing={1}>
+        <Grid item xs={12}>
+          <CSVUpload
+            title="Upload via CSV"
+            icon={<PlaylistAddCircleRoundedIcon />}
+            uploadedDataHandler={sysUploadHandler}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <SysTable data={uploadedSys} />
+        </Grid>
+      </Grid>
+    </BasicDialog>
+  );
 };
 
 export default AddSysDialog;

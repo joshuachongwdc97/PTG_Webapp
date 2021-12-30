@@ -14,43 +14,43 @@ import "@fontsource/roboto/700.css";
 import Layout from "./Layout/Layout";
 
 const Main = () => {
-	const [dark, setDark] = useState(true);
+  const [dark, setDark] = useState(true);
 
-	const darkModeHandler = () => {
-		setDark(!dark);
-	};
+  const darkModeHandler = () => {
+    setDark(!dark);
+  };
 
-	let theme = createTheme({
-		palette: {
-			mode: dark ? "dark" : "light",
-		},
-	});
+  let theme = createTheme({
+    palette: {
+      mode: dark ? "dark" : "light",
+    },
+  });
 
-	return (
-		<React.Fragment>
-			<DarkContext.Provider
-				value={{
-					dark: dark,
-					toggle: darkModeHandler,
-				}}
-			>
-				<ThemeProvider theme={theme}>
-					<Router>
-						<Layout>
-							<Switch>
-								<Route path="/" exact={true}>
-									<Inventory />
-								</Route>
-								<Route path="/system" exact={true}>
-									<System />
-								</Route>
-							</Switch>
-						</Layout>
-					</Router>
-				</ThemeProvider>
-			</DarkContext.Provider>
-		</React.Fragment>
-	);
+  return (
+    <React.Fragment>
+      <DarkContext.Provider
+        value={{
+          dark: dark,
+          toggle: darkModeHandler,
+        }}
+      >
+        <ThemeProvider theme={theme}>
+          <Router>
+            <Layout>
+              <Switch>
+                <Route path="/" exact={true}>
+                  <Inventory />
+                </Route>
+                <Route path="/system" exact={true}>
+                  <System />
+                </Route>
+              </Switch>
+            </Layout>
+          </Router>
+        </ThemeProvider>
+      </DarkContext.Provider>
+    </React.Fragment>
+  );
 };
 
 export default Main;

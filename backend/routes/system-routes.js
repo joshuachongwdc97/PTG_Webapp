@@ -8,9 +8,9 @@ const systemController = require("../controller/system-controller");
 router.get("/", systemController.getSystems);
 
 router.post(
-	"/add",
-	[check("systems").not().isEmpty()],
-	systemController.addSystems
+  "/add",
+  [check("systems").not().isEmpty()],
+  systemController.addSystems
 );
 
 router.patch("/report", systemController.systemReport);

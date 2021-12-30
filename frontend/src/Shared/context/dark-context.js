@@ -1,6 +1,6 @@
 import { createContext } from "react";
 
 export const DarkContext = createContext({
-	dark: true,
-	toggle: () => {},
+  dark: true,
+  toggle: () => {},
 });
