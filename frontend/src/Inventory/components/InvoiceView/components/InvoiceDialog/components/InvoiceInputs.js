@@ -75,6 +75,7 @@ const InvoiceInputs = (props) => {
             uniqueArr={InvIDArr}
             disabled={invIDInputDisabled}
             autoComplete="off"
+            placeholder="5805-2021-12-37-NC0332"
           ></TextFieldWIcon>
         </Grid>
         <Grid item xs={12}>
@@ -87,6 +88,7 @@ const InvoiceInputs = (props) => {
             onChange={props.inputHandler}
             disabled={disabled}
             autoComplete="off"
+            placeholder="PCM SC3/MC3 QUALIFICATION FEN"
           ></TextFieldWIcon>
         </Grid>
 
@@ -103,6 +105,7 @@ const InvoiceInputs = (props) => {
             value={props.inputState.requestor}
             onChange={props.inputHandler}
             disabled={disabled}
+            placeholder="John Doe"
           ></TextFieldWIcon>
         </Grid>
         <Grid item xs={6}>
@@ -114,6 +117,7 @@ const InvoiceInputs = (props) => {
             value={props.inputState.origin}
             onChange={props.inputHandler}
             disabled={disabled}
+            placeholder="PRB Thailand"
           ></TextFieldWIcon>
         </Grid>
 
