@@ -130,7 +130,7 @@ const Layout = (props) => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-            PTG Dashboard
+            S.T.O.R.M
           </Typography>
           <IconButton onClick={dark.toggle}>{darkToggleIcon}</IconButton>
         </Toolbar>
