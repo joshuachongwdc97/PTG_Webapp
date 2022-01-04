@@ -29,9 +29,11 @@ const Table = (props) => {
           // disableExtendRowFullWidth
           autoHeight
           {...props.data}
-          components={{
-            Toolbar: GridToolbar,
-          }}
+          components={
+            props.components && {
+              Toolbar: GridToolbar,
+            }
+          }
         />
       )}
     </div>
