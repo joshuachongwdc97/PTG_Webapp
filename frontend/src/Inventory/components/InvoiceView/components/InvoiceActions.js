@@ -4,6 +4,7 @@ import { Button, Grid } from "@mui/material";
 // ICONS
 import CreateNewFolderRoundedIcon from "@mui/icons-material/CreateNewFolderRounded";
 import PostAddRoundedIcon from "@mui/icons-material/PostAddRounded";
+import TravelExploreRoundedIcon from "@mui/icons-material/TravelExploreRounded";
 
 const InvoiceActions = (props) => {
   return (
@@ -29,6 +30,18 @@ const InvoiceActions = (props) => {
             disabled
           >
             New Drives
+          </Button>
+        </Grid>
+
+        <Grid item>
+          <Button
+            variant="outlined"
+            startIcon={<TravelExploreRoundedIcon />}
+            size="large"
+            color="secondary"
+            onClick={props.showGlobalDriveSearchHandler}
+          >
+            Global Drive Search
           </Button>
         </Grid>
       </Grid>
