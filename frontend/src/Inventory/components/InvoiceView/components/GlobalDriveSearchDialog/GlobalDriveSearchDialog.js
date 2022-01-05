@@ -1,10 +1,9 @@
-import React, { useState, useReducer } from "react";
-import { Divider, Grid } from "@mui/material";
+import React, { useState } from "react";
+import { Grid } from "@mui/material";
 
 // COMPONENTS
 import Dialog from "../../../../../Shared/components/Dialog/Dialog";
 import TextFieldWIcon from "../../../../../Shared/components/Input/TextFieldWIcon";
-import OutlinedCard from "../../../../../Shared/components/Card/OutlinedCard";
 import GlobalDriveSearchResults from "./components/GlobalDriveSearchResults";
 
 // ICONS
@@ -16,7 +15,6 @@ const GlobalDriveSearchDialog = (props) => {
 
   const inputHandler = (event) => {
     let value = event.target.value.toUpperCase();
-    console.log(value.length - inputState.length);
     setInputState(value);
   };
 
@@ -39,9 +37,6 @@ const GlobalDriveSearchDialog = (props) => {
             helperText="Barcode Scanners Are Supported"
           ></TextFieldWIcon>
         </Grid>
-        {/* <Grid item xs={12}>
-          <Divider />
-        </Grid> */}
         <GlobalDriveSearchResults
           invoices={props.invoices}
           drives={props.drives}
