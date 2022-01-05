@@ -10,30 +10,32 @@ const InvoiceActions = (props) => {
   return (
     <React.Fragment>
       <Grid container spacing={1}>
-        <Grid item>
-          <Button
-            variant="outlined"
-            startIcon={<CreateNewFolderRoundedIcon />}
-            size="large"
-            color="success"
-            onClick={props.showInvDetHandler}
-          >
-            New Invoice
-          </Button>
+        <Grid item container sm spacing={1}>
+          <Grid item>
+            <Button
+              variant="outlined"
+              startIcon={<CreateNewFolderRoundedIcon />}
+              size="large"
+              color="success"
+              onClick={props.showInvDetHandler}
+            >
+              New Invoice
+            </Button>
+          </Grid>
+
+          <Grid item>
+            <Button
+              variant="outlined"
+              startIcon={<PostAddRoundedIcon />}
+              size="large"
+              disabled
+            >
+              New Drives
+            </Button>
+          </Grid>
         </Grid>
 
-        <Grid item>
-          <Button
-            variant="outlined"
-            startIcon={<PostAddRoundedIcon />}
-            size="large"
-            disabled
-          >
-            New Drives
-          </Button>
-        </Grid>
-
-        <Grid item>
+        <Grid item sm textAlign={"right"}>
           <Button
             variant="outlined"
             startIcon={<TravelExploreRoundedIcon />}
