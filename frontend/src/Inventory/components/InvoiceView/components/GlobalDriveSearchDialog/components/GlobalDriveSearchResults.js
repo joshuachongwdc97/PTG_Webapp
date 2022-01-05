@@ -1,12 +1,29 @@
-import React from "react";
-import { Grid } from "@mui/material";
+import React, { useState, useCallback } from "react";
+import { Grid, Tooltip } from "@mui/material";
+import { GridActionsCellItem } from "@mui/x-data-grid";
 
 // COMPONENTS
 import OutlinedCard from "../../../../../../Shared/components/Card/OutlinedCard";
 import Table from "../../../../../../Shared/components/Table/Table";
 import getInvBySn from "../../../../../../Shared/functions/getInvBySn";
+import LocateDialog from "./LocateDialog";
+
+// ICONS
+import FmdGoodRoundedIcon from "@mui/icons-material/FmdGoodRounded";
+import GpsFixedRoundedIcon from "@mui/icons-material/GpsFixedRounded";
 
 const GlobalDriveSearchResults = (props) => {
+  const [showLocateDialog, setShowLocateDialog] = useState(false);
+  const [serialNumber, setSerialNumber] = useState();
+
+  const locateDrive = useCallback(
+    (sn) => () => {
+      setSerialNumber(sn);
+      setShowLocateDialog(true);
+    },
+    []
+  );
+
   let columns = [
     {
       field: "id",
@@ -40,7 +57,23 @@ const GlobalDriveSearchResults = (props) => {
     {
       field: "interface",
       headerName: "Interface",
-      flex: 1,
+      flex: 0.5,
+    },
+    {
+      field: "actions",
+      type: "actions",
+      flex: 0.05,
+      getActions: (params) => [
+        <GridActionsCellItem
+          icon={
+            <Tooltip title="Locate Drive">
+              <GpsFixedRoundedIcon />
+            </Tooltip>
+          }
+          label="Locate"
+          onClick={locateDrive(params.row.sn)}
+        />,
+      ],
     },
   ];
 
@@ -53,9 +86,18 @@ const GlobalDriveSearchResults = (props) => {
     columns: columns,
     rows: rows,
   };
-  console.log(tableData);
+
   return (
     <React.Fragment>
+      {showLocateDialog && (
+        <LocateDialog
+          open={showLocateDialog}
+          close={() => {
+            setShowLocateDialog(false);
+          }}
+          sn={serialNumber}
+        />
+      )}
       <Grid item xs={12} textAlign="center">
         <OutlinedCard>
           <Table
