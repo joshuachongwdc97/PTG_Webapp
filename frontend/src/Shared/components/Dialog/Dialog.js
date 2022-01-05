@@ -21,7 +21,7 @@ const BasicDialog = (props) => {
     <Dialog
       open={props.open}
       TransitionComponent={Transition}
-      // keepMounted
+      keepMounted={false}
       onClose={props.close}
       fullWidth
       fullScreen={props.fullScreen}
