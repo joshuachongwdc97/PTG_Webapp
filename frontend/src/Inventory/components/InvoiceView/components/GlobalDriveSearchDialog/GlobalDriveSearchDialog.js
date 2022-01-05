@@ -24,25 +24,24 @@ const GlobalDriveSearchDialog = (props) => {
     <Dialog open={props.open} close={props.close} maxWidth="md">
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <OutlinedCard>
-            <TextFieldWIcon
-              required
-              label="Serial Number"
-              icon={<SearchIcon />}
-              name="Serial Number"
-              onChange={inputHandler}
-              autoComplete="off"
-              value={inputState}
-              autoFocus
-              onFocus={(event) => {
-                event.target.select();
-              }}
-            ></TextFieldWIcon>
-          </OutlinedCard>
+          <TextFieldWIcon
+            required
+            label="Serial Number"
+            icon={<SearchIcon />}
+            name="Serial Number"
+            onChange={inputHandler}
+            autoComplete="off"
+            value={inputState}
+            autoFocus
+            onFocus={(event) => {
+              event.target.select();
+            }}
+            helperText="Barcode Scanners Are Supported"
+          ></TextFieldWIcon>
         </Grid>
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <Divider />
-        </Grid>
+        </Grid> */}
         <GlobalDriveSearchResults
           invoices={props.invoices}
           drives={props.drives}
