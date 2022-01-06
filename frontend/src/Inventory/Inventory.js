@@ -4,7 +4,7 @@ import { useHttpClient } from "../Shared/hooks/http-hook";
 import { Grid, Divider } from "@mui/material";
 
 // Assets
-import GIF from "../Shared/assets/cute.gif";
+import GIF from "../Shared/assets/hny.gif";
 
 // Self Built Components
 import DrvCard from "./components/DrvCard/DrvCard";
