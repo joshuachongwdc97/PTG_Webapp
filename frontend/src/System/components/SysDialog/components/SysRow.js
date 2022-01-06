@@ -3,7 +3,7 @@ import React from "react";
 import { Grid, Typography, LinearProgress } from "@mui/material";
 
 // COMPONENTS
-import BasicCard from "../../../../Shared/components/Card/BasicCard";
+import BasicCardwTT from "../../../../Shared/components/Card/BasicCardwTT";
 
 // FUNCTIONS
 import sysStatus from "../../../../Shared/functions/SysStatus";
@@ -19,7 +19,11 @@ const SysRow = (props) => {
 
     return (
       <Grid item key={sys.id} xs={sysMargin} align="center">
-        <BasicCard click>
+        <BasicCardwTT
+          click
+          ttTitle={sys.ip ? sys.ip : "No Response"}
+          ttPlacement="top"
+        >
           <Grid container spacing={1.5}>
             <Grid item xs={12} align="center">
               <Typography variant="subtitle2">{sys.rackLoc}</Typography>
@@ -33,7 +37,7 @@ const SysRow = (props) => {
               />
             </Grid>
           </Grid>
-        </BasicCard>
+        </BasicCardwTT>
       </Grid>
     );
   });
