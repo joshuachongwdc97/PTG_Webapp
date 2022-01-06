@@ -25,7 +25,6 @@ const GlobalDriveSearchDialog = (props) => {
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextFieldWIcon
-              required
               label="Serial Number"
               icon={<SearchIcon />}
               name="Serial Number"

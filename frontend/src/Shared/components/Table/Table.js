@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-// import { useDemoData } from "@mui/x-data-grid-generator";
 
 const Table = (props) => {
   const [pageSize, setPageSize] = useState(5);
