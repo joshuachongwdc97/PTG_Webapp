@@ -20,7 +20,14 @@ const GlobalDriveSearchDialog = (props) => {
   };
 
   return (
-    <Dialog open={props.open} close={props.close} maxWidth="md">
+    <Dialog
+      open={props.open}
+      close={() => {
+        setInputState("");
+        props.close();
+      }}
+      maxWidth="md"
+    >
       <OutlinedCard>
         <Grid container spacing={2}>
           <Grid item xs={12}>
