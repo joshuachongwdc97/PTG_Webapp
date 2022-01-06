@@ -43,6 +43,8 @@ const TextFieldWIcon = (props) => {
       disabled={props.disabled}
       autoComplete={props.autoComplete}
       placeholder={props.placeholder}
+      autoFocus={props.autoFocus}
+      onFocus={props.onFocus}
     />
   );
 };

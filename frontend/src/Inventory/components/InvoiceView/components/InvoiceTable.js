@@ -96,6 +96,7 @@ const InvoiceTable = (props) => {
         density="comfortable"
         onCellClick={props.showInvDetHandler}
         onCellDoubleClick={props.showInvDetHandler}
+        components
       />
     </div>
   );
