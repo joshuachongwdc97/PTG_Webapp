@@ -58,6 +58,11 @@ const InvoiceTable = (props) => {
       flex: 0.5,
     },
     {
+      field: "dateReceived",
+      headerName: "Date Received",
+      flex: 1,
+    },
+    {
       field: "origin",
       headerName: "Origin",
       flex: 1.5,
@@ -87,6 +92,7 @@ const InvoiceTable = (props) => {
         age: age,
         origin: inv.origin,
         requestor: inv.requestor,
+        dateReceived: new Date(inv.dateReceived).toISOString().split("T")[0],
       };
     }));
 
