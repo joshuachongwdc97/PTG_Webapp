@@ -1,4 +1,5 @@
 import React from "react";
+import Chip from "@mui/material/Chip";
 
 import Table from "../../../../Shared/components/Table/Table";
 
@@ -36,7 +37,20 @@ const InvoiceTable = (props) => {
     {
       field: "status",
       headerName: "Status",
-      flex: 0.5,
+      flex: 1,
+      renderCell: (params) => {
+        const color = params.row.status === "Active" ? "success" : "default";
+
+        return (
+          <Chip
+            label={params.row.status}
+            color={color}
+            variant="outlined"
+            sx={{ width: "100%" }}
+            disabled={params.row.status === "Active" ? false : true}
+          />
+        );
+      },
     },
     {
       field: "age",
