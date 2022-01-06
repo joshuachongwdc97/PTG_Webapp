@@ -1,13 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Divider } from "@mui/material";
+import { Divider, Grid } from "@mui/material";
+
+// ANIMATIONS
+import GIF from "../../../../../../Shared/assets/comp.gif";
 
 // COMPONENTS
 import Dialog from "../../../../../../Shared/components/Dialog/Dialog";
 import { useHttpClient } from "../../../../../../Shared/hooks/http-hook";
 import getDrvLocation from "../../../../../../Shared/functions/getDrvLocation";
+import OutlinedCard from "../../../../../../Shared/components/Card/OutlinedCard";
+import MediaCard from "../../../../../../Shared/components/Card/MediaCard";
+import { Typography, Avatar } from "@mui/material";
 
 // ICONS
-import FmdGoodRoundedIcon from "@mui/icons-material/FmdGoodRounded";
+import DesktopWindowsRoundedIcon from "@mui/icons-material/DesktopWindowsRounded";
+import MyLocationRoundedIcon from "@mui/icons-material/MyLocationRounded";
+import HttpRoundedIcon from "@mui/icons-material/HttpRounded";
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import { red } from "@mui/material/colors";
 
 const LocateDialog = (props) => {
   const { sendRequest } = useHttpClient();
@@ -15,68 +25,162 @@ const LocateDialog = (props) => {
   const [dataReady, setDataReady] = useState(false);
 
   const getData = async () => {
-    console.log("Fetching Data");
     try {
       let responseData = await sendRequest(
         "http://mps-ed-ptgval.ad.shared:5000/api/system"
       );
       setSystems(responseData.systems);
-
-      console.log("Data fetched");
       setDataReady(true);
     } catch (err) {}
   };
 
-  useEffect(() => {
-    getData();
-  }, []);
+  useEffect(
+    () => {
+      getData();
+    },
+    // eslint-disable-next-line
+    []
+  );
 
   const driveLocation = getDrvLocation(props.sn, systems);
 
   return (
     <React.Fragment>
       {dataReady && (
-        <Dialog open={props.open} close={props.close}>
-          {driveLocation ? (
-            <Grid container spacing={2}>
-              <Grid item>
-                <h2>Drive Location</h2>
-              </Grid>
-              <Grid item xs={12}>
-                <Divider />
-              </Grid>
-              <Grid item container spacing={6}>
-                <Grid item>
-                  <div>
-                    <strong>System ID</strong>
-                  </div>
-                  <div>{driveLocation.sysId}</div>
-                </Grid>
-                <Grid item>
-                  <div>
-                    <strong>Rack No.</strong>
-                  </div>
-                  <div>{driveLocation.rackNo}</div>
-                </Grid>
-                <Grid item>
-                  <div>
-                    <strong>Rack Row</strong>
-                  </div>
-                  <div>{driveLocation.rackRow}</div>
-                </Grid>
-                <Grid item>
-                  <div>
-                    <strong>Rack Location</strong>
-                  </div>
-                  <div>{driveLocation.rackLoc}</div>
-                </Grid>
-              </Grid>
+        <Dialog open={props.open} close={props.close} maxWidth="xs">
+          <Grid container spacing={1.5}>
+            <Grid item xs={12}>
+              <MediaCard media={GIF} height={220} />
             </Grid>
-          ) : (
-            <div>
-              <p>Drive is not in the system</p>
-            </div>
-          )}
+            <Grid item xs={12}>
+              <Divider />
+            </Grid>
+
+            {driveLocation ? (
+              <React.Fragment>
+                <Grid item xs={12}>
+                  <OutlinedCard click>
+                    <Grid
+                      container
+                      spacing={2}
+                      justifyContent={"center"}
+                      alignItems={"center"}
+                    >
+                      <Grid item xs={2} align="right">
+                        <Avatar
+                          variant="rounded"
+                          sx={{ width: 35, height: 35 }}
+                        >
+                          <DesktopWindowsRoundedIcon />
+                        </Avatar>
+                      </Grid>
+                      <Grid item xs={10} align="center">
+                        <Typography
+                          variant="subtitle2"
+                          display="block"
+                          sx={{ fontSize: "16px" }}
+                        >
+                          {driveLocation.sysId}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  </OutlinedCard>
+                </Grid>
+                <Grid item xs={12}>
+                  <OutlinedCard click>
+                    <Grid
+                      container
+                      spacing={2}
+                      justifyContent={"center"}
+                      alignItems={"center"}
+                    >
+                      <Grid item xs={2} align="right">
+                        <Avatar
+                          variant="rounded"
+                          sx={{ width: 35, height: 35 }}
+                        >
+                          <MyLocationRoundedIcon />
+                        </Avatar>
+                      </Grid>
+                      <Grid item xs={10} align="center">
+                        <Typography
+                          variant="subtitle2"
+                          display="block"
+                          sx={{ fontSize: "16px" }}
+                        >
+                          {"Rack " +
+                            driveLocation.rackNo +
+                            " Row " +
+                            driveLocation.rackRow +
+                            " --- " +
+                            driveLocation.rackLoc}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  </OutlinedCard>
+                </Grid>
+                <Grid item xs={12}>
+                  <OutlinedCard click>
+                    <Grid
+                      container
+                      spacing={2}
+                      justifyContent={"center"}
+                      alignItems={"center"}
+                    >
+                      <Grid item xs={2} align="right">
+                        <Avatar
+                          variant="rounded"
+                          sx={{ width: 35, height: 35 }}
+                        >
+                          <HttpRoundedIcon />
+                        </Avatar>
+                      </Grid>
+                      {driveLocation.ip && (
+                        <Grid item xs={10} align="center">
+                          <Typography
+                            variant="subtitle2"
+                            display="block"
+                            sx={{ fontSize: "16px" }}
+                          >
+                            {driveLocation.ip}
+                          </Typography>
+                        </Grid>
+                      )}
+                    </Grid>
+                  </OutlinedCard>
+                </Grid>
+              </React.Fragment>
+            ) : (
+              <Grid item xs={12}>
+                <OutlinedCard click>
+                  <Grid
+                    container
+                    spacing={2}
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                  >
+                    <Grid item xs={2} align="right">
+                      <Avatar
+                        variant="rounded"
+                        sx={{ width: 35, height: 35, bgcolor: red[500] }}
+                      >
+                        <CloseRoundedIcon />
+                      </Avatar>
+                    </Grid>
+                    <Grid item xs={10} align="center">
+                      <Typography
+                        variant="subtitle2"
+                        display="block"
+                        sx={{ fontSize: "16px" }}
+                      >
+                        Unable to Locate Drive
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </OutlinedCard>
+              </Grid>
+            )}
+          </Grid>
         </Dialog>
       )}
     </React.Fragment>

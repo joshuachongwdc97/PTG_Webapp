@@ -21,22 +21,6 @@ const InvoiceView = (props) => {
 
   return (
     <React.Fragment>
-      {/* INVOICE DETAILS DIALOG */}
-      {/* {showInvDialog && (
-        <InvoiceDialog
-          open={showInvDialog}
-          close={() => {
-            setShowInvDialog(false);
-            setSelection([]);
-            props.getData();
-          }}
-          getData={props.getData}
-          invoices={props.invoices}
-          drives={props.drives}
-          selection={selection}
-        />
-      )} */}
-
       <InvoiceDialog
         open={showInvDialog}
         close={() => {

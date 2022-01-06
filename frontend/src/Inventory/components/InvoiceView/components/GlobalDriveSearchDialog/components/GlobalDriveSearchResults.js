@@ -1,15 +1,13 @@
 import React, { useState, useCallback } from "react";
-import { Grid, Tooltip } from "@mui/material";
+import { Tooltip } from "@mui/material";
 import { GridActionsCellItem } from "@mui/x-data-grid";
 
 // COMPONENTS
-import OutlinedCard from "../../../../../../Shared/components/Card/OutlinedCard";
 import Table from "../../../../../../Shared/components/Table/Table";
 import getInvBySn from "../../../../../../Shared/functions/getInvBySn";
 import LocateDialog from "./LocateDialog";
 
 // ICONS
-import FmdGoodRoundedIcon from "@mui/icons-material/FmdGoodRounded";
 import GpsFixedRoundedIcon from "@mui/icons-material/GpsFixedRounded";
 
 const GlobalDriveSearchResults = (props) => {
@@ -32,27 +30,27 @@ const GlobalDriveSearchResults = (props) => {
     {
       field: "invid",
       headerName: "Invoice ID",
-      flex: 2,
+      flex: 1.3,
     },
     {
       field: "sn",
       headerName: "SN",
-      flex: 1,
+      flex: 0.5,
     },
     {
       field: "label",
       headerName: "Label",
-      flex: 2.5,
+      flex: 1.3,
     },
     {
       field: "drvType",
-      headerName: "Drv Type",
-      flex: 0.5,
+      headerName: "Type",
+      flex: 0.3,
     },
     {
       field: "capacity",
-      headerName: "Capacity",
-      flex: 0.5,
+      headerName: "TB",
+      flex: 0.1,
     },
     {
       field: "interface",
@@ -61,8 +59,9 @@ const GlobalDriveSearchResults = (props) => {
     },
     {
       field: "actions",
+      headerName: "Locate",
       type: "actions",
-      flex: 0.05,
+      flex: 0.3,
       getActions: (params) => [
         <GridActionsCellItem
           icon={
@@ -98,24 +97,20 @@ const GlobalDriveSearchResults = (props) => {
           sn={serialNumber}
         />
       )}
-      <Grid item xs={12} textAlign="center">
-        <OutlinedCard>
-          <Table
-            data={tableData}
-            selectedHandler={props.selectedHandler}
-            selection={props.selection}
-            sortModel={[
-              {
-                field: "sn",
-                sort: "asc",
-              },
-            ]}
-            density="comfortable"
-            onCellClick={props.showInvDetHandler}
-            onCellDoubleClick={props.showInvDetHandler}
-          />
-        </OutlinedCard>
-      </Grid>
+      <Table
+        data={tableData}
+        selectedHandler={props.selectedHandler}
+        selection={props.selection}
+        sortModel={[
+          {
+            field: "sn",
+            sort: "asc",
+          },
+        ]}
+        density="comfortable"
+        onCellClick={props.showInvDetHandler}
+        onCellDoubleClick={props.showInvDetHandler}
+      />
     </React.Fragment>
   );
 };

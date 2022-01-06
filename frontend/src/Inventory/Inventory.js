@@ -90,7 +90,7 @@ const Inventory = () => {
           </Grid>
           <Grid item xs={2}>
             <Animate show={dataReady}>
-              <MediaCard media={GIF} />
+              <MediaCard media={GIF} height={150} />
             </Animate>
           </Grid>
           <Grid item xs={12}>

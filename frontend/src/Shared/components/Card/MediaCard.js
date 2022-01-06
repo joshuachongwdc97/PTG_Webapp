@@ -14,7 +14,7 @@ const MediaCard = (props) => {
       raised
     >
       <CardActionArea>
-        <CardMedia component="img" height="150" image={props.media} />
+        <CardMedia component="img" height={props.height} image={props.media} />
       </CardActionArea>
     </Card>
   );

@@ -1,5 +1,4 @@
 const getDrvLocation = (sn, systems) => {
-  console.log(systems);
   const driveLocation = systems.filter((sys) => sys.drive === sn);
 
   if (driveLocation) {
