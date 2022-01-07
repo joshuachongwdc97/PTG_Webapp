@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 
 // COMPONENTS
 import { Grid } from "@mui/material";
 import BasicDialog from "../../../Shared/components/Dialog/Dialog";
 import SysRackCard from "./components/SysRackCard";
+import SysInfoDialog from "./components/SysInfoDialog";
 
 const SysDialog = (props) => {
-  //   console.log(props.systems);
+  const [showSysInfoDialog, setShowSysInfoDialog] = useState(false);
+  const [selectedSys, setSelectedSys] = useState();
 
   // GET RACK NUMBER ARRAYS
   let rackNoArr = props.systems.map((sys) => {
@@ -22,22 +24,41 @@ const SysDialog = (props) => {
 
     return (
       <Grid item xs={4} key={rackNo}>
-        <SysRackCard rackNo={rackNo} sysInRack={sysInRack} key={rackNo} />
+        <SysRackCard
+          rackNo={rackNo}
+          sysInRack={sysInRack}
+          key={rackNo}
+          showSysInfoDialog={(sys) => {
+            setShowSysInfoDialog(true);
+            setSelectedSys(sys);
+          }}
+        />
       </Grid>
     );
   });
 
   return (
-    <BasicDialog
-      close={props.close}
-      open={props.open}
-      title="System Control Panel"
-      fullScreen
-    >
-      <Grid container spacing={2}>
-        {RackCards}
-      </Grid>
-    </BasicDialog>
+    <React.Fragment>
+      <SysInfoDialog
+        open={showSysInfoDialog}
+        close={() => {
+          setShowSysInfoDialog(false);
+          setSelectedSys();
+        }}
+        sys={selectedSys}
+      />
+
+      <BasicDialog
+        close={props.close}
+        open={props.open}
+        title="System Control Panel"
+        fullScreen
+      >
+        <Grid container spacing={2}>
+          {RackCards}
+        </Grid>
+      </BasicDialog>
+    </React.Fragment>
   );
 };
 

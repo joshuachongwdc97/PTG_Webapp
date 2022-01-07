@@ -23,6 +23,9 @@ const SysRow = (props) => {
           click
           ttTitle={sys.ip ? sys.ip : "No Response"}
           ttPlacement="top"
+          onClick={() => {
+            props.showSysInfoDialog(sys);
+          }}
         >
           <Grid container spacing={1.5}>
             <Grid item xs={12} align="center">

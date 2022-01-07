@@ -18,7 +18,12 @@ const SysRackCard = (props) => {
 
     return (
       <Grid item xs={12} key={rowNo}>
-        <SysRow rowNo={rowNo} key={rowNo} sysInRow={sysInRow} />
+        <SysRow
+          rowNo={rowNo}
+          key={rowNo}
+          sysInRow={sysInRow}
+          showSysInfoDialog={props.showSysInfoDialog}
+        />
       </Grid>
     );
   });
