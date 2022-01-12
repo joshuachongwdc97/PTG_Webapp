@@ -96,6 +96,7 @@ const DriveUpload = (props) => {
             checkbox
             selectedHandler={props.selectedHandler}
             selection={props.selection}
+            components
           />
         </Grid>
       </Grid>
