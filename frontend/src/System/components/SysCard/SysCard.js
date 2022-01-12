@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import SdStorageIcon from "@mui/icons-material/SdStorage";
 import { blue } from "@mui/material/colors";
 
 // COMPONENTS
@@ -7,6 +6,9 @@ import BasicCountCard from "../../../Shared/components/Card/BasicCountCard";
 
 // FUNCTIONS
 import SysStatus from "../../../Shared/functions/SysStatus";
+
+// ICONS
+import DesktopWindowsRoundedIcon from "@mui/icons-material/DesktopWindowsRounded";
 
 const SysCard = (props) => {
   const [availSys, setAvailSys] = useState([]);
@@ -24,7 +26,7 @@ const SysCard = (props) => {
     <BasicCountCard
       title="Available Systems"
       data={availSys.length}
-      icon={<SdStorageIcon />}
+      icon={<DesktopWindowsRoundedIcon />}
       color={blue[400]}
       onClick={props.onClick}
     />
