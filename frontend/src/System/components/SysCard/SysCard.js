@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { blue } from "@mui/material/colors";
+import { green } from "@mui/material/colors";
 
 // COMPONENTS
-import BasicCountCard from "../../../Shared/components/Card/BasicCountCard";
+import BasicCountCardwPB from "../../../Shared/components/Card/BasicCountCardwPB";
 
 // FUNCTIONS
 import SysStatus from "../../../Shared/functions/SysStatus";
@@ -17,18 +17,21 @@ const SysCard = (props) => {
     setAvailSys(
       props.sys.filter((sys) => {
         const status = SysStatus(sys);
-        return status === "online";
+        return status === "online" || status === "offline";
       })
     );
   }, [setAvailSys, props.sys]);
 
   return (
-    <BasicCountCard
+    <BasicCountCardwPB
       title="Available Systems"
       data={availSys.length}
+      dataAll={props.sys.length}
       icon={<DesktopWindowsRoundedIcon />}
-      color={blue[400]}
+      color={green[400]}
       onClick={props.onClick}
+      progress={(availSys.length / props.sys.length) * 100}
+      progressColor="success"
     />
   );
 };
