@@ -57,6 +57,7 @@ const System = (props) => {
         close={() => {
           setShowAddSysDialog(false);
         }}
+        getData={getData}
       />
 
       {/* SYSTEM VIEW DIALOG */}
@@ -66,6 +67,7 @@ const System = (props) => {
           setShowSysDialog(false);
         }}
         systems={systems}
+        getData={getData}
       />
 
       <Grid container>

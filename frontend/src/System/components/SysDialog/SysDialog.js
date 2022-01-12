@@ -46,6 +46,7 @@ const SysDialog = (props) => {
           setSelectedSys();
         }}
         sys={selectedSys}
+        getData={props.getData}
       />
 
       <BasicDialog

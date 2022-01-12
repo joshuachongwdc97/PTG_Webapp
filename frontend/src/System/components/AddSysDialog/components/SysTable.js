@@ -14,7 +14,7 @@ const SysTable = (props) => {
     {
       field: "chipset",
       headerName: "Chipset",
-      flex: 1,
+      flex: 0.8,
     },
     {
       field: "hba",
@@ -24,12 +24,12 @@ const SysTable = (props) => {
     {
       field: "rackNo",
       headerName: "Rack No.",
-      flex: 0.5,
+      flex: 0.3,
     },
     {
       field: "rackLoc",
-      headerName: "Rack Location",
-      flex: 0.5,
+      headerName: "Rack Loc",
+      flex: 0.3,
     },
     {
       field: "mac",
