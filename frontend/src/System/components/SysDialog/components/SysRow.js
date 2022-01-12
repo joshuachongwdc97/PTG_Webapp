@@ -41,12 +41,14 @@ const SysRow = (props) => {
               <LinearProgress
                 color={
                   SysStatus === "reserved"
-                    ? "primary"
+                    ? "warning"
                     : SysStatus === "error"
                     ? "error"
                     : "success"
                 }
-                variant="determinate"
+                variant={
+                  SysStatus === "reserved" ? "indeterminate" : "determinate"
+                }
                 value={
                   SysStatus === "online" || SysStatus === "reserved" ? 100 : 0
                 }

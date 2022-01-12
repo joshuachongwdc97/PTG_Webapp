@@ -138,124 +138,150 @@ const SysInfoDialog = (props) => {
         actions={DialogActions}
       >
         {props.sys && (
-          <Grid container spacing={1.5}>
-            <Grid item xs={5} container spacing={1.5}>
+          <React.Fragment>
+            <Grid container spacing={1.5}>
               <Grid item xs={12}>
-                <Animate show>
-                  {status === "offline" ? (
-                    <OutlinedCard align="center" click>
-                      <Grid container alignItems={"center"} spacing={3}>
-                        <Grid item xs={12} align="center">
-                          <DesktopAccessDisabledRoundedIcon
-                            sx={{ height: "100px", width: "100px" }}
-                          />
-                        </Grid>
-                        <Grid item xs={12} align="center">
-                          <Typography>System Offline</Typography>
-                        </Grid>
-                      </Grid>
-                    </OutlinedCard>
-                  ) : (
-                    <MediaCard media={GIF} height={420} />
-                  )}
-                </Animate>
+                <Button
+                  size="large"
+                  variant="outlined"
+                  fullWidth
+                  color={
+                    status === "online"
+                      ? "success"
+                      : status === "reserved"
+                      ? "warning"
+                      : "secondary"
+                  }
+                >
+                  {status}
+                </Button>
+              </Grid>
+              <Grid item xs={12}>
+                <Grid container spacing={1.5}>
+                  <Grid item xs={5} container spacing={1.5}>
+                    <Grid item xs={12}>
+                      <Animate show>
+                        {status === "offline" ? (
+                          <OutlinedCard align="center" click>
+                            <Grid container alignItems={"center"} spacing={3}>
+                              <Grid item xs={12} align="center">
+                                <DesktopAccessDisabledRoundedIcon
+                                  sx={{ height: "100px", width: "100px" }}
+                                />
+                              </Grid>
+                              <Grid item xs={12} align="center">
+                                <Typography>System Offline</Typography>
+                              </Grid>
+                            </Grid>
+                          </OutlinedCard>
+                        ) : (
+                          <MediaCard media={GIF} height={420} />
+                        )}
+                      </Animate>
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={2.5} container spacing={1.5}>
+                    <Grid item xs={12}>
+                      <Animate show delay="0.5s">
+                        <AvatarCard
+                          title={props.sys.sysId}
+                          letterSpacing="1px"
+                          fontWeight="350"
+                          icon={<NumbersRoundedIcon fontSize="small" />}
+                        />
+                      </Animate>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Animate show delay="0.6s">
+                        <AvatarCard
+                          title={
+                            "R" + props.sys.rackRow + " - " + props.sys.rackLoc
+                          }
+                          letterSpacing="1px"
+                          fontWeight="350"
+                          icon={<MyLocationRoundedIcon fontSize="small" />}
+                        />
+                      </Animate>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Animate show delay="0.7s">
+                        <AvatarCard
+                          title={props.sys.chipset}
+                          letterSpacing="1px"
+                          fontWeight="350"
+                          icon={<MemoryRoundedIcon fontSize="medium" />}
+                        />
+                      </Animate>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Animate show delay="0.8s">
+                        <AvatarCard
+                          title={props.sys.hba}
+                          letterSpacing="1px"
+                          fontWeight="350"
+                          icon={<CableRoundedIcon fontSize="small" />}
+                        />
+                      </Animate>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Animate show delay="0.9s">
+                        <AvatarCard
+                          title={props.sys.os ? props.sys.os : "Unknown OS"}
+                          letterSpacing="1px"
+                          fontWeight="350"
+                          icon={<DeviceHubRoundedIcon fontSize="small" />}
+                        />
+                      </Animate>
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={4.5} container spacing={1.5}>
+                    <Grid item xs={12}>
+                      <Animate show delay="1.5s">
+                        <AvatarCard
+                          title={
+                            props.sys.ip ? props.sys.ip : "Unable to obtain IP"
+                          }
+                          letterSpacing="1px"
+                          fontWeight="350"
+                          icon={<HttpRoundedIcon fontSize="medium" />}
+                        />
+                      </Animate>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Animate show delay="1.7s">
+                        <AvatarCard
+                          title={
+                            props.sys.drive
+                              ? props.sys.drive
+                              : "No Test Drive Connected"
+                          }
+                          letterSpacing="1px"
+                          fontWeight="350"
+                          icon={<AlbumRoundedIcon fontSize="medium" />}
+                        />
+                      </Animate>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Animate show delay="1.9s">
+                        <AvatarCard
+                          title={
+                            status === "reserved"
+                              ? props.sys.status
+                              : props.sys.qual
+                              ? "Job Detected"
+                              : "No Jobs Detected"
+                          }
+                          letterSpacing="1px"
+                          fontWeight="350"
+                          icon={<CodeRoundedIcon fontSize="medium" />}
+                        />
+                      </Animate>
+                    </Grid>
+                  </Grid>
+                </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={2.5} container spacing={1.5}>
-              <Grid item xs={12}>
-                <Animate show delay="0.5s">
-                  <AvatarCard
-                    title={props.sys.sysId}
-                    letterSpacing="1px"
-                    fontWeight="350"
-                    icon={<NumbersRoundedIcon fontSize="small" />}
-                  />
-                </Animate>
-              </Grid>
-              <Grid item xs={12}>
-                <Animate show delay="0.6s">
-                  <AvatarCard
-                    title={"R" + props.sys.rackRow + " - " + props.sys.rackLoc}
-                    letterSpacing="1px"
-                    fontWeight="350"
-                    icon={<MyLocationRoundedIcon fontSize="small" />}
-                  />
-                </Animate>
-              </Grid>
-              <Grid item xs={12}>
-                <Animate show delay="0.7s">
-                  <AvatarCard
-                    title={props.sys.chipset}
-                    letterSpacing="1px"
-                    fontWeight="350"
-                    icon={<MemoryRoundedIcon fontSize="medium" />}
-                  />
-                </Animate>
-              </Grid>
-              <Grid item xs={12}>
-                <Animate show delay="0.8s">
-                  <AvatarCard
-                    title={props.sys.hba}
-                    letterSpacing="1px"
-                    fontWeight="350"
-                    icon={<CableRoundedIcon fontSize="small" />}
-                  />
-                </Animate>
-              </Grid>
-              <Grid item xs={12}>
-                <Animate show delay="0.9s">
-                  <AvatarCard
-                    title={props.sys.os ? props.sys.os : "Unknown OS"}
-                    letterSpacing="1px"
-                    fontWeight="350"
-                    icon={<DeviceHubRoundedIcon fontSize="small" />}
-                  />
-                </Animate>
-              </Grid>
-            </Grid>
-            <Grid item xs={4.5} container spacing={1.5}>
-              <Grid item xs={12}>
-                <Animate show delay="1.5s">
-                  <AvatarCard
-                    title={props.sys.ip ? props.sys.ip : "Unable to obtain IP"}
-                    letterSpacing="1px"
-                    fontWeight="350"
-                    icon={<HttpRoundedIcon fontSize="medium" />}
-                  />
-                </Animate>
-              </Grid>
-              <Grid item xs={12}>
-                <Animate show delay="1.7s">
-                  <AvatarCard
-                    title={
-                      props.sys.drive
-                        ? props.sys.drive
-                        : "No Test Drive Connected"
-                    }
-                    letterSpacing="1px"
-                    fontWeight="350"
-                    icon={<AlbumRoundedIcon fontSize="medium" />}
-                  />
-                </Animate>
-              </Grid>
-              <Grid item xs={12}>
-                <Animate show delay="1.9s">
-                  <AvatarCard
-                    title={
-                      status === "reserved"
-                        ? props.sys.status
-                        : props.sys.qual
-                        ? "Job Detected"
-                        : "No Jobs Detected"
-                    }
-                    letterSpacing="1px"
-                    fontWeight="350"
-                    icon={<CodeRoundedIcon fontSize="medium" />}
-                  />
-                </Animate>
-              </Grid>
-            </Grid>
-          </Grid>
+          </React.Fragment>
         )}
       </Dialog>
     </React.Fragment>
