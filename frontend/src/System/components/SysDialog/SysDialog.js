@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // COMPONENTS
 import { Grid } from "@mui/material";
@@ -16,6 +16,19 @@ const SysDialog = (props) => {
   });
 
   rackNoArr = [...new Set(rackNoArr)];
+
+  // Use Effect to update Selected System Details on change
+  useEffect(
+    () => {
+      if (selectedSys) {
+        const newSysDetails = props.systems.filter((sys) => {
+          return sys.id === selectedSys.id;
+        });
+        setSelectedSys(newSysDetails[0]);
+      }
+    }, // eslint-disable-next-line
+    [props.systems]
+  );
 
   const RackCards = rackNoArr.map((rackNo) => {
     const sysInRack = props.systems.filter((sys) => {

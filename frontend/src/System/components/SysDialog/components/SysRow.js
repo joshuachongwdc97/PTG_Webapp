@@ -21,7 +21,13 @@ const SysRow = (props) => {
       <Grid item key={sys.id} xs={sysMargin} align="center">
         <BasicCardwTT
           click
-          ttTitle={sys.ip ? sys.ip : "No Response"}
+          ttTitle={
+            SysStatus === "reserved"
+              ? sys.status
+              : SysStatus === "online"
+              ? "Ready"
+              : "Not Responding"
+          }
           ttPlacement="top"
           onClick={() => {
             props.showSysInfoDialog(sys);
@@ -33,9 +39,17 @@ const SysRow = (props) => {
             </Grid>
             <Grid item xs={12}>
               <LinearProgress
-                color="success"
+                color={
+                  SysStatus === "reserved"
+                    ? "primary"
+                    : SysStatus === "error"
+                    ? "error"
+                    : "success"
+                }
                 variant="determinate"
-                value={SysStatus === "online" ? 100 : 0}
+                value={
+                  SysStatus === "online" || SysStatus === "reserved" ? 100 : 0
+                }
                 sx={{ maxWidth: "30px", width: "80%", borderRadius: 5 }}
               />
             </Grid>

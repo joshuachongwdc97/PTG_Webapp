@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
+import { useHttpClient } from "../../../../Shared/hooks/http-hook";
 
 // Images
 import GIF from "../../../../Shared/assets/comp_hw.gif";
 
 import { Button, Grid, Typography } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 
 import Dialog from "../../../../Shared/components/Dialog/Dialog";
 import MediaCard from "../../../../Shared/components/Card/MediaCard";
 import AvatarCard from "../../../../Shared/components/Card/AvatarCard";
 import OutlinedCard from "../../../../Shared/components/Card/OutlinedCard";
 import SysDeleteDialog from "./SysDeleteDialog";
+import ReserveDialog from "./ReserveDialog";
 import Animate from "../../../../Shared/transitions/Animate";
 
 // FUNCTIONS
@@ -29,8 +32,12 @@ import BookmarkAddedRoundedIcon from "@mui/icons-material/BookmarkAddedRounded";
 import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
 
 const SysInfoDialog = (props) => {
+  const { sendRequest } = useHttpClient();
+
   const [status, setStatus] = useState();
   const [showDelDialog, setShowDelDialog] = useState(false);
+  const [showReserveDialog, setShowReserveDialog] = useState(false);
+  const [releasing, setReleasing] = useState(false);
 
   useEffect(() => {
     if (props.open) {
@@ -38,18 +45,50 @@ const SysInfoDialog = (props) => {
     }
   }, [props.sys, props.open]);
 
+  const releaseSysHandler = async () => {
+    setReleasing(true);
+    try {
+      await sendRequest(
+        "http://mps-ed-ptgval.ad.shared:5000/api/system/release",
+        "PATCH",
+        JSON.stringify({ IDs: [props.sys.id] }),
+        { "Content-Type": "application/json" }
+      );
+    } catch (err) {}
+    setReleasing(false);
+    props.getData();
+  };
+
   const DialogActions = (
     <Grid container spacing={2}>
       <Grid item xs={6}>
-        <Button
-          variant="contained"
-          color="success"
-          size="large"
-          fullWidth
-          startIcon={<BookmarkAddedRoundedIcon />}
-        >
-          RESERVE
-        </Button>
+        {status !== "reserved" ? (
+          <Button
+            variant="contained"
+            color="success"
+            size="large"
+            fullWidth
+            startIcon={<BookmarkAddedRoundedIcon />}
+            onClick={() => {
+              setShowReserveDialog(true);
+            }}
+          >
+            RESERVE
+          </Button>
+        ) : (
+          <LoadingButton
+            variant="contained"
+            color="warning"
+            size="large"
+            fullWidth
+            startIcon={<BookmarkAddedRoundedIcon />}
+            onClick={releaseSysHandler}
+            loading={releasing}
+            loadingPosition="start"
+          >
+            RELEASE
+          </LoadingButton>
+        )}
       </Grid>
       <Grid item xs={6}>
         <Button
@@ -81,6 +120,15 @@ const SysInfoDialog = (props) => {
           props.close();
           props.getData();
         }}
+      />
+
+      <ReserveDialog
+        open={showReserveDialog}
+        close={() => {
+          setShowReserveDialog(false);
+        }}
+        id={props.open ? props.sys.id : null}
+        getData={props.getData}
       />
 
       <Dialog
@@ -193,7 +241,13 @@ const SysInfoDialog = (props) => {
               <Grid item xs={12}>
                 <Animate show delay="1.9s">
                   <AvatarCard
-                    title={props.sys.qual ? "Job Detected" : "No Jobs Detected"}
+                    title={
+                      status === "reserved"
+                        ? props.sys.status
+                        : props.sys.qual
+                        ? "Job Detected"
+                        : "No Jobs Detected"
+                    }
                     letterSpacing="1px"
                     fontWeight="350"
                     icon={<CodeRoundedIcon fontSize="medium" />}
