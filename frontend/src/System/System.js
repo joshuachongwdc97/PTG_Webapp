@@ -9,6 +9,8 @@ import SysDialog from "./components/SysDialog/SysDialog";
 import FloatingActions from "./components/FloatingActions/FloatingActions";
 import AddSysDialog from "./components/AddSysDialog/AddSysDialog";
 import AddTestDialog from "./components/AddTestDialog/AddTestDialog";
+import TestCard from "./components/TestCard/TestCard";
+import TestsDialog from "./components/TestsDialog/TestsDialog";
 
 // VARIABLES
 import { serverName } from "../Shared/variables/Variables";
@@ -20,6 +22,7 @@ const System = (props) => {
   const [dataReady, setDataReady] = useState(false);
   const [showAddSysDialog, setShowAddSysDialog] = useState(false);
   const [showAddTestDialog, setShowAddTestDialog] = useState(false);
+  const [showTestsDialog, setShowTestsDialog] = useState(false);
 
   const getData = async () => {
     console.log("Fetching Data");
@@ -87,7 +90,15 @@ const System = (props) => {
         getData={getData}
       />
 
-      <Grid container>
+      {/* TESTS DIALOG */}
+      <TestsDialog
+        open={showTestsDialog}
+        close={() => {
+          setShowTestsDialog(false);
+        }}
+      />
+
+      <Grid container spacing={2}>
         <Grid item xs={2}>
           {dataReady && (
             <Animate show={dataReady}>
@@ -95,6 +106,17 @@ const System = (props) => {
                 sys={systems}
                 onClick={() => {
                   setShowSysDialog(true);
+                }}
+              />
+            </Animate>
+          )}
+        </Grid>
+        <Grid item xs={1}>
+          {dataReady && (
+            <Animate show={dataReady}>
+              <TestCard
+                onClick={() => {
+                  setShowTestsDialog(true);
                 }}
               />
             </Animate>

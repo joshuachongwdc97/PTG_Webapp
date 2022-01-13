@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useHttpClient } from "../../../Shared/hooks/http-hook";
 
 import { Grid, Button, Divider, Chip } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 
 import BasicDialog from "../../../Shared/components/Dialog/Dialog";
 import TextFieldWIcon from "../../../Shared/components/Input/TextFieldWIcon";
@@ -25,8 +26,9 @@ const AddTestDialog = (props) => {
   const [addedModes, setAddedModes] = useState([]);
   const [addModeDisable, setAddModeDisable] = useState(true);
   const [selectDrvPrgm, setSelectDrvPrgm] = useState([]);
-
-  console.log(inputState.drvPrgm);
+  const [submitDisable, setSubmitDisable] = useState(true);
+  const [resetDisable, setResetDisable] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
 
   // Get Drive Programs
   const getDrvPrgms = async () => {
@@ -62,6 +64,8 @@ const AddTestDialog = (props) => {
           drvPrgm: "",
           drvType: "",
         });
+        setAddedModes([]);
+        setSubmitting(false);
       }
     },
     // eslint-disable-next-line
@@ -77,6 +81,34 @@ const AddTestDialog = (props) => {
     }
   }, [inputState.mode, inputState.duration]);
 
+  // MAKE SURE REQUIRED FIELDS ARE NOT EMPTY
+  useEffect(() => {
+    if (
+      inputState.name ||
+      inputState.description ||
+      inputState.drvPrgm ||
+      inputState.drvType ||
+      inputState.mode ||
+      inputState.duration ||
+      addedModes.length > 0
+    ) {
+      setResetDisable(false);
+    } else {
+      setResetDisable(true);
+    }
+
+    if (
+      inputState.name &&
+      inputState.drvType &&
+      inputState.drvPrgm &&
+      addedModes.length > 0
+    ) {
+      setSubmitDisable(false);
+    } else {
+      setSubmitDisable(true);
+    }
+  }, [inputState, addedModes]);
+
   const inputHandler = (event) => {
     let value = event.target.value;
     if (event.target.name === "name" || event.target.name === "mode") {
@@ -87,32 +119,6 @@ const AddTestDialog = (props) => {
       [event.target.name]: value,
     });
   };
-
-  const DialogActions = (
-    <Grid container spacing={1}>
-      <Grid item xs={4}>
-        <Button
-          variant="contained"
-          fullWidth
-          size="large"
-          startIcon={<RestartAltRoundedIcon />}
-        >
-          Reset
-        </Button>
-      </Grid>
-      <Grid item xs={8}>
-        <Button
-          variant="contained"
-          fullWidth
-          size="large"
-          color="success"
-          startIcon={<AddCircleOutlineRoundedIcon />}
-        >
-          Add Test
-        </Button>
-      </Grid>
-    </Grid>
-  );
 
   const addModeHandler = () => {
     const newMode = {
@@ -133,6 +139,63 @@ const AddTestDialog = (props) => {
     });
     setAddedModes(delModes);
   };
+
+  const addTestHandler = async () => {
+    const newTest = {
+      test: inputState.name,
+      modes: addedModes,
+      drvPrgm: inputState.drvPrgm,
+      drvType: inputState.drvType,
+      description: inputState.description,
+    };
+
+    setSubmitting(true);
+
+    try {
+      await sendRequest(
+        "http://mps-ed-ptgval.ad.shared:5000/api/test/add",
+        "POST",
+        JSON.stringify(newTest),
+        { "Content-Type": "application/json" }
+      );
+
+      props.close();
+      props.getData();
+    } catch (err) {}
+
+    setSubmitting(false);
+  };
+
+  const DialogActions = (
+    <Grid container spacing={1}>
+      <Grid item xs={4}>
+        <Button
+          variant="contained"
+          fullWidth
+          size="large"
+          startIcon={<RestartAltRoundedIcon />}
+          disabled={resetDisable}
+        >
+          Reset
+        </Button>
+      </Grid>
+      <Grid item xs={8}>
+        <LoadingButton
+          variant="contained"
+          fullWidth
+          size="large"
+          color="success"
+          startIcon={<AddCircleOutlineRoundedIcon />}
+          onClick={addTestHandler}
+          loading={submitting}
+          loadingPosition="start"
+          disabled={submitDisable}
+        >
+          Add Test
+        </LoadingButton>
+      </Grid>
+    </Grid>
+  );
 
   const AddedModesChips = addedModes.map((mode) => {
     return (
