@@ -14,6 +14,9 @@ import SendRoundedIcon from "@mui/icons-material/SendRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { LoadingButton } from "@mui/lab";
 
+// VARIABLES
+import { serverName } from "../../../Shared/variables/Variables";
+
 const AddSysDialog = (props) => {
   const { sendRequest } = useHttpClient();
 
@@ -35,7 +38,7 @@ const AddSysDialog = (props) => {
 
     try {
       await sendRequest(
-        "http://mps-ed-ptgval.ad.shared:5000/api/system/add",
+        "http://" + serverName + "/api/system/add",
         "POST",
         JSON.stringify({ systems: uploadedSys }),
         { "Content-Type": "application/json" }

@@ -14,6 +14,9 @@ import TextFieldWIcon from "../../../../../../Shared/components/Input/TextFieldW
 import SelectMenu from "../../../../../../Shared/components/Input/SelectMenu";
 import DatePicker from "../../../../../../Shared/components/Input/DatePicker";
 
+// VARIABLES
+import { serverName } from "../../../../../../Shared/variables/Variables";
+
 const InvoiceInputs = (props) => {
   const [drvPrgms, setDrvPrgms] = useState([]);
   const [dataReady, setDataReady] = useState(false);
@@ -32,7 +35,7 @@ const InvoiceInputs = (props) => {
   const getDrvPrgms = async () => {
     try {
       let responseData = await sendRequest(
-        "http://mps-ed-ptgval.ad.shared:5000/api/drvProgram"
+        "http://" + serverName + "/api/drvProgram"
       );
       setDrvPrgms(responseData.programs);
     } catch (err) {}

@@ -31,6 +31,9 @@ import DesktopAccessDisabledRoundedIcon from "@mui/icons-material/DesktopAccessD
 import BookmarkAddedRoundedIcon from "@mui/icons-material/BookmarkAddedRounded";
 import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
 
+// VARIABLES
+import { serverName } from "../../../../Shared/variables/Variables";
+
 const SysInfoDialog = (props) => {
   const { sendRequest } = useHttpClient();
 
@@ -49,7 +52,7 @@ const SysInfoDialog = (props) => {
     setReleasing(true);
     try {
       await sendRequest(
-        "http://mps-ed-ptgval.ad.shared:5000/api/system/release",
+        "http://" + serverName + "/api/system/release",
         "PATCH",
         JSON.stringify({ IDs: [props.sys.id] }),
         { "Content-Type": "application/json" }

@@ -9,6 +9,9 @@ import SysDialog from "./components/SysDialog/SysDialog";
 import FloatingActions from "./components/FloatingActions/FloatingActions";
 import AddSysDialog from "./components/AddSysDialog/AddSysDialog";
 
+// VARIABLES
+import { serverName } from "../Shared/variables/Variables";
+
 const System = (props) => {
   const { sendRequest } = useHttpClient();
   const [systems, setSystems] = useState([]);
@@ -20,7 +23,7 @@ const System = (props) => {
     console.log("Fetching Data");
     try {
       let responseData = await sendRequest(
-        "http://mps-ed-ptgval.ad.shared:5000/api/system"
+        "http://" + serverName + "/api/system"
       );
       setSystems(responseData.systems);
 

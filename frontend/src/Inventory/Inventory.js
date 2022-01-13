@@ -18,6 +18,9 @@ import MediaCard from "../Shared/components/Card/MediaCard";
 import getActiveInvDrv from "../Shared/functions/getActiveInvDrv";
 // import getDrv from "../Shared/functions/getDrv";
 
+// VARIABLES
+import { serverName } from "../Shared/variables/Variables";
+
 const Inventory = () => {
   const { sendRequest } = useHttpClient();
 
@@ -29,17 +32,15 @@ const Inventory = () => {
   const getData = async () => {
     try {
       let responseData = await sendRequest(
-        "http://mps-ed-ptgval.ad.shared:5000/api/invoice"
+        "http://" + serverName + "/api/invoice"
       );
       setInvoices(responseData.invoices);
 
-      responseData = await sendRequest(
-        "http://mps-ed-ptgval.ad.shared:5000/api/drive"
-      );
+      responseData = await sendRequest("http://" + serverName + "/api/drive");
       setDrives(responseData.drives);
 
       responseData = await sendRequest(
-        "http://mps-ed-ptgval.ad.shared:5000/api/drvProgram"
+        "http://" + serverName + "/api/drvProgram"
       );
       setDrvPrgms(responseData.programs);
     } catch (err) {}

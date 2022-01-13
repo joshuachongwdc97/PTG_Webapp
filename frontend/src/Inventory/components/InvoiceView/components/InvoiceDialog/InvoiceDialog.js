@@ -14,6 +14,9 @@ import CreateNewFolderRoundedIcon from "@mui/icons-material/CreateNewFolderRound
 import PostAddRoundedIcon from "@mui/icons-material/PostAddRounded";
 import DeleteDialog from "./components/DeleteDialog";
 
+// VARIABLES
+import { serverName } from "../../../../../Shared/variables/Variables";
+
 const InvoiceDialog = (props) => {
   const { sendRequest } = useHttpClient();
 
@@ -232,7 +235,7 @@ const InvoiceDialog = (props) => {
 
     try {
       await sendRequest(
-        `http://mps-ed-ptgval.ad.shared:5000/api/invoice/${props.selection[0]}`,
+        `http://${serverName}/api/invoice/${props.selection[0]}`,
         "PATCH",
         JSON.stringify(NewInv),
         { "Content-Type": "application/json" }
@@ -255,7 +258,7 @@ const InvoiceDialog = (props) => {
       // CREATE NEW INVOICE
       try {
         const response = await sendRequest(
-          "http://mps-ed-ptgval.ad.shared:5000/api/invoice/add",
+          "http://" + serverName + "/api/invoice/add",
           "POST",
           JSON.stringify(NewInv),
           { "Content-Type": "application/json" }
@@ -275,7 +278,7 @@ const InvoiceDialog = (props) => {
 
           try {
             await sendRequest(
-              "http://mps-ed-ptgval.ad.shared:5000/api/drive/add",
+              "http://" + serverName + "/api/drive/add",
               "POST",
               JSON.stringify(newDrives),
               { "Content-Type": "application/json" }
@@ -291,7 +294,7 @@ const InvoiceDialog = (props) => {
       // MODIFY INVOICE
       try {
         await sendRequest(
-          `http://mps-ed-ptgval.ad.shared:5000/api/invoice/${props.selection[0]}`,
+          `http://${serverName}/api/invoice/${props.selection[0]}`,
           "PATCH",
           JSON.stringify(NewInv),
           { "Content-Type": "application/json" }
@@ -310,7 +313,7 @@ const InvoiceDialog = (props) => {
 
           try {
             await sendRequest(
-              "http://mps-ed-ptgval.ad.shared:5000/api/drive/add",
+              "http://" + serverName + "/api/drive/add",
               "POST",
               JSON.stringify(newDrives),
               { "Content-Type": "application/json" }
@@ -335,7 +338,7 @@ const InvoiceDialog = (props) => {
 
         try {
           await sendRequest(
-            "http://mps-ed-ptgval.ad.shared:5000/api/drive",
+            "http://" + serverName + "/api/drive",
             "DELETE",
             JSON.stringify(drvIDToRemove),
             { "Content-Type": "application/json" }
