@@ -29,8 +29,10 @@ const InvoiceDialog = (props) => {
     requestor: "",
     origin: "",
     dateReceived: new Date().toString(),
+    dateReturned: undefined,
     drvPrgm: "",
     status: "",
+    description: undefined,
   });
   const [inputReady, setInputReady] = useState(false);
   const [drives, setDrives] = useState([]);
@@ -50,7 +52,9 @@ const InvoiceDialog = (props) => {
         inputState.requestor !== unmodifiedState.requestor ||
         inputState.origin !== unmodifiedState.origin ||
         inputState.dateReceived !== unmodifiedState.dateReceived ||
+        inputState.dateReturned !== unmodifiedState.dateReturned ||
         inputState.drvPrgm !== unmodifiedState.drvPrgm ||
+        inputState.description !== unmodifiedState.description ||
         drives !== unmodifiedState.drives
       ) {
         setModifiable(true);
@@ -80,8 +84,10 @@ const InvoiceDialog = (props) => {
         requestor: invoiceData.requestor,
         origin: invoiceData.origin,
         dateReceived: invoiceData.dateReceived,
+        dateReturned: invoiceData.dateReturned,
         drvPrgm: invoiceData.drvPrgm,
         status: invoiceData.status,
+        description: invoiceData.description,
       });
 
       setDrives(driveData);
@@ -142,16 +148,27 @@ const InvoiceDialog = (props) => {
     if (event.target.name === "invid" || event.target.name === "name") {
       value = event.target.value.toUpperCase();
     }
+    if (event.target.name === "description" && event.target.value === "") {
+      value = undefined;
+    }
+
     setInputState({
       ...inputState,
       [event.target.name]: value,
     });
   };
 
-  const dateHandler = (value) => {
+  const dateReceivedHandler = (value) => {
     setInputState({
       ...inputState,
       dateReceived: value.toString(),
+    });
+  };
+
+  const dateReturnedHandler = (value) => {
+    setInputState({
+      ...inputState,
+      dateReturned: value.toString(),
     });
   };
 
@@ -162,7 +179,9 @@ const InvoiceDialog = (props) => {
       requestor: "",
       origin: "",
       dateReceived: new Date().toString(),
+      dateReturned: undefined,
       drvPrgm: "",
+      description: undefined,
     });
     setDrives([]);
     setActiveTab("invoice");
@@ -221,15 +240,19 @@ const InvoiceDialog = (props) => {
     };
     if (NewInv.status === "Active") {
       NewInv.status = "Returned";
+      NewInv.dateReturned = new Date().toString();
       setInputState({
         ...inputState,
         status: "Returned",
+        dateReturned: new Date().toString(),
       });
     } else {
       NewInv.status = "Active";
+      NewInv.dateReturned = undefined;
       setInputState({
         ...inputState,
         status: "Active",
+        dateReturned: undefined,
       });
     }
 
@@ -444,7 +467,8 @@ const InvoiceDialog = (props) => {
                   )}
                   <InvoiceInputs
                     inputState={inputState}
-                    dateHandler={dateHandler}
+                    dateReceivedHandler={dateReceivedHandler}
+                    dateReturnedHandler={dateReturnedHandler}
                     inputHandler={inputHandler}
                     invoices={props.invoices}
                     invDialogState={invDialogState}

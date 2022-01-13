@@ -21,8 +21,17 @@ const getInvoices = async (req, res, next) => {
 };
 
 const addInvoice = async (req, res, next) => {
-  const { name, invid, status, dateReceived, origin, requestor, drvPrgm } =
-    req.body;
+  const {
+    name,
+    invid,
+    status,
+    dateReceived,
+    dateReturned,
+    origin,
+    requestor,
+    drvPrgm,
+    description,
+  } = req.body;
 
   let existingInvoice;
 
@@ -44,9 +53,11 @@ const addInvoice = async (req, res, next) => {
     invid,
     status,
     dateReceived,
+    dateReturned,
     origin,
     requestor,
     drvPrgm,
+    description,
     schemaVersion,
   });
 
@@ -66,8 +77,17 @@ const addInvoice = async (req, res, next) => {
 };
 
 const updateInvoice = async (req, res, next) => {
-  const { name, invid, status, dateReceived, origin, requestor, drvPrgm } =
-    req.body;
+  const {
+    name,
+    invid,
+    status,
+    dateReceived,
+    dateReturned,
+    origin,
+    requestor,
+    drvPrgm,
+    description,
+  } = req.body;
   const id = req.params.id;
 
   let updatedInvoice;
@@ -83,9 +103,11 @@ const updateInvoice = async (req, res, next) => {
   updatedInvoice.invid = invid;
   updatedInvoice.status = status;
   updatedInvoice.dateReceived = dateReceived;
+  updatedInvoice.dateReturned = dateReturned;
   updatedInvoice.origin = origin;
   updatedInvoice.requestor = requestor;
   updatedInvoice.drvPrgm = drvPrgm;
+  updatedInvoice.description = description;
 
   try {
     await updatedInvoice.save();
