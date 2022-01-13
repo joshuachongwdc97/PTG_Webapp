@@ -8,6 +8,7 @@ import {
   Toolbar,
   IconButton,
   Typography,
+  Divider,
 } from "@mui/material";
 import Slide from "@mui/material/Slide";
 import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
@@ -47,13 +48,19 @@ const BasicDialog = (props) => {
       )}
 
       {!props.fullScreen && props.title && (
-        <DialogTitle>{props.title}</DialogTitle>
+        <React.Fragment>
+          <DialogTitle>{props.title}</DialogTitle>
+          <Divider />
+        </React.Fragment>
       )}
       <DialogContent>{props.children}</DialogContent>
       {props.actions && (
-        <DialogActions style={{ padding: "23px" }}>
-          {props.actions}
-        </DialogActions>
+        <React.Fragment>
+          <Divider />
+          <DialogActions style={{ padding: "23px" }}>
+            {props.actions}
+          </DialogActions>
+        </React.Fragment>
       )}
     </Dialog>
   );

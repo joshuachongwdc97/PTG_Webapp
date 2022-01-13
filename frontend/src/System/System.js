@@ -8,6 +8,7 @@ import Animate from "../Shared/transitions/Animate";
 import SysDialog from "./components/SysDialog/SysDialog";
 import FloatingActions from "./components/FloatingActions/FloatingActions";
 import AddSysDialog from "./components/AddSysDialog/AddSysDialog";
+import AddTestDialog from "./components/AddTestDialog/AddTestDialog";
 
 const System = (props) => {
   const { sendRequest } = useHttpClient();
@@ -15,6 +16,7 @@ const System = (props) => {
   const [showSysDialog, setShowSysDialog] = useState(false);
   const [dataReady, setDataReady] = useState(false);
   const [showAddSysDialog, setShowAddSysDialog] = useState(false);
+  const [showAddTestDialog, setShowAddTestDialog] = useState(false);
 
   const getData = async () => {
     console.log("Fetching Data");
@@ -49,6 +51,18 @@ const System = (props) => {
         showAddSysHandler={() => {
           setShowAddSysDialog(true);
         }}
+        showAddTestHandler={() => {
+          setShowAddTestDialog(true);
+        }}
+      />
+
+      {/* ADD TEST DIALOG */}
+      <AddTestDialog
+        open={showAddTestDialog}
+        close={() => {
+          setShowAddTestDialog(false);
+        }}
+        getData={getData}
       />
 
       {/* ADD SYSTEM DIALOG */}
