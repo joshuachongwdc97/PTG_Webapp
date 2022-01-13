@@ -8,11 +8,13 @@ import {
   AccountBoxRounded,
   LocationOnRounded,
 } from "@mui/icons-material";
+import DescriptionRoundedIcon from "@mui/icons-material/DescriptionRounded";
 
 // COMPONENTS
 import TextFieldWIcon from "../../../../../../Shared/components/Input/TextFieldWIcon";
 import SelectMenu from "../../../../../../Shared/components/Input/SelectMenu";
 import DatePicker from "../../../../../../Shared/components/Input/DatePicker";
+import Animate from "../../../../../../Shared/transitions/Animate";
 
 // VARIABLES
 import { serverName } from "../../../../../../Shared/variables/Variables";
@@ -139,14 +141,54 @@ const InvoiceInputs = (props) => {
             disabled={disabled}
           ></SelectMenu>
         </Grid>
-        <Grid item xs={6}>
-          <DatePicker
-            required
-            label="Date Received"
-            value={new Date(props.inputState.dateReceived)}
-            onChange={props.dateHandler}
+        {!props.inputState.dateReturned ? (
+          <Grid item xs={6}>
+            <Animate show>
+              <DatePicker
+                required
+                label="Date Received"
+                value={new Date(props.inputState.dateReceived)}
+                onChange={props.dateReceivedHandler}
+                disabled={disabled}
+              />
+            </Animate>
+          </Grid>
+        ) : (
+          <React.Fragment>
+            <Grid item xs={3}>
+              <Animate show>
+                <DatePicker
+                  required
+                  label="Date Received"
+                  value={new Date(props.inputState.dateReceived)}
+                  onChange={props.dateReceivedHandler}
+                  disabled={disabled}
+                />
+              </Animate>
+            </Grid>
+            <Grid item xs={3}>
+              <Animate show>
+                <DatePicker
+                  required
+                  label="Date Returned"
+                  value={new Date(props.inputState.dateReturned)}
+                  onChange={props.dateReturnedHandler}
+                  disabled={disabled}
+                />
+              </Animate>
+            </Grid>
+          </React.Fragment>
+        )}
+        <Grid item xs={12}>
+          <TextFieldWIcon
+            label="Description/Remarks"
+            icon={<DescriptionRoundedIcon />}
+            name="description"
+            value={props.inputState.description}
+            onChange={props.inputHandler}
             disabled={disabled}
-          />
+            autoComplete="off"
+          ></TextFieldWIcon>
         </Grid>
       </Grid>
     </React.Fragment>
