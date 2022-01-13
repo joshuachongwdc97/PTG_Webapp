@@ -40,20 +40,6 @@ const getTest = async (req, res, next) => {
 const addTest = async (req, res, next) => {
   const { test, modes, drvPrgm, drvType, description } = req.body;
 
-  let existingTest;
-
-  try {
-    existingTest = await Test.findOne({ test: test });
-  } catch (err) {
-    const error = new HttpError("Existing Test Checking Failed", 500);
-    return next(error);
-  }
-
-  if (existingTest) {
-    const error = new HttpError("Test Exists", 422);
-    return next(error);
-  }
-
   const newTest = new Test({
     test,
     modes,
