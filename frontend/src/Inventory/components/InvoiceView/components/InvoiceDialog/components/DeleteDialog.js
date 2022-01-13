@@ -3,6 +3,9 @@ import { useHttpClient } from "../../../../../../Shared/hooks/http-hook";
 
 import AlertDialog from "../../../../../../Shared/components/Dialog/AlertDialog";
 
+// VARIABLES
+import { serverName } from "../../../../../../Shared/variables/Variables";
+
 const DeleteDialog = (props) => {
   const { sendRequest } = useHttpClient();
   const deleteInvHandler = async () => {
@@ -13,7 +16,7 @@ const DeleteDialog = (props) => {
     try {
       // DELETE DRIVES FROM DATABASE
       await sendRequest(
-        "http://mps-ed-ptgval.ad.shared:5000/api/DRIVE",
+        "http://" + serverName + "/api/DRIVE",
         "DELETE",
         JSON.stringify({ ids: drvToDel }),
         { "Content-Type": "application/json" }
@@ -21,7 +24,7 @@ const DeleteDialog = (props) => {
 
       // DELETE INVOICE
       await sendRequest(
-        `http://mps-ed-ptgval.ad.shared:5000/api/invoice/${props.id}`,
+        `http://${serverName}/api/invoice/${props.id}`,
         "DELETE"
       );
     } catch (err) {}

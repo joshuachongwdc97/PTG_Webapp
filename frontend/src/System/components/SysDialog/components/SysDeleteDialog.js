@@ -3,6 +3,9 @@ import { useHttpClient } from "../../../../Shared/hooks/http-hook";
 
 import AlertDialog from "../../../../Shared/components/Dialog/AlertDialog";
 
+// VARIABLES
+import { serverName } from "../../../../Shared/variables/Variables";
+
 const SysDeleteDialog = (props) => {
   const { sendRequest } = useHttpClient();
 
@@ -10,7 +13,7 @@ const SysDeleteDialog = (props) => {
     try {
       // DELETE SYSTEM FROM DATABASE
       await sendRequest(
-        "http://mps-ed-ptgval.ad.shared:5000/api/system",
+        "http://" + serverName + "/api/system",
         "DELETE",
         JSON.stringify({ ids: [props.id] }),
         { "Content-Type": "application/json" }
