@@ -11,7 +11,7 @@ const testSchema = new Schema({
     },
   ],
   drvPrgm: { type: mongoose.Types.ObjectId, ref: "Drive Program" },
-  drvType: { type: mongoose.Types.ObjectId, ref: "drvType" },
+  drvType: { type: String, required: true },
   description: { type: String },
 });
 
