@@ -7,7 +7,12 @@ import OutlinedCard from "../../../Shared/components/Card/OutlinedCard";
 
 const ActiveInvDialog = (props) => {
   return (
-    <Dialog open={props.open} close={props.close} maxWidth="md">
+    <Dialog
+      open={props.open}
+      close={props.close}
+      maxWidth="lg"
+      title="Active Invoices"
+    >
       <OutlinedCard>
         <InvoiceTable
           invoices={props.activeInvs}

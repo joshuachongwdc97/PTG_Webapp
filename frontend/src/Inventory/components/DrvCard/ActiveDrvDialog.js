@@ -42,7 +42,12 @@ const ActiveDrvDialog = (props) => {
   };
 
   return (
-    <Dialog open={props.open} close={props.close} maxWidth="md">
+    <Dialog
+      open={props.open}
+      close={props.close}
+      maxWidth="md"
+      title="Active Drives"
+    >
       <OutlinedCard>
         <Table data={tableData} density="comfortable" components />
       </OutlinedCard>
