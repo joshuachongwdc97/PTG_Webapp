@@ -232,6 +232,7 @@ const testStart = async (req, res, next) => {
     system.qual = qualID;
     system.testMode = testMode;
     system.testStart = new Date();
+    system.testEnd = undefined;
 
     try {
       await system.save();
