@@ -13,7 +13,7 @@ const systemSchema = new Schema({
   ip: { type: String },
   status: { type: String },
   description: { type: String },
-  mac: { type: String, unique: true },
+  mac: { type: String },
   lastSeen: { type: String },
   os: { type: String },
   drive: { type: String },
