@@ -11,6 +11,7 @@ const DrvCard = (props) => {
       data={props.data.length}
       icon={<SdStorageIcon />}
       color={blue[400]}
+      onClick={props.onClick}
     />
   );
 };

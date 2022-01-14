@@ -11,6 +11,7 @@ const InvCard = (props) => {
       data={props.data.length}
       icon={<AssignmentRoundedIcon />}
       color={orange[300]}
+      onClick={props.onClick}
     />
   );
 };
