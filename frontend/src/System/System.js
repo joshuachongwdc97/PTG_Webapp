@@ -99,7 +99,7 @@ const System = (props) => {
       />
 
       <Grid container spacing={2}>
-        <Grid item xs={2}>
+        <Grid item>
           {dataReady && (
             <Animate show={dataReady}>
               <SysCard
@@ -111,7 +111,7 @@ const System = (props) => {
             </Animate>
           )}
         </Grid>
-        <Grid item xs={1}>
+        <Grid item>
           {dataReady && (
             <Animate show={dataReady}>
               <TestCard
