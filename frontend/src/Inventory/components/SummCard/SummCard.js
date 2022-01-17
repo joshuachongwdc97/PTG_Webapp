@@ -6,6 +6,7 @@ import BasicCard from "../../../Shared/components/Card/BasicCard";
 
 // Import Functions
 import getDrv from "../../../Shared/functions/getDrv";
+import { border, borderColor } from "@mui/system";
 
 const SummCard = (props) => {
   let first_month = 0;
@@ -65,7 +66,10 @@ const SummCard = (props) => {
           <Grid item xs={12} align="center">
             <Chip
               variant="outlined"
-              color="warning"
+              style={{
+                color: "hsl(44, 99%, 66%)",
+                borderColor: "hsl(44, 99%, 66%)",
+              }}
               size="small"
               label="30 - 60 days"
             />
