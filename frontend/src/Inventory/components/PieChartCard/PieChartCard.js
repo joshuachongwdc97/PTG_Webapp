@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { ResponsivePie } from "@nivo/pie";
+import { Grid } from "@mui/material";
 
 import BasicCard from "../../../Shared/components/Card/BasicCard";
 import { DarkContext } from "../../../Shared/context/dark-context";
@@ -29,11 +30,11 @@ const PieChartCard = (props) => {
 
   return (
     <BasicCard>
-      <div style={{ height: 250 }}>
+      <Grid item container sx={{ height: "14.5em" }}>
         <ResponsivePie
           theme={darkMode.dark ? darkTheme : lightTheme}
           data={props.data}
-          margin={{ top: 0, right: 80, bottom: 0, left: 80 }}
+          margin={{ top: 30, right: 80, bottom: 10, left: 80 }}
           innerRadius={0.5}
           padAngle={0.7}
           cornerRadius={3}
@@ -68,7 +69,7 @@ const PieChartCard = (props) => {
             },
           ]}
         />
-      </div>
+      </Grid>
     </BasicCard>
   );
 };
