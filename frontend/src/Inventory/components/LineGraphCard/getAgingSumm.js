@@ -14,20 +14,20 @@ const getAgingSumm = (invoices, drives, period, category) => {
     dataPoints = 12;
     interval = 30;
     dateFormat = { month: "short" };
-  } else if (period === "past month") {
-    dataPoints = 10;
-    interval = 3;
+  } else if (period === "past 6 months") {
+    dataPoints = 12;
+    interval = 15;
     dateFormat = { day: "numeric", month: "short" };
-  } else if (period === "past week") {
-    dataPoints = 7;
-    interval = 1;
-    dateFormat = { weekday: "short" };
+  } else if (period === "past 3 months") {
+    dataPoints = 12;
+    interval = 8;
+    dateFormat = { day: "numeric", month: "short" };
   }
 
   let data = [
-    { id: "< 30 days", data: [] },
-    { id: "30-60 days", data: [] },
-    { id: "60-90 days", data: [] },
+    { id: "<= 30 days", data: [] },
+    { id: "31-60 days", data: [] },
+    { id: "61-90 days", data: [] },
     { id: "> 90 days", data: [] },
   ];
 
@@ -77,9 +77,9 @@ const getAgingSumm = (invoices, drives, period, category) => {
   });
 
   const lineTheme = {
-    "< 30 days": "hsl(123, 38%, 57%)",
-    "30-60 days": "hsl(54, 84%, 65%)",
-    "60-90 days": "hsl(38, 79%, 56%)",
+    "<= 30 days": "hsl(123, 38%, 57%)",
+    "31-60 days": "hsl(54, 84%, 65%)",
+    "61-90 days": "hsl(38, 79%, 56%)",
     "> 90 days": "hsl(9, 87%, 67%)",
   };
 

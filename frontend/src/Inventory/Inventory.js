@@ -74,7 +74,7 @@ const Inventory = () => {
   useEffect(() => {
     if (dataReady) {
       setPieData(getActiveTypes(invoices, drives, drvPrgms, "drives"));
-      setLineData(getAgingSumm(invoices, drives, "past year", "drives"));
+      setLineData(getAgingSumm(invoices, drives, "past 3 months", "drives"));
     }
     // eslint-disable-next-line
   }, [dataReady]);
@@ -83,21 +83,20 @@ const Inventory = () => {
   const flipSummCardHandler = () => {
     setFlipSummCard((prevState) => ({ flipSummCard: !prevState.flipSummCard }));
 
-    // on each flip, reset line graph period to display past year
-    setSelectedPeriod("past year");
+    // on each flip, reset line graph period to display past 3 months
+    setSelectedPeriod("past 3 months");
 
     // alternate line graph and pie chart data between aging drives and aging invoices when clicked
     if (!flipSummCard.flipSummCard) {
       setPieData(getActiveTypes(invoices, drives, drvPrgms, "invoices"));
-      setLineData(getAgingSumm(invoices, drives, "past year", "invoices"));
-      // dispatch({ type: "displayInvGraphs", currentGraph: "invoice" });
+      setLineData(getAgingSumm(invoices, drives, "past 3 months", "invoices"));
     } else {
       setPieData(getActiveTypes(invoices, drives, drvPrgms, "drives"));
-      setLineData(getAgingSumm(invoices, drives, "past year", "drives"));
+      setLineData(getAgingSumm(invoices, drives, "past 3 months", "drives"));
     }
   };
 
-  const [selectedPeriod, setSelectedPeriod] = useState("past year");
+  const [selectedPeriod, setSelectedPeriod] = useState("past 3 months");
 
   // handler to manage period change on line graph
   const changePeriodHandler = (event) => {
@@ -105,8 +104,10 @@ const Inventory = () => {
     const category = !flipSummCard.flipSummCard ? "drives" : "invoices";
 
     // update line data according to selected period and current category
-    setSelectedPeriod(event.target.value);
-    setLineData(getAgingSumm(invoices, drives, event.target.value, category));
+    setSelectedPeriod(event.currentTarget.value);
+    setLineData(
+      getAgingSumm(invoices, drives, event.currentTarget.value, category)
+    );
   };
 
   // Get Active Invoices & Drives

@@ -58,7 +58,7 @@ const SummCard = (props) => {
               variant="outlined"
               color="success"
               size="small"
-              label="&lt; 30 days"
+              label="&lt;= 30 days"
             />
           </Grid>
         </Grid>
@@ -74,7 +74,7 @@ const SummCard = (props) => {
                 borderColor: "hsl(44, 99%, 66%)",
               }}
               size="small"
-              label="30 - 60 days"
+              label="31 - 60 days"
             />
           </Grid>
         </Grid>
@@ -87,7 +87,7 @@ const SummCard = (props) => {
               variant="outlined"
               color="warning"
               size="small"
-              label="60 - 90 days"
+              label="61 - 90 days"
             />
           </Grid>
         </Grid>
