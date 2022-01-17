@@ -51,13 +51,14 @@ const LineGraphCard = (props) => {
         <ResponsiveLine
           theme={darkMode.dark ? darkTheme : lightTheme}
           data={props.data}
+          colors={(id) => id.color}
           margin={{ top: 10, right: 100, bottom: 20, left: 50 }}
           xScale={{ type: "point" }}
           yScale={{
             type: "linear",
             min: "auto",
             max: "auto",
-            stacked: true,
+            stacked: false,
             reverse: false,
           }}
           yFormat=" >-.2f"

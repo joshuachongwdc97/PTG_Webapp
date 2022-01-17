@@ -69,9 +69,16 @@ const getAgingSumm = (invoices, drives, period, category) => {
     count += 1;
   });
 
+  const lineTheme = {
+    "< 30 days": "hsl(123, 38%, 57%)",
+    "30-60 days": "hsl(54, 84%, 65%)",
+    "60-90 days": "hsl(38, 79%, 56%)",
+    "> 90 days": "hsl(9, 87%, 67%)",
+  };
   const lineDataFormat = data.map((line) => {
     return {
       id: line.id,
+      color: lineTheme[line.id],
       data: line.data,
     };
   });
