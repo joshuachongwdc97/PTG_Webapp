@@ -18,16 +18,19 @@ const SummCard = (props) => {
         const date = new Date(inv.dateReceived);
         const age = Math.ceil((new Date() - date) / 3600 / 24 / 1000);
 
-        const drives = getDrv(inv.id, props.drives);
+        const drvOrInv =
+          props.title === "Aging Drives (Summary)"
+            ? getDrv(inv.id, props.drives)
+            : [inv];
 
         if (age > 90) {
-          return (fourth_month += drives.length);
+          return (fourth_month += drvOrInv.length);
         } else if (age > 60) {
-          return (third_month += drives.length);
+          return (third_month += drvOrInv.length);
         } else if (age > 30) {
-          return (sec_month += drives.length);
+          return (sec_month += drvOrInv.length);
         } else {
-          return (first_month += drives.length);
+          return (first_month += drvOrInv.length);
         }
       });
   };
@@ -35,7 +38,7 @@ const SummCard = (props) => {
   summarize();
 
   return (
-    <BasicCard minWidth={200} click>
+    <BasicCard minWidth={200} click onClick={props.onClick}>
       <Grid container alignItems="center" rowSpacing={2} columnSpacing={0}>
         <Grid item xs={12}>
           <Typography variant="subtitle2" color="textSecondary">
