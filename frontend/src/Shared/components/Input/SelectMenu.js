@@ -15,7 +15,7 @@ const SelectMenu = (props) => {
     }));
 
   return (
-    <FormControl fullWidth>
+    <FormControl fullWidth size={props.size}>
       <InputLabel id="label" required={props.required}>
         {props.label}
       </InputLabel>
