@@ -70,7 +70,7 @@ const Inventory = () => {
     []
   );
 
-  // Set pie chart data to display active drive data by default
+  // set chart data to display active drive data by default
   useEffect(() => {
     if (dataReady) {
       setPieData(getActiveTypes(invoices, drives, drvPrgms, "drives"));
@@ -79,10 +79,14 @@ const Inventory = () => {
     // eslint-disable-next-line
   }, [dataReady]);
 
+  // handler to manage the flipped state of the SummCard
   const flipSummCardHandler = () => {
     setFlipSummCard((prevState) => ({ flipSummCard: !prevState.flipSummCard }));
+
+    // on each flip, reset line graph period to display past year
     setSelectedPeriod("past year");
 
+    // alternate line graph and pie chart data between aging drives and aging invoices when clicked
     if (!flipSummCard.flipSummCard) {
       setPieData(getActiveTypes(invoices, drives, drvPrgms, "invoices"));
       setLineData(getAgingSumm(invoices, drives, "past year", "invoices"));
@@ -95,9 +99,12 @@ const Inventory = () => {
 
   const [selectedPeriod, setSelectedPeriod] = useState("past year");
 
+  // handler to manage period change on line graph
   const changePeriodHandler = (event) => {
+    // identify the current category displayed by the SummCard
     const category = !flipSummCard.flipSummCard ? "drives" : "invoices";
 
+    // update line data according to selected period and current category
     setSelectedPeriod(event.target.value);
     setLineData(getAgingSumm(invoices, drives, event.target.value, category));
   };

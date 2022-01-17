@@ -8,6 +8,8 @@ import SelectMenu from "../../../Shared/components/Input/SelectMenu";
 
 const LineGraphCard = (props) => {
   const darkMode = useContext(DarkContext);
+
+  // Change tooltip background color accordingly with webapp's theme
   const lightTheme = {
     textColor: "#8f8f8f",
     tooltip: {

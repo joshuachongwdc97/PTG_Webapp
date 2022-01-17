@@ -1,9 +1,13 @@
 import getDrv from "../../../Shared/functions/getDrv";
 
 const getAgingSumm = (invoices, drives, period, category) => {
-  let interval;
+  // dataPoints is the number of data points
   let dataPoints;
+  // interval is the time gap between 2 points
+  let interval;
+  // dateFormat is the date format according to the period
   let dateFormat;
+  // count is a counter to track the number of data points
   let count = 0;
 
   if (period === "past year") {

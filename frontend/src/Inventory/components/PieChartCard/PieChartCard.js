@@ -6,6 +6,8 @@ import { DarkContext } from "../../../Shared/context/dark-context";
 
 const PieChartCard = (props) => {
   const darkMode = useContext(DarkContext);
+
+  // Change tooltip background color accordingly with webapp's theme
   const lightTheme = {
     textColor: "#8f8f8f",
     tooltip: {
