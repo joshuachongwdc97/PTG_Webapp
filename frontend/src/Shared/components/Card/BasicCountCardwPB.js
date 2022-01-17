@@ -17,11 +17,8 @@ const CountCard = (props) => {
             {props.title}
           </Typography>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={9}>
           <Typography variant="h3">{props.data}</Typography>
-        </Grid>
-        <Grid item xs={6} align="left">
-          <Typography variant="subtitle2">{"/ " + props.dataAll}</Typography>
         </Grid>
         <Grid item xs={3} align="right">
           <Avatar variant="rounded" sx={{ bgcolor: props.color }}>
