@@ -20,7 +20,7 @@ const CountCard = (props) => {
         </Grid>
         <Grid item xs={9}>
           <Typography variant="h3">
-            <CountUp start={0} end={props.data} duration={1.5} />
+            <CountUp start={0} end={props.data} duration={0.5} />
           </Typography>
         </Grid>
         <Grid item xs={3} align="right">

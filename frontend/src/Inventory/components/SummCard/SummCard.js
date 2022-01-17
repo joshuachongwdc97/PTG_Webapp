@@ -46,7 +46,7 @@ const SummCard = (props) => {
         <Grid container item xs={3} alignItems="center" spacing={0.5}>
           <Grid item xs={12} align="center">
             <Typography variant="h4">
-              <CountUp start={0} end={first_month} duration={1.5} />
+              <CountUp start={0} end={first_month} duration={1} />
             </Typography>
           </Grid>
           <Grid item xs={12} align="center">
@@ -61,7 +61,7 @@ const SummCard = (props) => {
         <Grid container item xs={3} alignItems="center" spacing={0.5}>
           <Grid item xs={12} align="center">
             <Typography variant="h4">
-              <CountUp start={0} end={sec_month} duration={1.5} />
+              <CountUp start={0} end={sec_month} duration={1} />
             </Typography>
           </Grid>
           <Grid item xs={12} align="center">
@@ -76,7 +76,7 @@ const SummCard = (props) => {
         <Grid container item xs={3} alignItems="center" spacing={0.5}>
           <Grid item xs={12} align="center">
             <Typography variant="h4">
-              <CountUp start={0} end={third_month} duration={1.5} />
+              <CountUp start={0} end={third_month} duration={1} />
             </Typography>
           </Grid>
           <Grid item xs={12} align="center">
@@ -91,7 +91,7 @@ const SummCard = (props) => {
         <Grid container item xs={3} alignItems="center" spacing={0.5}>
           <Grid item xs={12} align="center">
             <Typography variant="h4">
-              <CountUp start={0} end={fourth_month} duration={1.5} />
+              <CountUp start={0} end={fourth_month} duration={1} />
             </Typography>
           </Grid>
           <Grid item xs={12} align="center">

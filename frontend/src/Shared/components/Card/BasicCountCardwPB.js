@@ -1,5 +1,6 @@
 import React from "react";
 import { Typography, Grid, Avatar, LinearProgress } from "@mui/material";
+import CountUp from "react-countup";
 
 import BasicCard from "./BasicCard";
 
@@ -18,7 +19,9 @@ const CountCard = (props) => {
           </Typography>
         </Grid>
         <Grid item xs={9}>
-          <Typography variant="h3">{props.data}</Typography>
+          <Typography variant="h3">
+            <CountUp start={0} end={props.data} duration={0.5} />
+          </Typography>
         </Grid>
         <Grid item xs={3} align="right">
           <Avatar variant="rounded" sx={{ bgcolor: props.color }}>
