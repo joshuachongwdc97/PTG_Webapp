@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHttpClient } from "../Shared/hooks/http-hook";
+import ReactCardFlip from "react-card-flip";
 
 import { Grid, Divider } from "@mui/material";
 
@@ -13,13 +14,17 @@ import SummCard from "./components/SummCard/SummCard";
 import Animate from "../Shared/transitions/Animate";
 import InvoiceView from "./components/InvoiceView/InvoiceView";
 import MediaCard from "../Shared/components/Card/MediaCard";
+import LineGraphCard from "./components/LineGraphCard/LineGraphCard";
+import PieChartCard from "./components/PieChartCard/PieChartCard";
 
 // Self Built Functions
 import getActiveInvDrv from "../Shared/functions/getActiveInvDrv";
 // import getDrv from "../Shared/functions/getDrv";
+import getActiveTypes from "./components/PieChartCard/getActiveTypes";
 
 // VARIABLES
 import { serverName } from "../Shared/variables/Variables";
+import getAgingSumm from "./components/LineGraphCard/getAgingSumm";
 
 const Inventory = () => {
   const { sendRequest } = useHttpClient();
@@ -28,6 +33,9 @@ const Inventory = () => {
   const [invoices, setInvoices] = useState([]);
   const [drives, setDrives] = useState([]);
   const [drvPrgms, setDrvPrgms] = useState([]);
+  const [flipSummCard, setFlipSummCard] = useState({ flipSummCard: false });
+  const [pieData, setPieData] = useState();
+  const [lineData, setLineData] = useState();
 
   const getData = async () => {
     try {
@@ -62,6 +70,38 @@ const Inventory = () => {
     []
   );
 
+  // Set pie chart data to display active drive data by default
+  useEffect(() => {
+    if (dataReady) {
+      setPieData(getActiveTypes(invoices, drives, drvPrgms, "drives"));
+      setLineData(getAgingSumm(invoices, drives, "past year", "drives"));
+    }
+    // eslint-disable-next-line
+  }, [dataReady]);
+
+  const flipSummCardHandler = () => {
+    setFlipSummCard((prevState) => ({ flipSummCard: !prevState.flipSummCard }));
+    setSelectedPeriod("past year");
+
+    if (!flipSummCard.flipSummCard) {
+      setPieData(getActiveTypes(invoices, drives, drvPrgms, "invoices"));
+      setLineData(getAgingSumm(invoices, drives, "past year", "invoices"));
+      // dispatch({ type: "displayInvGraphs", currentGraph: "invoice" });
+    } else {
+      setPieData(getActiveTypes(invoices, drives, drvPrgms, "drives"));
+      setLineData(getAgingSumm(invoices, drives, "past year", "drives"));
+    }
+  };
+
+  const [selectedPeriod, setSelectedPeriod] = useState("past year");
+
+  const changePeriodHandler = (event) => {
+    const category = !flipSummCard.flipSummCard ? "drives" : "invoices";
+
+    setSelectedPeriod(event.target.value);
+    setLineData(getAgingSumm(invoices, drives, event.target.value, category));
+  };
+
   // Get Active Invoices & Drives
   let activeInvs, activeDrvs;
   [activeInvs, activeDrvs] = getActiveInvDrv(invoices, drives);
@@ -82,17 +122,40 @@ const Inventory = () => {
           </Grid>
           <Grid item xs={5}>
             <Animate show={dataReady}>
-              <SummCard
-                title="Aging Drives (Summary)"
-                invoices={activeInvs}
-                drives={activeDrvs}
-              />
+              <ReactCardFlip
+                isFlipped={flipSummCard.flipSummCard}
+                flipDirection="horizontal"
+                containerStyle={{ height: "100%" }}
+              >
+                <SummCard
+                  title="Aging Drives (Summary)"
+                  invoices={activeInvs}
+                  drives={activeDrvs}
+                  onClick={flipSummCardHandler}
+                />
+                <SummCard
+                  title="Aging Invoices (Summary)"
+                  invoices={activeInvs}
+                  drives={activeDrvs}
+                  onClick={flipSummCardHandler}
+                />
+              </ReactCardFlip>
             </Animate>
           </Grid>
           <Grid item xs={2}>
             <Animate show={dataReady}>
               <MediaCard media={GIF} height={150} />
             </Animate>
+          </Grid>
+          <Grid item xs={8}>
+            <LineGraphCard
+              data={lineData}
+              changePeriodHandler={changePeriodHandler}
+              selectedPeriod={selectedPeriod}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <PieChartCard data={pieData} />
           </Grid>
           <Grid item xs={12}>
             <Divider />
