@@ -26,6 +26,10 @@ const SysRow = (props) => {
               ? sys.status
               : SysStatus === "online"
               ? "Ready"
+              : SysStatus === "test in progress"
+              ? "Test In Progress"
+              : SysStatus === "test completed"
+              ? "Test Completed"
               : "Not Responding"
           }
           ttPlacement="top"
@@ -42,15 +46,23 @@ const SysRow = (props) => {
                 color={
                   SysStatus === "reserved"
                     ? "warning"
-                    : SysStatus === "error"
+                    : SysStatus === "error" || SysStatus === "offline"
                     ? "error"
-                    : "success"
+                    : SysStatus === "online"
+                    ? "success"
+                    : "primary"
                 }
                 variant={
-                  SysStatus === "reserved" ? "indeterminate" : "determinate"
+                  SysStatus === "reserved" || SysStatus === "test in progress"
+                    ? "indeterminate"
+                    : "determinate"
                 }
                 value={
-                  SysStatus === "online" || SysStatus === "reserved" ? 100 : 0
+                  SysStatus === "online" ||
+                  SysStatus === "reserved" ||
+                  SysStatus === "test completed"
+                    ? 100
+                    : 0
                 }
                 sx={{ maxWidth: "30px", width: "80%", borderRadius: 5 }}
               />

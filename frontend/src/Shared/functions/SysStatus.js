@@ -12,6 +12,14 @@ const sysStatus = (sys) => {
     if (diffMin > 35) {
       return "offline";
     } else {
+      if (sys.testStart) {
+        if (!sys.testEnd) {
+          return "test in progress";
+        } else {
+          return "test completed";
+        }
+      }
+
       return "online";
     }
   } else {
