@@ -33,35 +33,42 @@ const getAgingSumm = (invoices, drives, period, category) => {
 
   dataPoints = [...Array(dataPoints)];
 
-  dataPoints.map(() => {
+  dataPoints.forEach(() => {
     let first_month = 0;
     let sec_month = 0;
     let third_month = 0;
     let fourth_month = 0;
     let xAxisLabel;
 
-    invoices.map((inv) => {
+    invoices.forEach((inv) => {
       const currentDate = new Date();
+      const returnedDate = inv.dateReturned && new Date(inv.dateReturned);
+      currentDate.setDate(currentDate.getDate() - interval * count);
 
-      if (!inv.dateReturned || currentDate < inv.dateReturned) {
+      // if there is no returned date, the inv is counted
+      // but if there is a returned date, the current date must be before the returned date
+      // because if the current date is past the returned date, it should not be counted anymore
+      if (!returnedDate || currentDate <= returnedDate) {
         const date = new Date(inv.dateReceived);
-        currentDate.setDate(currentDate.getDate() - interval * count);
         xAxisLabel = currentDate.toLocaleString("default", dateFormat);
         const age = Math.ceil((currentDate - date) / 3600 / 24 / 1000);
         const drvOrInv = category === "drives" ? getDrv(inv.id, drives) : [inv];
 
-        if (age > 90) {
+        // >= 91 days
+        if (age >= 91) {
           return (fourth_month += drvOrInv.length);
-        } else if (age > 60) {
+          // 61 - 90 days
+        } else if (age >= 61) {
           return (third_month += drvOrInv.length);
-        } else if (age > 30) {
+          // 31 - 60 days
+        } else if (age >= 31) {
           return (sec_month += drvOrInv.length);
-        } else if (age >= 0) {
+          // <= 30 days and a positive number
+        } else if (age > 0) {
           return (first_month += drvOrInv.length);
         }
       }
     });
-
     data[0].data.unshift({ x: xAxisLabel, y: first_month });
     data[1].data.unshift({ x: xAxisLabel, y: sec_month });
     data[2].data.unshift({ x: xAxisLabel, y: third_month });
@@ -75,6 +82,7 @@ const getAgingSumm = (invoices, drives, period, category) => {
     "60-90 days": "hsl(38, 79%, 56%)",
     "> 90 days": "hsl(9, 87%, 67%)",
   };
+
   const lineDataFormat = data.map((line) => {
     return {
       id: line.id,

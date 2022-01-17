@@ -6,7 +6,6 @@ import BasicCard from "../../../Shared/components/Card/BasicCard";
 
 // Import Functions
 import getDrv from "../../../Shared/functions/getDrv";
-import { border, borderColor } from "@mui/system";
 
 const SummCard = (props) => {
   let first_month = 0;
@@ -24,12 +23,16 @@ const SummCard = (props) => {
             ? getDrv(inv.id, props.drives)
             : [inv];
 
-        if (age > 90) {
+        // >= 91 days
+        if (age >= 91) {
           return (fourth_month += drvOrInv.length);
-        } else if (age > 60) {
+          // 61 - 90 days
+        } else if (age >= 61) {
           return (third_month += drvOrInv.length);
-        } else if (age > 30) {
+          // 31 - 60 days
+        } else if (age >= 31) {
           return (sec_month += drvOrInv.length);
+          // <= 30 days
         } else {
           return (first_month += drvOrInv.length);
         }
