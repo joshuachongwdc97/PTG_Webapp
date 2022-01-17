@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Grid, Typography, Chip } from "@mui/material";
+import CountUp from "react-countup";
 
 import BasicCard from "../../../Shared/components/Card/BasicCard";
 
@@ -44,7 +45,9 @@ const SummCard = (props) => {
         </Grid>
         <Grid container item xs={3} alignItems="center" spacing={0.5}>
           <Grid item xs={12} align="center">
-            <Typography variant="h4">{first_month}</Typography>
+            <Typography variant="h4">
+              <CountUp start={0} end={first_month} duration={1.5} />
+            </Typography>
           </Grid>
           <Grid item xs={12} align="center">
             <Chip
@@ -57,7 +60,9 @@ const SummCard = (props) => {
         </Grid>
         <Grid container item xs={3} alignItems="center" spacing={0.5}>
           <Grid item xs={12} align="center">
-            <Typography variant="h4">{sec_month}</Typography>
+            <Typography variant="h4">
+              <CountUp start={0} end={sec_month} duration={1.5} />
+            </Typography>
           </Grid>
           <Grid item xs={12} align="center">
             <Chip
@@ -70,7 +75,9 @@ const SummCard = (props) => {
         </Grid>
         <Grid container item xs={3} alignItems="center" spacing={0.5}>
           <Grid item xs={12} align="center">
-            <Typography variant="h4">{third_month}</Typography>
+            <Typography variant="h4">
+              <CountUp start={0} end={third_month} duration={1.5} />
+            </Typography>
           </Grid>
           <Grid item xs={12} align="center">
             <Chip
@@ -83,7 +90,9 @@ const SummCard = (props) => {
         </Grid>
         <Grid container item xs={3} alignItems="center" spacing={0.5}>
           <Grid item xs={12} align="center">
-            <Typography variant="h4">{fourth_month}</Typography>
+            <Typography variant="h4">
+              <CountUp start={0} end={fourth_month} duration={1.5} />
+            </Typography>
           </Grid>
           <Grid item xs={12} align="center">
             <Chip
