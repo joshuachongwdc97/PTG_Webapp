@@ -97,7 +97,7 @@ const LineGraphCard = (props) => {
         </Button>
       </Grid>
 
-      <Grid item container sx={{ height: "300px" }}>
+      <Grid item container sx={{ height: "260px" }}>
         <ResponsiveLine
           theme={darkMode.dark ? darkTheme : lightTheme}
           data={props.data}
