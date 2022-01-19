@@ -3,8 +3,12 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import { CardActionArea } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
-
+import { styled } from "@mui/material/styles";
 const BasicCard = (props) => {
+  const CardContentEvenPadding = styled(CardContent)(
+    `padding: 16px; &:last-child { padding-bottom: 16px; }`
+  );
+
   return (
     <Card
       sx={{
@@ -20,7 +24,7 @@ const BasicCard = (props) => {
           <CardContent>{props.children}</CardContent>
         </CardActionArea>
       ) : (
-        <CardContent>{props.children}</CardContent>
+        <CardContentEvenPadding>{props.children}</CardContentEvenPadding>
       )}
       {props.actions && <CardActions>{props.actions}</CardActions>}
     </Card>
