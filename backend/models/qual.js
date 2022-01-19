@@ -4,7 +4,6 @@ const Schema = mongoose.Schema;
 
 const qualSchema = new Schema({
   soda: { type: String, required: true, unique: true },
-  qual: { type: String, required: true },
   test: { type: mongoose.Types.ObjectId, required: true, ref: "Test" },
   invoice: { type: mongoose.Types.ObjectId, ref: "Invoice" },
   status: { type: String, required: true },
