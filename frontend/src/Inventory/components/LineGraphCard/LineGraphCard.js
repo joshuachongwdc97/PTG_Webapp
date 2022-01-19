@@ -17,6 +17,9 @@ const LineGraphCard = (props) => {
         background: "white",
       },
     },
+    legends: {
+      hidden: { text: { fill: "#8f8f8f" }, symbol: { fill: "#8f8f8f" } },
+    },
   };
 
   const darkTheme = {
@@ -27,6 +30,13 @@ const LineGraphCard = (props) => {
         stroke: "#474747",
       },
     },
+  };
+
+  const lineTheme = {
+    "<= 30 days": "hsl(123, 38%, 57%)",
+    "31-60 days": "hsl(54, 84%, 65%)",
+    "61-90 days": "hsl(38, 79%, 56%)",
+    "> 90 days": "hsl(9, 87%, 67%)",
   };
 
   return (
@@ -62,7 +72,7 @@ const LineGraphCard = (props) => {
         <ResponsiveLine
           theme={darkMode.dark ? darkTheme : lightTheme}
           data={props.data}
-          colors={(id) => id.color}
+          colors={(id) => lineTheme[id.id]}
           margin={{ top: 10, right: 100, bottom: 25, left: 50 }}
           xScale={{ type: "point" }}
           yScale={{
@@ -125,6 +135,7 @@ const LineGraphCard = (props) => {
                   },
                 },
               ],
+              toggleSerie: true,
             },
           ]}
         />
