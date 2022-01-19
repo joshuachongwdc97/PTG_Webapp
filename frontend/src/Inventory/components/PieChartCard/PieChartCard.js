@@ -11,6 +11,7 @@ const PieChartCard = (props) => {
   // Change tooltip background color accordingly with webapp's theme
   const lightTheme = {
     textColor: "#8f8f8f",
+    fontSize: "0.8em",
     tooltip: {
       container: {
         background: "white",
@@ -48,26 +49,6 @@ const PieChartCard = (props) => {
           arcLinkLabelsColor={{ from: "color" }}
           arcLabelsSkipAngle={10}
           arcLabelsTextColor={{ from: "color", modifiers: [["darker", 2]] }}
-          defs={[
-            {
-              id: "dots",
-              type: "patternDots",
-              background: "inherit",
-              color: "rgba(255, 255, 255, 0.3)",
-              size: 4,
-              padding: 1,
-              stagger: true,
-            },
-            {
-              id: "lines",
-              type: "patternLines",
-              background: "inherit",
-              color: "rgba(255, 255, 255, 0.3)",
-              rotation: -45,
-              lineWidth: 6,
-              spacing: 10,
-            },
-          ]}
         />
       </Grid>
     </BasicCard>
