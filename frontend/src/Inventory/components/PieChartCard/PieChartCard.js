@@ -17,6 +17,9 @@ const PieChartCard = (props) => {
         background: "white",
       },
     },
+    labels: {
+      text: { fontWeight: "bold" },
+    },
   };
 
   const darkTheme = {
@@ -37,7 +40,7 @@ const PieChartCard = (props) => {
           data={props.data}
           margin={{ top: 30, right: 80, bottom: 10, left: 80 }}
           innerRadius={0.5}
-          padAngle={0.7}
+          padAngle={1.5}
           cornerRadius={3}
           activeOuterRadiusOffset={8}
           colors={{ scheme: "nivo" }}
@@ -48,7 +51,7 @@ const PieChartCard = (props) => {
           arcLinkLabelsThickness={2}
           arcLinkLabelsColor={{ from: "color" }}
           arcLabelsSkipAngle={10}
-          arcLabelsTextColor={{ from: "color", modifiers: [["darker", 2]] }}
+          arcLabelsTextColor="#383838"
         />
       </Grid>
     </BasicCard>
