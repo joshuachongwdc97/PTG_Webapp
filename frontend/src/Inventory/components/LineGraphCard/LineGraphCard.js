@@ -50,7 +50,7 @@ const LineGraphCard = (props) => {
     "31-60 days": "hsl(54, 84%, 65%)",
     "61-90 days": "hsl(38, 79%, 56%)",
     "> 90 days": "hsl(9, 87%, 67%)",
-    all: "hsl(240, 100%, 80%)",
+    all: "	hsl(207, 90%, 61%)",
   };
 
   return (
