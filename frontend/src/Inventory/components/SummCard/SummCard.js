@@ -19,16 +19,23 @@ const SummCard = (props) => {
         const date = new Date(inv.dateReceived);
         const age = Math.ceil((new Date() - date) / 3600 / 24 / 1000);
 
-        const drives = getDrv(inv.id, props.drives);
+        const drvOrInv =
+          props.title === "Aging Drives (Summary)"
+            ? getDrv(inv.id, props.drives)
+            : [inv];
 
-        if (age > 90) {
-          return (fourth_month += drives.length);
-        } else if (age > 60) {
-          return (third_month += drives.length);
-        } else if (age > 30) {
-          return (sec_month += drives.length);
+        // >= 91 days
+        if (age >= 91) {
+          return (fourth_month += drvOrInv.length);
+          // 61 - 90 days
+        } else if (age >= 61) {
+          return (third_month += drvOrInv.length);
+          // 31 - 60 days
+        } else if (age >= 31) {
+          return (sec_month += drvOrInv.length);
+          // <= 30 days
         } else {
-          return (first_month += drives.length);
+          return (first_month += drvOrInv.length);
         }
       });
   };
@@ -36,7 +43,7 @@ const SummCard = (props) => {
   summarize();
 
   return (
-    <BasicCard minWidth={200} click>
+    <BasicCard minWidth={200} click onClick={props.onClick}>
       <Grid container alignItems="center" rowSpacing={2} columnSpacing={0}>
         <Grid item xs={12}>
           <Typography variant="subtitle2" color="textSecondary">
@@ -54,7 +61,7 @@ const SummCard = (props) => {
               variant="outlined"
               color="success"
               size="small"
-              label="&lt; 30 days"
+              label="&lt;= 30 days"
             />
           </Grid>
         </Grid>
@@ -67,9 +74,12 @@ const SummCard = (props) => {
           <Grid item xs={12} align="center">
             <Chip
               variant="outlined"
-              color="warning"
+              style={{
+                color: "hsl(44, 99%, 66%)",
+                borderColor: "hsl(44, 99%, 66%)",
+              }}
               size="small"
-              label="30 - 60 days"
+              label="31 - 60 days"
             />
           </Grid>
         </Grid>
@@ -84,7 +94,7 @@ const SummCard = (props) => {
               variant="outlined"
               color="warning"
               size="small"
-              label="60 - 90 days"
+              label="61 - 90 days"
             />
           </Grid>
         </Grid>
