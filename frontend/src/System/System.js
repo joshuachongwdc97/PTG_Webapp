@@ -11,6 +11,7 @@ import AddSysDialog from "./components/AddSysDialog/AddSysDialog";
 import AddTestDialog from "./components/AddTestDialog/AddTestDialog";
 import TestCard from "./components/TestCard/TestCard";
 import TestsDialog from "./components/TestsDialog/TestsDialog";
+import NewQualDialog from "./components/NewQualDialog/NewQualDialog";
 
 // VARIABLES
 import { serverName } from "../Shared/variables/Variables";
@@ -23,6 +24,7 @@ const System = (props) => {
   const [showAddSysDialog, setShowAddSysDialog] = useState(false);
   const [showAddTestDialog, setShowAddTestDialog] = useState(false);
   const [showTestsDialog, setShowTestsDialog] = useState(false);
+  const [showNewQualDialog, setShowNewQualDialog] = useState(false);
 
   const getData = async () => {
     console.log("Fetching Data");
@@ -60,6 +62,18 @@ const System = (props) => {
         showAddTestHandler={() => {
           setShowAddTestDialog(true);
         }}
+        showNewQualHandler={() => {
+          setShowNewQualDialog(true);
+        }}
+      />
+
+      {/* NEW QUAL DIALOG */}
+      <NewQualDialog
+        open={showNewQualDialog}
+        close={() => {
+          setShowNewQualDialog(false);
+        }}
+        getData={getData}
       />
 
       {/* ADD TEST DIALOG */}
