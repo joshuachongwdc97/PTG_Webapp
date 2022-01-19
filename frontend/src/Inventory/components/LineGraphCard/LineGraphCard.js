@@ -18,7 +18,15 @@ const LineGraphCard = (props) => {
       },
     },
     legends: {
-      hidden: { text: { fill: "#8f8f8f" }, symbol: { fill: "#8f8f8f" } },
+      hidden: {
+        text: { fill: "#8f8f8f" },
+        symbol: { fill: "#8f8f8f" },
+      },
+    },
+    crosshair: {
+      line: {
+        stroke: "#000000",
+      },
     },
   };
 
@@ -28,6 +36,11 @@ const LineGraphCard = (props) => {
     grid: {
       line: {
         stroke: "#474747",
+      },
+    },
+    crosshair: {
+      line: {
+        stroke: "#FFFFFF",
       },
     },
   };
