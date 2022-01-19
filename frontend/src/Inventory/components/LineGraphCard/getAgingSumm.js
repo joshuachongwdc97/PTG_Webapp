@@ -29,6 +29,7 @@ const getAgingSumm = (invoices, drives, period, category) => {
     { id: "31-60 days", data: [] },
     { id: "61-90 days", data: [] },
     { id: "> 90 days", data: [] },
+    { id: "all", data: [] },
   ];
 
   dataPoints = [...Array(dataPoints)];
@@ -38,6 +39,7 @@ const getAgingSumm = (invoices, drives, period, category) => {
     let sec_month = 0;
     let third_month = 0;
     let fourth_month = 0;
+    let all_month = 0;
     let xAxisLabel;
 
     invoices.forEach((inv) => {
@@ -53,6 +55,10 @@ const getAgingSumm = (invoices, drives, period, category) => {
         xAxisLabel = currentDate.toLocaleString("default", dateFormat);
         const age = Math.ceil((currentDate - date) / 3600 / 24 / 1000);
         const drvOrInv = category === "drives" ? getDrv(inv.id, drives) : [inv];
+
+        if (age > 0) {
+          all_month += drvOrInv.length;
+        }
 
         // >= 91 days
         if (age >= 91) {
@@ -73,6 +79,7 @@ const getAgingSumm = (invoices, drives, period, category) => {
     data[1].data.unshift({ x: xAxisLabel, y: sec_month });
     data[2].data.unshift({ x: xAxisLabel, y: third_month });
     data[3].data.unshift({ x: xAxisLabel, y: fourth_month });
+    data[4].data.unshift({ x: xAxisLabel, y: all_month });
     count += 1;
   });
 

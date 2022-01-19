@@ -50,6 +50,7 @@ const LineGraphCard = (props) => {
     "31-60 days": "hsl(54, 84%, 65%)",
     "61-90 days": "hsl(38, 79%, 56%)",
     "> 90 days": "hsl(9, 87%, 67%)",
+    all: "hsl(240, 100%, 80%)",
   };
 
   return (
@@ -96,7 +97,7 @@ const LineGraphCard = (props) => {
         </Button>
       </Grid>
 
-      <Grid item container sx={{ height: "12.5em" }}>
+      <Grid item container sx={{ height: "300px" }}>
         <ResponsiveLine
           theme={darkMode.dark ? darkTheme : lightTheme}
           data={props.data}

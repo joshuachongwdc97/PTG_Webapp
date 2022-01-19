@@ -145,7 +145,7 @@ const Inventory = () => {
         }}
       />
       {dataReady && (
-        <Grid container spacing={2}>
+        <Grid container spacing={2} alignItems={"stretch"}>
           <Grid item xs={2.5}>
             <Animate show={dataReady}>
               <DrvCard data={activeDrvs} onClick={activeDrvDialogHandler} />
@@ -184,20 +184,26 @@ const Inventory = () => {
             </Animate>
           </Grid>
           <Grid item xs={8}>
-            <LineGraphCard
-              data={lineData}
-              changePeriodHandler={changePeriodHandler}
-              selectedPeriod={selectedPeriod}
-            />
+            <Animate show={dataReady} delay="0.2s">
+              <LineGraphCard
+                data={lineData}
+                changePeriodHandler={changePeriodHandler}
+                selectedPeriod={selectedPeriod}
+              />
+            </Animate>
           </Grid>
-          <Grid item xs={4}>
-            <PieChartCard data={pieData} />
+          <Grid item xs={4} align="center">
+            <Animate show={dataReady} delay="0.2s">
+              <PieChartCard data={pieData} />
+            </Animate>
           </Grid>
           <Grid item xs={12}>
-            <Divider />
+            <Animate show={dataReady} delay="0.3s">
+              <Divider />
+            </Animate>
           </Grid>
           <Grid item xs={12}>
-            <Animate show={dataReady}>
+            <Animate show={dataReady} delay="0.4s">
               <InvoiceView
                 invoices={invoices}
                 drives={drives}

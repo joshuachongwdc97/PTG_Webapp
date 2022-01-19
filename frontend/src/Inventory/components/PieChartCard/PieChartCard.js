@@ -34,11 +34,11 @@ const PieChartCard = (props) => {
 
   return (
     <BasicCard>
-      <Grid item container sx={{ height: "14.5em" }}>
+      <Grid item container sx={{ height: "300px" }}>
         <ResponsivePie
           theme={darkMode.dark ? darkTheme : lightTheme}
           data={props.data}
-          margin={{ top: 30, right: 80, bottom: 10, left: 80 }}
+          margin={{ top: 50, right: 80, bottom: 10, left: 80 }}
           innerRadius={0.5}
           padAngle={1.5}
           cornerRadius={3}
