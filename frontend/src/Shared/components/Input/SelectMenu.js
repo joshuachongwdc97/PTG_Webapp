@@ -1,6 +1,16 @@
 import React from "react";
 
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  ListItemIcon,
+  ListItemText,
+} from "@mui/material";
+
+// ICONS
+import AddRoundedIcon from "@mui/icons-material/AddRounded";
 
 const SelectMenu = (props) => {
   let MenuItems;
@@ -13,6 +23,17 @@ const SelectMenu = (props) => {
         </MenuItem>
       );
     }));
+
+  props.addOption &&
+    MenuItems &&
+    MenuItems.push(
+      <MenuItem value={""} onClick={props.addOptionHandler} key={"addDrive"}>
+        <ListItemIcon>
+          <AddRoundedIcon />
+        </ListItemIcon>
+        <ListItemText primary={props.addOptionText} />
+      </MenuItem>
+    );
 
   return (
     <FormControl fullWidth size={props.size}>
