@@ -184,7 +184,9 @@ const InvoiceInputs = (props) => {
             label="Description/Remarks"
             icon={<DescriptionRoundedIcon />}
             name="description"
-            value={props.inputState.description}
+            value={
+              props.inputState.description ? props.inputState.description : ""
+            }
             onChange={props.inputHandler}
             disabled={disabled}
             autoComplete="off"
