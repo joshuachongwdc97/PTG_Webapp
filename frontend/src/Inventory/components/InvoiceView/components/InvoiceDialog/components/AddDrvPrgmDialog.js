@@ -6,18 +6,19 @@ import { Alert } from "@mui/material";
 import Dialog from "../../../../../../Shared/components/Dialog/Dialog";
 import TextFieldWIcon from "../../../../../../Shared/components/Input/TextFieldWIcon";
 import { useHttpClient } from "../../../../../../Shared/hooks/http-hook";
+import Animate from "../../../../../../Shared/transitions/Animate";
 
 // VARIABLES
 import { serverName } from "../../../../../../Shared/variables/Variables";
 
 const AddDrvPrgmDialog = (props) => {
   const { sendRequest } = useHttpClient();
+  const [showError, setShowError] = useState(true);
   const [inputState, setInputState] = useState({
     drvPrgm: "",
     alias: "",
   });
   const [inputReady, setInputReady] = useState(false);
-  const [prgmExistError, setPrgmExistError] = useState(false);
 
   const inputHandler = (event) => {
     let value = event.target.value.toUpperCase();
@@ -30,18 +31,21 @@ const AddDrvPrgmDialog = (props) => {
       drvPrgm: "",
       alias: "",
     });
-    setPrgmExistError(false);
+    setShowError(false);
     props.close();
   };
 
   const addDrvPrgmHandler = async () => {
+    let drvPrgmId;
     try {
-      await sendRequest(
+      const response = await sendRequest(
         "http://" + serverName + "/api/drvProgram/add",
         "POST",
         JSON.stringify(inputState),
         { "Content-Type": "application/json" }
       );
+
+      drvPrgmId = response.program.id;
     } catch (err) {
       console.log(err);
     }
@@ -60,23 +64,36 @@ const AddDrvPrgmDialog = (props) => {
     if (!inputState.drvPrgm || !inputState.alias) {
       setInputReady(false);
     } else if (drvPrgmsArr.includes(inputState.alias)) {
-      setPrgmExistError(true);
+      setShowError(true);
       setInputReady(false);
     } else {
-      setPrgmExistError(false);
+      setShowError(false);
       setInputReady(true);
     }
   }, [inputState, drvPrgmsArr]);
 
   return (
-    <Dialog open={props.open} close={closeDialog}>
+    <Dialog
+      open={props.open}
+      close={closeDialog}
+      title="Add Drive Program"
+      actions={
+        <Button
+          variant="contained"
+          disabled={!inputReady}
+          onClick={addDrvPrgmHandler}
+        >
+          Add Drive
+        </Button>
+      }
+    >
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          {prgmExistError && (
-            <Alert sx={{ mb: 2 }} severity="error">
+          <Animate show={showError}>
+            <Alert severity="error">
               Duplicate Drive Program Alias Detected!
             </Alert>
-          )}
+          </Animate>
         </Grid>
         <Grid item xs={12}>
           <TextFieldWIcon
@@ -99,15 +116,6 @@ const AddDrvPrgmDialog = (props) => {
             unique
             uniqueArr={drvPrgmsArr}
           ></TextFieldWIcon>
-        </Grid>
-        <Grid item container xs={12} justifyContent={"end"}>
-          <Button
-            variant="contained"
-            disabled={!inputReady}
-            onClick={addDrvPrgmHandler}
-          >
-            Add Drive
-          </Button>
         </Grid>
       </Grid>
     </Dialog>
