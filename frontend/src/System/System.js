@@ -12,6 +12,7 @@ import AddTestDialog from "./components/AddTestDialog/AddTestDialog";
 import TestCard from "./components/TestCard/TestCard";
 import TestsDialog from "./components/TestsDialog/TestsDialog";
 import NewQualDialog from "./components/NewQualDialog/NewQualDialog";
+import ServerStorageCard from "./components/ServerStorageCard/ServerStorageCard";
 
 // VARIABLES
 import { serverName } from "../Shared/variables/Variables";
@@ -133,6 +134,13 @@ const System = (props) => {
                   setShowTestsDialog(true);
                 }}
               />
+            </Animate>
+          )}
+        </Grid>
+        <Grid item xs={4}>
+          {dataReady && (
+            <Animate show={dataReady}>
+              <ServerStorageCard />
             </Animate>
           )}
         </Grid>
