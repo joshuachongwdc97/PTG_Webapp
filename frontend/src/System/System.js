@@ -137,6 +137,8 @@ const System = (props) => {
             </Animate>
           )}
         </Grid>
+      </Grid>
+      <Grid container paddingTop={2}>
         <Grid item xs={4}>
           {dataReady && (
             <Animate show={dataReady}>

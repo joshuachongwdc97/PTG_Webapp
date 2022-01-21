@@ -11,7 +11,9 @@ import { serverName } from "../../../Shared/variables/Variables";
 
 const ServerStorageCard = () => {
   const { sendRequest } = useHttpClient();
-  const [storageData, setStorageData] = useState();
+  const [storageData, setStorageData] = useState([
+    { drive: "PTG_STORAGE_B", freeSpace: "20", totalSpace: "230" },
+  ]);
 
   const getStorageData = async () => {
     let response;
@@ -22,7 +24,11 @@ const ServerStorageCard = () => {
     } catch (err) {
       console.log(err);
     }
-    setStorageData(Object.values(response.storageData));
+
+    const updatedStorageData = storageData.concat(
+      Object.values(response.storageData)
+    );
+    setStorageData(updatedStorageData);
   };
 
   useEffect(() => {
@@ -33,24 +39,26 @@ const ServerStorageCard = () => {
   return (
     <BasicCard title="Server Storage">
       <Grid container>
-        <Grid item xs={12} paddingBottom={1.5}>
+        <Grid item xs={12}>
           <Typography variant="subtitle2" color="textSecondary">
             Server Storage
           </Typography>
         </Grid>
         {storageData &&
           storageData.map((data) => (
-            <Grid item container xs={12} key={data.drive}>
-              <Grid item xs={1.5}>
-                <Typography variant="h4">{data.drive}</Typography>
+            <Grid
+              item
+              container
+              xs={12}
+              alignSelf={"center"}
+              key={data.drive}
+              paddingTop={3}
+            >
+              <Grid item xs={7}>
+                <Typography variant="h5">{data.drive}</Typography>
               </Grid>
-              <Grid
-                item
-                xs={10.5}
-                alignSelf={"center"}
-                justifyContent={"right"}
-              >
-                <Typography variant="subtitle2">
+              <Grid item xs={5} textAlign={"right"} alignSelf={"center"}>
+                <Typography variant="subtitle2" justifyItem={"right"}>
                   <CountUp
                     start={0}
                     end={data.totalSpace - data.freeSpace}
@@ -58,6 +66,8 @@ const ServerStorageCard = () => {
                   />
                   {" GB / " + data.totalSpace + " GB"}
                 </Typography>
+              </Grid>
+              <Grid item xs={12}>
                 <LinearProgress
                   variant="determinate"
                   value={
