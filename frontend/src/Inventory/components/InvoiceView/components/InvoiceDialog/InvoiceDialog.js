@@ -8,6 +8,7 @@ import InvoiceInputs from "./components/InvoiceInputs";
 import DriveUpload from "./components/DriveUpload";
 import OutlinedCard from "../../../../../Shared/components/Card/OutlinedCard";
 import InvDialogActions from "./components/InvDialogActions";
+import Animate from "../../../../../Shared/transitions/Animate";
 
 // ICONS
 import CreateNewFolderRoundedIcon from "@mui/icons-material/CreateNewFolderRounded";
@@ -460,11 +461,11 @@ const InvoiceDialog = (props) => {
             <OutlinedCard>
               {activeTab === "invoice" ? (
                 <React.Fragment>
-                  {invExistError && (
+                  <Animate show={invExistError}>
                     <Alert sx={{ mb: 2 }} severity="error">
                       Duplicate Invoice ID Detected!
                     </Alert>
-                  )}
+                  </Animate>
                   <InvoiceInputs
                     inputState={inputState}
                     dateReceivedHandler={dateReceivedHandler}
