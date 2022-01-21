@@ -13,7 +13,7 @@ import {
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 
 const SelectMenu = (props) => {
-  let MenuItems;
+  let MenuItems = [];
   props.data &&
     props.data.length > 0 &&
     (MenuItems = props.data.map((data) => {
@@ -25,9 +25,8 @@ const SelectMenu = (props) => {
     }));
 
   props.addOption &&
-    MenuItems &&
     MenuItems.push(
-      <MenuItem value={""} onClick={props.addOptionHandler} key={"addDrive"}>
+      <MenuItem value={""} onClick={props.addOptionHandler} key={""}>
         <ListItemIcon>
           <AddRoundedIcon />
         </ListItemIcon>
