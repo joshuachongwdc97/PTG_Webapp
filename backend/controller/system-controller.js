@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 
 const System = require("../models/system");
 const Qual = require("../models/qual");
+const child = require("child_process");
 
 const getSystems = async (req, res, next) => {
   let systems;
@@ -19,6 +20,28 @@ const getSystems = async (req, res, next) => {
   res.json({
     systems: systems.map((sys) => sys.toObject({ getters: true })),
   });
+};
+
+const getStorage = (req, res, next) => {
+  let storageData = child
+    .execSync("wmic logicaldisk get size, freespace, caption")
+    .toString();
+
+  // convert string into array
+  storageData = storageData
+    .trim()
+    .split("\r\r\n")
+    .map((str) => str.trim().replace(/\s+/g, ",").split(","))
+    .slice(1);
+
+  // convert array elements to objects
+  storageData = storageData.map((drv) => ({
+    drive: drv[0],
+    freeSpace: Math.floor(drv[1] / 1024 / 1024 / 1024),
+    totalSpace: Math.floor(drv[2] / 1024 / 1024 / 1024),
+  }));
+
+  res.json({ storageData });
 };
 
 const addSystems = async (req, res, next) => {
@@ -325,3 +348,4 @@ exports.systemsRelease = systemsRelease;
 exports.testStart = testStart;
 exports.testEnd = testEnd;
 exports.testReset = testReset;
+exports.getStorage = getStorage;
