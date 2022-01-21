@@ -27,18 +27,28 @@ const InvoiceInputs = (props) => {
   const [dataReady, setDataReady] = useState(false);
   const [showAddDrvPrgmDialog, setShowAddDrvPrgmDialog] = useState(false);
   const { sendRequest } = useHttpClient();
+  const [selectData, setSelectData] = useState();
+  const [selectDataReady, setSelectDataReady] = useState(false);
 
-  let selectData;
-  dataReady &&
-    (selectData = drvPrgms.map((prgm) => {
-      return {
-        value: prgm.id,
-        label: prgm.drvPrgm + " (" + prgm.alias + ") ",
-      };
-    }));
+  useEffect(() => {
+    setSelectDataReady(false);
+    if (dataReady) {
+      setSelectData(
+        drvPrgms.map((prgm) => {
+          return {
+            value: prgm.id,
+            label: prgm.drvPrgm + " (" + prgm.alias + ") ",
+          };
+        })
+      );
+      setSelectDataReady(true);
+    }
+    // eslint-disable-next-line
+  }, [dataReady, drvPrgms]);
 
   // GET DRIVE PROGRAMS
   const getDrvPrgms = async () => {
+    setDataReady(false);
     try {
       let responseData = await sendRequest(
         "http://" + serverName + "/api/drvProgram"
@@ -76,6 +86,8 @@ const InvoiceInputs = (props) => {
         close={() => setShowAddDrvPrgmDialog(false)}
         drvPrgms={drvPrgms}
         getDrvPrgms={getDrvPrgms}
+        setInvDialogInputState={props.setInvDialogInputState}
+        invInputState={props.inputState}
       />
       <Grid container spacing={2.5}>
         <Grid item xs={12}>
@@ -146,7 +158,7 @@ const InvoiceInputs = (props) => {
             label="Drive Program"
             data={selectData}
             onChange={props.inputHandler}
-            value={dataReady ? props.inputState.drvPrgm : ""}
+            value={dataReady && selectDataReady ? props.inputState.drvPrgm : ""}
             name="drvPrgm"
             disabled={disabled}
             addOption
@@ -199,7 +211,9 @@ const InvoiceInputs = (props) => {
             label="Description/Remarks"
             icon={<DescriptionRoundedIcon />}
             name="description"
-            value={props.inputState.description}
+            value={
+              props.inputState.description ? props.inputState.description : ""
+            }
             onChange={props.inputHandler}
             disabled={disabled}
             autoComplete="off"

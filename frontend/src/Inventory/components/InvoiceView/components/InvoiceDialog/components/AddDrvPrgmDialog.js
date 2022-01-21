@@ -13,7 +13,7 @@ import { serverName } from "../../../../../../Shared/variables/Variables";
 
 const AddDrvPrgmDialog = (props) => {
   const { sendRequest } = useHttpClient();
-  const [showError, setShowError] = useState(true);
+  const [showError, setShowError] = useState(false);
   const [inputState, setInputState] = useState({
     drvPrgm: "",
     alias: "",
@@ -35,6 +35,7 @@ const AddDrvPrgmDialog = (props) => {
     props.close();
   };
 
+  // add new drive to database and display newly added drive in drive program input field
   const addDrvPrgmHandler = async () => {
     let drvPrgmId;
     try {
@@ -50,7 +51,15 @@ const AddDrvPrgmDialog = (props) => {
       console.log(err);
     }
 
+    // fetch latest drvPrgms list
     props.getDrvPrgms();
+
+    // set drive program input field to newly added drive program
+    props.setInvDialogInputState({
+      ...props.invInputState,
+      drvPrgm: drvPrgmId,
+    });
+
     closeDialog();
   };
 
