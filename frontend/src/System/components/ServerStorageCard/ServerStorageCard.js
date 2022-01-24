@@ -23,7 +23,10 @@ const ServerStorageCard = () => {
       console.log(err);
     }
 
-    setStorageData(response.storageData);
+    const filteredDrives = response.storageData.filter((drv) =>
+      ["D:", "E:"].includes(drv.drive)
+    );
+    setStorageData(filteredDrives);
   };
 
   useEffect(() => {
