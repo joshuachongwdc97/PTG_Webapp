@@ -69,7 +69,7 @@ const QualView = (props) => {
 
     return (
       <Grid item xs={2} key={qual.id}>
-        {test && drvPrgm && (
+        {test && drvPrgm && invoice && (
           <QualCard
             qual={qual}
             test={test}
