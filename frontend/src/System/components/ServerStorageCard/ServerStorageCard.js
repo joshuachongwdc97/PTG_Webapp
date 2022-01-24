@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Typography, LinearProgress } from "@mui/material";
-import CountUp from "react-countup";
+import { Grid, Typography } from "@mui/material";
 
 // COMPONENTS
 import { useHttpClient } from "../../../Shared/hooks/http-hook";
 import BasicCard from "../../../Shared/components/Card/BasicCard";
+import StorageGrid from "./StorageGrid";
 
 // VARIABLES
 import { serverName } from "../../../Shared/variables/Variables";
 
 const ServerStorageCard = () => {
   const { sendRequest } = useHttpClient();
-  const [storageData, setStorageData] = useState([
-    { drive: "PTG_STORAGE_B", freeSpace: "20", totalSpace: "230" },
-  ]);
+  const [storageData, setStorageData] = useState();
 
   const getStorageData = async () => {
     let response;
@@ -25,10 +23,7 @@ const ServerStorageCard = () => {
       console.log(err);
     }
 
-    const updatedStorageData = storageData.concat(
-      Object.values(response.storageData)
-    );
-    setStorageData(updatedStorageData);
+    setStorageData(response.storageData);
   };
 
   useEffect(() => {
@@ -46,37 +41,15 @@ const ServerStorageCard = () => {
         </Grid>
         {storageData &&
           storageData.map((data) => (
-            <Grid
-              item
-              container
-              xs={12}
-              alignSelf={"center"}
+            <StorageGrid
+              drive={data.drive}
+              totalSpace={data.totalSpace}
+              freeSpace={data.freeSpace}
               key={data.drive}
-              paddingTop={3}
-            >
-              <Grid item xs={7}>
-                <Typography variant="h5">{data.drive}</Typography>
-              </Grid>
-              <Grid item xs={5} textAlign={"right"} alignSelf={"center"}>
-                <Typography variant="subtitle2" justifyItem={"right"}>
-                  <CountUp
-                    start={0}
-                    end={data.totalSpace - data.freeSpace}
-                    duration={0.5}
-                  />
-                  {" GB / " + data.totalSpace + " GB"}
-                </Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <LinearProgress
-                  variant="determinate"
-                  value={
-                    ((data.totalSpace - data.freeSpace) / data.totalSpace) * 100
-                  }
-                  color="info"
-                />
-              </Grid>
-            </Grid>
+              progress={
+                ((data.totalSpace - data.freeSpace) / data.totalSpace) * 100
+              }
+            />
           ))}
       </Grid>
     </BasicCard>
