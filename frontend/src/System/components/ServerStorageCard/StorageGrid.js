@@ -16,18 +16,27 @@ const StorageGrid = (props) => {
   }, []);
 
   return (
-    <Grid item container xs={12} alignSelf={"center"} paddingTop={3}>
-      <Grid item xs={7}>
-        <Typography variant="h5">{props.drive}</Typography>
+    <Grid
+      item
+      container
+      xs={12}
+      alignSelf={"center"}
+      paddingTop={3}
+      spacing={1}
+    >
+      <Grid item xs={4}>
+        <Typography variant="subtitle">
+          {props.drive === "D:" ? "PTG" : "PTG_B"}
+        </Typography>
       </Grid>
-      <Grid item xs={5} textAlign={"right"} alignSelf={"center"}>
-        <Typography variant="subtitle2">
+      <Grid item xs={8} textAlign={"right"} alignSelf={"center"}>
+        <Typography variant="subtitle2" color="textSecondary">
           <CountUp
             start={0}
             end={props.totalSpace - props.freeSpace}
             duration={0.5}
           />
-          {" GB / " + props.totalSpace + " GB"}
+          {" GB / " + props.totalSpace + " GB used"}
         </Typography>
       </Grid>
       <Grid item xs={12}>

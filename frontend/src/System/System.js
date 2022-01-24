@@ -144,15 +144,17 @@ const System = (props) => {
             </Animate>
           )}
         </Grid>
+
         <Grid item xs={12}>
           <Divider>Ongoing Jobs</Divider>
         </Grid>
         <Grid item xs={12}>
           <QualView quals={quals} />
         </Grid>
-      </Grid>
-      <Grid container paddingTop={2}>
-        <Grid item xs={4}>
+        <Grid item xs={12}>
+          <Divider sx={{ marginTop: "10px" }}>Server Info</Divider>
+        </Grid>
+        <Grid item xs={3}>
           {dataReady && (
             <Animate show={dataReady}>
               <ServerStorageCard />

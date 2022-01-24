@@ -39,7 +39,7 @@ const ServerStorageCard = () => {
       <Grid container>
         <Grid item xs={12}>
           <Typography variant="subtitle2" color="textSecondary">
-            Server Storage
+            Server Storage Utilization
           </Typography>
         </Grid>
         {storageData &&
