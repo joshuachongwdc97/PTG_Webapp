@@ -1,32 +1,53 @@
 import React from "react";
 
-import { Chip, Grid, Typography } from "@mui/material";
+import { Chip, Grid, Typography, LinearProgress } from "@mui/material";
 
 import BasicCard from "../../../../Shared/components/Card/BasicCard";
 
 const QualCard = (props) => {
-  console.log(props.test);
-  console.log(props.drvPrgm);
+  console.log(props.invoice);
 
   return (
-    <BasicCard click>
+    <BasicCard>
       <Grid container spaing={1} rowSpacing={2}>
-        <Grid item xs={12}>
+        <Grid item xs={8}>
           <Typography variant="h5" sx={{ fontWeight: "500" }}>
             {props.qual.soda}
           </Typography>
         </Grid>
-        <Grid item xs={12}>
-          <Typography variant="subtitle2" sx={{ fontWeight: "500" }}>
-            {props.qual.soda}
+        <Grid item xs={4} align="right">
+          <Chip
+            label={props.test.test}
+            sx={{
+              borderRadius: "5px",
+              fontWeight: "600",
+            }}
+          />
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          style={{
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          }}
+        >
+          <Typography
+            variant="subtitle2"
+            noWrap
+            sx={{ fontWeight: "500" }}
+            color="textSecondary"
+          >
+            {props.invoice.name}
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <Chip
-            label={props.drvPrgm.alias}
-            sx={{ borderRadius: "5px", marginRight: "5px" }}
+          <LinearProgress
+            variant="indeterminate"
+            value={100}
+            color={"primary"}
+            sx={{ borderRadius: "10px", marginTop: "10px" }}
           />
-          <Chip label={props.test.drvType} sx={{ borderRadius: "5px" }} />
         </Grid>
       </Grid>
     </BasicCard>

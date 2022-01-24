@@ -16,7 +16,6 @@ const QualView = (props) => {
   const [dataReady, setDataReady] = useState(false);
 
   const getTests = async () => {
-    console.log("Fetching Tests");
     try {
       let responseData = await sendRequest(
         "http://" + serverName + "/api/test/all"
@@ -26,7 +25,6 @@ const QualView = (props) => {
   };
 
   const getDrvPrgms = async () => {
-    console.log("Fetching Drv Prgms");
     try {
       let responseData = await sendRequest(
         "http://" + serverName + "/api/drvProgram"
@@ -35,11 +33,21 @@ const QualView = (props) => {
     } catch (err) {}
   };
 
+  const getInvoices = async () => {
+    try {
+      let responseData = await sendRequest(
+        "http://" + serverName + "/api/invoice"
+      );
+      setInvoices(responseData.invoices);
+    } catch (err) {}
+  };
+
   useEffect(
     () => {
       if (props.quals.length > 0) {
         getTests();
         getDrvPrgms();
+        getInvoices();
         setDataReady(true);
       }
     }, // eslint-disable-next-line
@@ -55,10 +63,19 @@ const QualView = (props) => {
       return prgm.id === test.drvPrgm;
     })[0];
 
+    const invoice = invoices.filter((inv) => {
+      return inv.id === qual.invoice;
+    })[0];
+
     return (
       <Grid item xs={2} key={qual.id}>
         {test && drvPrgm && (
-          <QualCard qual={qual} test={test} drvPrgm={drvPrgm} />
+          <QualCard
+            qual={qual}
+            test={test}
+            drvPrgm={drvPrgm}
+            invoice={invoice}
+          />
         )}
       </Grid>
     );

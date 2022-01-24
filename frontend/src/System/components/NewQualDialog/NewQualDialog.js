@@ -198,6 +198,7 @@ const NewQualDialog = (props) => {
       soda: inputState.soda,
       qual: inputState.qual,
       test: inputState.test,
+      invoice: inputState.invoice,
       plannedStart: inputState.plannedStart,
       plannedEnd: inputState.plannedEnd,
     };
