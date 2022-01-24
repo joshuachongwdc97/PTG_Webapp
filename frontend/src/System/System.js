@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHttpClient } from "../Shared/hooks/http-hook";
-import { Grid } from "@mui/material";
+import { Grid, Divider } from "@mui/material";
 
 // COMPONENTS
 import SysCard from "./components/SysCard/SysCard";
@@ -12,6 +12,7 @@ import AddTestDialog from "./components/AddTestDialog/AddTestDialog";
 import TestCard from "./components/TestCard/TestCard";
 import TestsDialog from "./components/TestsDialog/TestsDialog";
 import NewQualDialog from "./components/NewQualDialog/NewQualDialog";
+import QualView from "./components/QualView/QualView";
 
 // VARIABLES
 import { serverName } from "../Shared/variables/Variables";
@@ -19,6 +20,7 @@ import { serverName } from "../Shared/variables/Variables";
 const System = (props) => {
   const { sendRequest } = useHttpClient();
   const [systems, setSystems] = useState([]);
+  const [quals, setQuals] = useState([]);
   const [showSysDialog, setShowSysDialog] = useState(false);
   const [dataReady, setDataReady] = useState(false);
   const [showAddSysDialog, setShowAddSysDialog] = useState(false);
@@ -33,6 +35,11 @@ const System = (props) => {
         "http://" + serverName + "/api/system"
       );
       setSystems(responseData.systems);
+
+      responseData = await sendRequest(
+        "http://" + serverName + "/api/qual/all"
+      );
+      setQuals(responseData.quals);
 
       console.log("Data fetched");
       setDataReady(true);
@@ -135,6 +142,12 @@ const System = (props) => {
               />
             </Animate>
           )}
+        </Grid>
+        <Grid item xs={12}>
+          <Divider>Ongoing Jobs</Divider>
+        </Grid>
+        <Grid item xs={12}>
+          <QualView quals={quals} />
         </Grid>
       </Grid>
     </React.Fragment>
