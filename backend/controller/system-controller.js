@@ -23,6 +23,7 @@ const getSystems = async (req, res, next) => {
 };
 
 const getStorage = (req, res, next) => {
+  // execute command in command prompt which retrieves system storage info
   let storageData = child
     .execSync("wmic logicaldisk get size, freespace, caption")
     .toString();
