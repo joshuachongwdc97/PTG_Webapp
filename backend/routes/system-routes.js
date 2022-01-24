@@ -7,6 +7,8 @@ const systemController = require("../controller/system-controller");
 
 router.get("/", systemController.getSystems);
 
+router.get("/storage", systemController.getStorage);
+
 router.post(
   "/add",
   [check("systems").not().isEmpty()],

@@ -13,6 +13,7 @@ import TestCard from "./components/TestCard/TestCard";
 import TestsDialog from "./components/TestsDialog/TestsDialog";
 import NewQualDialog from "./components/NewQualDialog/NewQualDialog";
 import QualView from "./components/QualView/QualView";
+import ServerStorageCard from "./components/ServerStorageCard/ServerStorageCard";
 
 // VARIABLES
 import { serverName } from "../Shared/variables/Variables";
@@ -148,6 +149,15 @@ const System = (props) => {
         </Grid>
         <Grid item xs={12}>
           <QualView quals={quals} />
+        </Grid>
+      </Grid>
+      <Grid container paddingTop={2}>
+        <Grid item xs={4}>
+          {dataReady && (
+            <Animate show={dataReady}>
+              <ServerStorageCard />
+            </Animate>
+          )}
         </Grid>
       </Grid>
     </React.Fragment>
