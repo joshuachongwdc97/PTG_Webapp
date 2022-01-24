@@ -33,6 +33,7 @@ const CountCard = (props) => {
             variant="determinate"
             value={props.progress}
             color={props.progressColor}
+            sx={{ borderRadius: "10px" }}
           />
         </Grid>
       </Grid>
