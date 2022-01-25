@@ -30,7 +30,6 @@ const System = (props) => {
   const [showNewQualDialog, setShowNewQualDialog] = useState(false);
 
   const getData = async () => {
-    console.log("Fetching Data");
     try {
       let responseData = await sendRequest(
         "http://" + serverName + "/api/system"

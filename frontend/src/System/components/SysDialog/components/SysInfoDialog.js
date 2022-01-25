@@ -41,12 +41,31 @@ const SysInfoDialog = (props) => {
   const [showDelDialog, setShowDelDialog] = useState(false);
   const [showReserveDialog, setShowReserveDialog] = useState(false);
   const [releasing, setReleasing] = useState(false);
+  const [qual, setQual] = useState();
 
-  useEffect(() => {
-    if (props.open) {
-      setStatus(SysStatus(props.sys));
-    }
-  }, [props.sys, props.open]);
+  console.log(qual);
+
+  const getQual = async () => {
+    try {
+      let responseData = await sendRequest(
+        "http://" + serverName + "/api/qual" + props.sys.qual
+      );
+      setQual(responseData.qual);
+    } catch (err) {}
+  };
+
+  useEffect(
+    () => {
+      if (props.open) {
+        setStatus(SysStatus(props.sys));
+      }
+
+      if (props.qual) {
+        getQual();
+      }
+    }, // eslint-disable-next-line
+    [props.sys, props.open, props.qual]
+  );
 
   const releaseSysHandler = async () => {
     setReleasing(true);
