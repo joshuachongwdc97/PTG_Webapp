@@ -8,6 +8,8 @@ import {
   AccountBoxRounded,
   LocationOnRounded,
 } from "@mui/icons-material";
+
+// ICONS
 import DescriptionRoundedIcon from "@mui/icons-material/DescriptionRounded";
 
 // COMPONENTS
@@ -15,6 +17,7 @@ import TextFieldWIcon from "../../../../../../Shared/components/Input/TextFieldW
 import SelectMenu from "../../../../../../Shared/components/Input/SelectMenu";
 import DatePicker from "../../../../../../Shared/components/Input/DatePicker";
 import Animate from "../../../../../../Shared/transitions/Animate";
+import AddDrvPrgmDialog from "./AddDrvPrgmDialog";
 
 // VARIABLES
 import { serverName } from "../../../../../../Shared/variables/Variables";
@@ -22,19 +25,30 @@ import { serverName } from "../../../../../../Shared/variables/Variables";
 const InvoiceInputs = (props) => {
   const [drvPrgms, setDrvPrgms] = useState([]);
   const [dataReady, setDataReady] = useState(false);
+  const [showAddDrvPrgmDialog, setShowAddDrvPrgmDialog] = useState(false);
   const { sendRequest } = useHttpClient();
+  const [selectData, setSelectData] = useState();
+  const [selectDataReady, setSelectDataReady] = useState(false);
 
-  let selectData;
-  dataReady &&
-    (selectData = drvPrgms.map((prgm) => {
-      return {
-        value: prgm.id,
-        label: prgm.drvPrgm + " (" + prgm.alias + ") ",
-      };
-    }));
+  useEffect(() => {
+    setSelectDataReady(false);
+    if (dataReady) {
+      setSelectData(
+        drvPrgms.map((prgm) => {
+          return {
+            value: prgm.id,
+            label: prgm.drvPrgm + " (" + prgm.alias + ") ",
+          };
+        })
+      );
+      setSelectDataReady(true);
+    }
+    // eslint-disable-next-line
+  }, [dataReady, drvPrgms]);
 
   // GET DRIVE PROGRAMS
   const getDrvPrgms = async () => {
+    setDataReady(false);
     try {
       let responseData = await sendRequest(
         "http://" + serverName + "/api/drvProgram"
@@ -67,6 +81,14 @@ const InvoiceInputs = (props) => {
 
   return (
     <React.Fragment>
+      <AddDrvPrgmDialog
+        open={showAddDrvPrgmDialog}
+        close={() => setShowAddDrvPrgmDialog(false)}
+        drvPrgms={drvPrgms}
+        getDrvPrgms={getDrvPrgms}
+        setInvDialogInputState={props.setInvDialogInputState}
+        invInputState={props.inputState}
+      />
       <Grid container spacing={2.5}>
         <Grid item xs={12}>
           <TextFieldWIcon
@@ -136,9 +158,14 @@ const InvoiceInputs = (props) => {
             label="Drive Program"
             data={selectData}
             onChange={props.inputHandler}
-            value={dataReady ? props.inputState.drvPrgm : ""}
+            value={dataReady && selectDataReady ? props.inputState.drvPrgm : ""}
             name="drvPrgm"
             disabled={disabled}
+            addOption
+            addOptionText="Add Drive Program"
+            addOptionHandler={() => {
+              setShowAddDrvPrgmDialog(true);
+            }}
           ></SelectMenu>
         </Grid>
         {!props.inputState.dateReturned ? (

@@ -473,6 +473,7 @@ const InvoiceDialog = (props) => {
                     inputHandler={inputHandler}
                     invoices={props.invoices}
                     invDialogState={invDialogState}
+                    setInvDialogInputState={setInputState}
                   />
                 </React.Fragment>
               ) : (
