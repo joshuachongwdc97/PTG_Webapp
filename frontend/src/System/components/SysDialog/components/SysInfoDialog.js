@@ -43,8 +43,6 @@ const SysInfoDialog = (props) => {
   const [releasing, setReleasing] = useState(false);
   const [qual, setQual] = useState();
 
-  console.log(qual);
-
   const getQual = async () => {
     try {
       let responseData = await sendRequest(

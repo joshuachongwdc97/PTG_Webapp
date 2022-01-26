@@ -13,7 +13,7 @@ const getAgingSumm = (invoices, drives, period, category) => {
   if (period === "past year") {
     dataPoints = 12;
     interval = 30;
-    dateFormat = { month: "short" };
+    dateFormat = { day: "numeric", month: "short" };
   } else if (period === "past 6 months") {
     dataPoints = 12;
     interval = 15;

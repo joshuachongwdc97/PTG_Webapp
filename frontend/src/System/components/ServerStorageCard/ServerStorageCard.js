@@ -11,7 +11,7 @@ import { serverName } from "../../../Shared/variables/Variables";
 
 const ServerStorageCard = () => {
   const { sendRequest } = useHttpClient();
-  const [storageData, setStorageData] = useState();
+  const [storageData, setStorageData] = useState([]);
 
   const getStorageData = async () => {
     let response;
@@ -19,14 +19,14 @@ const ServerStorageCard = () => {
       response = await sendRequest(
         "http://" + serverName + "/api/system/storage"
       );
+
+      const filteredDrives = response.storageData.filter((drv) =>
+        ["D:", "E:"].includes(drv.drive)
+      );
+      setStorageData(filteredDrives);
     } catch (err) {
       console.log(err);
     }
-
-    const filteredDrives = response.storageData.filter((drv) =>
-      ["D:", "E:"].includes(drv.drive)
-    );
-    setStorageData(filteredDrives);
   };
 
   useEffect(() => {
