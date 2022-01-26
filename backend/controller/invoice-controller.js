@@ -32,6 +32,8 @@ const getInvoice = async (req, res, next) => {
     return next(error);
   }
 
+  console.log(invoice);
+
   res.json({
     invoice: invoice.toObject({ getters: true }),
   });
