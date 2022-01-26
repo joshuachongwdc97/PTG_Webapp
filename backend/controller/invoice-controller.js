@@ -20,6 +20,23 @@ const getInvoices = async (req, res, next) => {
   });
 };
 
+const getInvoice = async (req, res, next) => {
+  const id = req.params.id;
+
+  let invoice;
+
+  try {
+    invoice = await Invoice.findById(id);
+  } catch (err) {
+    const error = new HttpError("Invoice Fetching Failed", 500);
+    return next(error);
+  }
+
+  res.json({
+    invoice: invoice.toObject({ getters: true }),
+  });
+};
+
 const addInvoice = async (req, res, next) => {
   const {
     name,
