@@ -32,11 +32,13 @@ const getInvoice = async (req, res, next) => {
     return next(error);
   }
 
-  console.log(invoice);
-
-  res.json({
-    invoice: invoice.toObject({ getters: true }),
-  });
+  if (invoice) {
+    res.json({
+      invoice: invoice.toObject({ getters: true }),
+    });
+  } else {
+    res.status(404).json({ message: "Invoice Not Found" });
+  }
 };
 
 const addInvoice = async (req, res, next) => {

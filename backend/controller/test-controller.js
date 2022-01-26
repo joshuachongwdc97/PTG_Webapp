@@ -32,9 +32,13 @@ const getTest = async (req, res, next) => {
     return next(error);
   }
 
-  res.json({
-    test: test.toObject({ getters: true }),
-  });
+  if (test) {
+    res.json({
+      test: test.toObject({ getters: true }),
+    });
+  } else {
+    res.status(404).json({ message: "Test Not Found" });
+  }
 };
 
 const addTest = async (req, res, next) => {

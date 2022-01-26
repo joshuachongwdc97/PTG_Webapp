@@ -32,9 +32,11 @@ const getQual = async (req, res, next) => {
     return next(error);
   }
 
-  res.json({
-    qual: qual.toObject({ getters: true }),
-  });
+  if (qual) {
+    res.json({
+      qual: qual.toObject({ getters: true }),
+    });
+  }
 };
 
 const addQual = async (req, res, next) => {

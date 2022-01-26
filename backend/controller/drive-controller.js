@@ -32,9 +32,13 @@ const getDrive = async (req, res, next) => {
     return next(error);
   }
 
-  res.json({
-    drive: drive.toObject({ getters: true }),
-  });
+  if (drive) {
+    res.json({
+      drive: drive.toObject({ getters: true }),
+    });
+  } else {
+    res.status(404).json({ message: "Drive Not Found" });
+  }
 };
 
 const addDrives = async (req, res, next) => {
