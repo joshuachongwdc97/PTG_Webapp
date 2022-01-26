@@ -7,6 +7,8 @@ const invoiceController = require("../controller/invoice-controller");
 
 router.get("/", invoiceController.getInvoices);
 
+router.get("/:id", invoiceController.getInvoice);
+
 router.post(
   "/add",
   [

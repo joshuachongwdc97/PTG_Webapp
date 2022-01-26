@@ -171,6 +171,7 @@ const deleteInvoice = async (req, res, next) => {
 };
 
 exports.getInvoices = getInvoices;
+exports.getInvoice = getInvoice;
 exports.addInvoice = addInvoice;
 exports.updateInvoice = updateInvoice;
 exports.deleteInvoice = deleteInvoice;
