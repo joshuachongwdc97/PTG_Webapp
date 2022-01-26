@@ -27,4 +27,8 @@ router.post(
 
 router.delete("/", driveController.deleteDrives);
 
+router.patch("/keep", driveController.keepDrives);
+
+router.patch("/unkeep", driveController.unkeepDrives);
+
 module.exports = router;

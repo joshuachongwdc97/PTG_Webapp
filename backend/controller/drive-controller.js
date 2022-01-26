@@ -127,7 +127,49 @@ const deleteDrives = async (req, res, next) => {
   res.status(201).json("Drives Deleted");
 };
 
+const keepDrives = async (req, res, next) => {
+  const { ids } = req.body;
+
+  try {
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+    ids.forEach(async (id) => {
+      const identifiedDrv = await Drive.findById(id);
+      identifiedDrv.status = "Keep";
+      await identifiedDrv.save({ session: sess });
+    });
+    sess.commitTransaction();
+  } catch (err) {
+    const error = new HttpError("Keeping Drives Failed", 500);
+    return next(error);
+  }
+
+  res.status(201).json("Drives Kept");
+};
+
+const unkeepDrives = async (req, res, next) => {
+  const { ids } = req.body;
+
+  try {
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+    ids.forEach(async (id) => {
+      const identifiedDrv = await Drive.findById(id);
+      identifiedDrv.status = undefined;
+      await identifiedDrv.save({ session: sess });
+    });
+    sess.commitTransaction();
+  } catch (err) {
+    const error = new HttpError("Keeping Drives Failed", 500);
+    return next(error);
+  }
+
+  res.status(201).json("Drives Unkept");
+};
+
 exports.getDrives = getDrives;
 exports.getDrive = getDrive;
 exports.addDrives = addDrives;
 exports.deleteDrives = deleteDrives;
+exports.keepDrives = keepDrives;
+exports.unkeepDrives = unkeepDrives;
