@@ -9,6 +9,13 @@ import getDrv from "../../../../Shared/functions/getDrv";
 import getDays from "../../../../Shared/functions/getDays";
 
 const InvoiceTable = (props) => {
+  const stateColors = {
+    Active: "success",
+    Returned: "default",
+    "P.Returned": "default",
+    Keep: "primary",
+  };
+
   let columns = [
     {
       field: "id",
@@ -39,7 +46,7 @@ const InvoiceTable = (props) => {
       headerName: "Status",
       flex: 1,
       renderCell: (params) => {
-        const color = params.row.status === "Active" ? "success" : "default";
+        const color = stateColors[params.row.status];
 
         return (
           <Chip
@@ -47,7 +54,11 @@ const InvoiceTable = (props) => {
             color={color}
             variant="outlined"
             sx={{ width: "100%" }}
-            disabled={params.row.status === "Active" ? false : true}
+            disabled={
+              ["Returned", "P.Returned"].includes(params.row.status)
+                ? true
+                : false
+            }
           />
         );
       },
@@ -82,12 +93,23 @@ const InvoiceTable = (props) => {
       const drvs = getDrv(inv.id, props.drives);
       const age = getDays(inv.dateReceived);
 
+      let status = inv.status;
+      const keptDrives = drvs.filter((drv) => drv.status === "Keep");
+
+      if (status === "Returned") {
+        if (drvs.length > 0 && keptDrives.length === drvs.length) {
+          status = "Keep";
+        } else if (keptDrives.length > 0) {
+          status = "P.Returned";
+        }
+      }
+
       return {
         id: inv.id,
         invid: inv.invid,
         name: inv.name,
         drvPrgm: drvPrgm,
-        status: inv.status,
+        status: status,
         drives: drvs.length,
         age: age,
         origin: inv.origin,
