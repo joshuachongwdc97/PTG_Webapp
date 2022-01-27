@@ -124,13 +124,11 @@ const DriveUpload = (props) => {
                 </Button>
               </Animate>
             </Grid>
-
             <Grid item xs={12}>
               <Animate show>
                 <Divider>Drive Added</Divider>
               </Animate>
             </Grid>
-
             <Grid item xs={12}>
               <Animate show>
                 <Table
@@ -147,36 +145,40 @@ const DriveUpload = (props) => {
         {props.invDialogState === "view" && props.invStatus === "Returned" && (
           <React.Fragment>
             <Grid item xs={6}>
-              <Button
-                fullWidth
-                variant="outlined"
-                color="primary"
-                disabled={!rowSelected}
-                onClick={props.keepDrvHandler}
-                size="large"
-                startIcon={<ArchiveRoundedIcon />}
-              >
-                Keep Selected
-              </Button>
+              <Animate show>
+                <Button
+                  fullWidth
+                  variant="outlined"
+                  color="primary"
+                  disabled={!rowSelected}
+                  onClick={props.keepDrvHandler}
+                  size="large"
+                  startIcon={<ArchiveRoundedIcon />}
+                >
+                  Keep Selected
+                </Button>
+              </Animate>
             </Grid>
             <Grid item xs={6}>
-              <Button
-                fullWidth
-                variant="outlined"
-                color="success"
-                disabled={!rowSelected}
-                onClick={props.unkeepDrvHandler}
-                size="large"
-                startIcon={<InventoryRoundedIcon />}
-              >
-                Return Selected
-              </Button>
+              <Animate show>
+                <Button
+                  fullWidth
+                  variant="outlined"
+                  color="success"
+                  disabled={!rowSelected}
+                  onClick={props.unkeepDrvHandler}
+                  size="large"
+                  startIcon={<InventoryRoundedIcon />}
+                >
+                  Return Selected
+                </Button>
+              </Animate>
             </Grid>
-
             <Grid item xs={12}>
-              <Divider>Drive Added</Divider>
+              <Animate show>
+                <Divider>Drive Added</Divider>
+              </Animate>
             </Grid>
-
             <Grid item xs={12}>
               <Animate show>
                 <Table
