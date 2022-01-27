@@ -81,7 +81,7 @@ const Inventory = () => {
   );
 
   // set chart data to display active drive data by default
-  // charts are automatically updated when a user closes an invoiceDialog to reflect new data
+  // charts are automatically updated when a user closes an InvoiceDialog to reflect new data
   useEffect(() => {
     if (changeReady) {
       const category = !flipSummCard.flipSummCard ? "drives" : "invoices";
