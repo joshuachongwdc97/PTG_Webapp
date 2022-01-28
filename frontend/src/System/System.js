@@ -210,7 +210,7 @@ const System = (props) => {
             <Divider sx={{ marginTop: "10px" }}>Server Info</Divider>
           )}
         </Grid>
-        <Grid item xs={3}>
+        <Grid item>
           {dataReady && (
             <Animate show={dataReady}>
               <ServerStorageCard />

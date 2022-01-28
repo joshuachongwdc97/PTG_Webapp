@@ -35,7 +35,7 @@ const ServerStorageCard = () => {
   }, []);
 
   return (
-    <BasicCard title="Server Storage">
+    <BasicCard title="Server Storage" maxWidth="350px">
       <Grid container>
         <Grid item xs={12}>
           <Typography variant="subtitle2" color="textSecondary">
