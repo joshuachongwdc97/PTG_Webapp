@@ -30,7 +30,9 @@ const SysCard = (props) => {
       icon={<DesktopWindowsRoundedIcon />}
       color={green[400]}
       onClick={props.onClick}
-      progress={(availSys.length / props.sys.length) * 100}
+      progress={
+        props.sys.length > 0 ? (availSys.length / props.sys.length) * 100 : 0
+      }
       progressColor="success"
     />
   );

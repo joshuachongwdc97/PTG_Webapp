@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useHttpClient } from "../../../../Shared/hooks/http-hook";
+import { serverName } from "../../../../Shared/variables/Variables";
 
 // Images
 import GIF from "../../../../Shared/assets/comp_hw.gif";
@@ -31,38 +32,20 @@ import DesktopAccessDisabledRoundedIcon from "@mui/icons-material/DesktopAccessD
 import BookmarkAddedRoundedIcon from "@mui/icons-material/BookmarkAddedRounded";
 import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
 
-// VARIABLES
-import { serverName } from "../../../../Shared/variables/Variables";
-
 const SysInfoDialog = (props) => {
   const { sendRequest } = useHttpClient();
-
   const [status, setStatus] = useState();
   const [showDelDialog, setShowDelDialog] = useState(false);
   const [showReserveDialog, setShowReserveDialog] = useState(false);
   const [releasing, setReleasing] = useState(false);
-  const [qual, setQual] = useState();
-
-  const getQual = async () => {
-    try {
-      let responseData = await sendRequest(
-        "http://" + serverName + "/api/qual" + props.sys.qual
-      );
-      setQual(responseData.qual);
-    } catch (err) {}
-  };
 
   useEffect(
     () => {
       if (props.open) {
         setStatus(SysStatus(props.sys));
       }
-
-      if (props.qual) {
-        getQual();
-      }
     }, // eslint-disable-next-line
-    [props.sys, props.open, props.qual]
+    [props.open]
   );
 
   const releaseSysHandler = async () => {
@@ -285,11 +268,16 @@ const SysInfoDialog = (props) => {
                       <Animate show delay="1.9s">
                         <AvatarCard
                           title={
-                            status === "reserved"
-                              ? props.sys.status
-                              : props.sys.qual
-                              ? "Job Detected"
-                              : "No Jobs Detected"
+                            !props.sys.qual
+                              ? "No Jobs Detected"
+                              : props.test && props.invoice
+                              ? "[" +
+                                props.test.test +
+                                "] [" +
+                                props.qual.soda +
+                                "] - " +
+                                props.invoice.name
+                              : "Test Info Unavailable"
                           }
                           letterSpacing="1px"
                           fontWeight="350"

@@ -5,8 +5,6 @@ import { Chip, Grid, Typography, LinearProgress } from "@mui/material";
 import BasicCard from "../../../../Shared/components/Card/BasicCard";
 
 const QualCard = (props) => {
-  console.log(props.invoice);
-
   return (
     <BasicCard>
       <Grid container spaing={1} rowSpacing={2}>
@@ -38,7 +36,7 @@ const QualCard = (props) => {
             sx={{ fontWeight: "500" }}
             color="textSecondary"
           >
-            {props.invoice.name}
+            {props.invoice ? props.invoice.name : "Invoice Not Found"}
           </Typography>
         </Grid>
         <Grid item xs={12}>

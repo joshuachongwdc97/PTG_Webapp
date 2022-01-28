@@ -22,6 +22,9 @@ const System = (props) => {
   const { sendRequest } = useHttpClient();
   const [systems, setSystems] = useState([]);
   const [quals, setQuals] = useState([]);
+  const [invoices, setInvoices] = useState([]);
+  const [tests, setTests] = useState([]);
+  const [drvPrgms, setDrvPrgms] = useState([]);
   const [showSysDialog, setShowSysDialog] = useState(false);
   const [dataReady, setDataReady] = useState(false);
   const [showAddSysDialog, setShowAddSysDialog] = useState(false);
@@ -29,21 +32,55 @@ const System = (props) => {
   const [showTestsDialog, setShowTestsDialog] = useState(false);
   const [showNewQualDialog, setShowNewQualDialog] = useState(false);
 
-  const getData = async () => {
+  const getSystems = async () => {
+    console.log("Getting Systems");
     try {
       let responseData = await sendRequest(
         "http://" + serverName + "/api/system"
       );
       setSystems(responseData.systems);
-
-      responseData = await sendRequest(
-        "http://" + serverName + "/api/qual/all"
-      );
-      setQuals(responseData.quals);
-
-      console.log("Data fetched");
-      setDataReady(true);
     } catch (err) {}
+  };
+
+  const getQuals = async () => {
+    let responseData = await sendRequest(
+      "http://" + serverName + "/api/qual/all"
+    );
+    setQuals(responseData.quals);
+  };
+
+  const getInvoices = async () => {
+    let responseData = await sendRequest(
+      "http://" + serverName + "/api/invoice"
+    );
+    setInvoices(responseData.invoices);
+  };
+
+  const getTests = async () => {
+    let responseData = await sendRequest(
+      "http://" + serverName + "/api/test/all"
+    );
+    setTests(responseData.tests);
+  };
+
+  const getDrvPrgms = async () => {
+    let responseData = await sendRequest(
+      "http://" + serverName + "/api/drvProgram"
+    );
+    setDrvPrgms(responseData.programs);
+  };
+
+  const getData = async () => {
+    console.log("Fetching Data");
+
+    getInvoices();
+    getTests();
+    getDrvPrgms();
+    getQuals();
+    getSystems();
+
+    console.log("Data fetched");
+    setDataReady(true);
   };
 
   useEffect(
@@ -108,7 +145,14 @@ const System = (props) => {
           setShowSysDialog(false);
         }}
         systems={systems}
+        invoices={invoices}
+        tests={tests}
+        quals={quals}
         getData={getData}
+        getSystems={getSystems}
+        getTests={getTests}
+        getInvoices={getInvoices}
+        getDrvPrgms={getDrvPrgms}
       />
 
       {/* TESTS DIALOG */}
@@ -117,6 +161,8 @@ const System = (props) => {
         close={() => {
           setShowTestsDialog(false);
         }}
+        drvPrgms={drvPrgms}
+        tests={tests}
       />
 
       <Grid container spacing={2}>
@@ -148,10 +194,21 @@ const System = (props) => {
           <Divider>Ongoing Jobs</Divider>
         </Grid>
         <Grid item xs={12}>
-          <QualView quals={quals} />
+          {dataReady && (
+            <Animate show={dataReady}>
+              <QualView
+                quals={quals}
+                invoices={invoices}
+                tests={tests}
+                drvPrgms={drvPrgms}
+              />
+            </Animate>
+          )}
         </Grid>
         <Grid item xs={12}>
-          <Divider sx={{ marginTop: "10px" }}>Server Info</Divider>
+          {dataReady && (
+            <Divider sx={{ marginTop: "10px" }}>Server Info</Divider>
+          )}
         </Grid>
         <Grid item xs={3}>
           {dataReady && (

@@ -9,6 +9,19 @@ import SysInfoDialog from "./components/SysInfoDialog";
 const SysDialog = (props) => {
   const [showSysInfoDialog, setShowSysInfoDialog] = useState(false);
   const [selectedSys, setSelectedSys] = useState();
+  const [test, setTest] = useState();
+  const [invoice, setInvoice] = useState();
+  const [qual, setQual] = useState();
+
+  // Refresh System Details
+  useEffect(
+    () => {
+      if (props.open) {
+        props.getSystems();
+      }
+    }, // eslint-disable-next-line
+    [props.open]
+  );
 
   // GET RACK NUMBER ARRAYS
   let rackNoArr = props.systems.map((sys) => {
@@ -30,6 +43,41 @@ const SysDialog = (props) => {
     [props.systems]
   );
 
+  // Get Selected Sys Qual Details
+  useEffect(() => {
+    if (selectedSys) {
+      if (selectedSys.qual) {
+        setQual(
+          props.quals.filter((qual) => {
+            return qual.id === selectedSys.qual;
+          })[0]
+        );
+      }
+    } else {
+      setQual();
+    }
+  }, [selectedSys, props.quals]);
+
+  // Get More Qual Details
+  useEffect(() => {
+    if (qual) {
+      setInvoice(
+        props.invoices.filter((inv) => {
+          return inv.id === qual.invoice;
+        })[0]
+      );
+
+      setTest(
+        props.tests.filter((test) => {
+          return test.id === qual.test;
+        })[0]
+      );
+    } else {
+      setInvoice();
+      setTest();
+    }
+  }, [props.invoices, props.tests, qual]);
+
   const RackCards = rackNoArr.map((rackNo) => {
     const sysInRack = props.systems.filter((sys) => {
       return sys.rackNo === rackNo;
@@ -45,6 +93,8 @@ const SysDialog = (props) => {
             setShowSysInfoDialog(true);
             setSelectedSys(sys);
           }}
+          quals={props.quals}
+          tests={props.tests}
         />
       </Grid>
     );
@@ -59,6 +109,9 @@ const SysDialog = (props) => {
           setSelectedSys();
         }}
         sys={selectedSys}
+        test={test}
+        qual={qual}
+        invoice={invoice}
         getData={props.getData}
       />
 

@@ -8,7 +8,7 @@ const AvatarCard = (props) => {
   return (
     <OutlinedCard align="center" click>
       <Grid container spacing={1} justifyContent="center" alignItems={"center"}>
-        <Grid item xs={4} align="center" sx={{ height: "100%" }}>
+        <Grid item xs={3} align="center" sx={{ height: "100%" }}>
           <Avatar
             variant="rounded"
             sx={{ width: props.iconSize, height: props.iconSize }}
@@ -16,7 +16,7 @@ const AvatarCard = (props) => {
             {props.icon}
           </Avatar>
         </Grid>
-        <Grid item xs={8} align="left" sx={{ height: "100%" }}>
+        <Grid item xs={9} align="left" sx={{ height: "100%" }}>
           <Typography
             variant={props.fontSize}
             sx={{

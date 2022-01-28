@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { useHttpClient } from "../../../Shared/hooks/http-hook";
-import { serverName } from "../../../Shared/variables/Variables";
+import React from "react";
 
 import { Grid } from "@mui/material";
 
@@ -8,89 +6,48 @@ import OutlinedCard from "../../../Shared/components/Card/OutlinedCard";
 import QualCard from "./components/QualCard";
 
 const QualView = (props) => {
-  const { sendRequest } = useHttpClient();
-
-  const [tests, setTests] = useState([]);
-  const [drvPrgms, setDrvPrgms] = useState([]);
-  const [invoices, setInvoices] = useState([]);
-  const [dataReady, setDataReady] = useState(false);
-
-  const getTests = async () => {
-    try {
-      let responseData = await sendRequest(
-        "http://" + serverName + "/api/test/all"
-      );
-      setTests(responseData.tests);
-    } catch (err) {}
-  };
-
-  const getDrvPrgms = async () => {
-    try {
-      let responseData = await sendRequest(
-        "http://" + serverName + "/api/drvProgram"
-      );
-      setDrvPrgms(responseData.programs);
-    } catch (err) {}
-  };
-
-  const getInvoices = async () => {
-    try {
-      let responseData = await sendRequest(
-        "http://" + serverName + "/api/invoice"
-      );
-      setInvoices(responseData.invoices);
-    } catch (err) {}
-  };
-
-  useEffect(
-    () => {
-      if (props.quals.length > 0) {
-        getTests();
-        getDrvPrgms();
-        getInvoices();
-        setDataReady(true);
-      }
-    }, // eslint-disable-next-line
-    [props.quals]
-  );
-
   const QualCards = props.quals.map((qual) => {
-    const test = tests.filter((test) => {
+    const test = props.tests.filter((test) => {
       return test.id === qual.test;
     })[0];
 
-    const drvPrgm = drvPrgms.filter((prgm) => {
-      return prgm.id === test.drvPrgm;
-    })[0];
+    let drvPrgm;
+    let invoice;
 
-    const invoice = invoices.filter((inv) => {
-      return inv.id === qual.invoice;
-    })[0];
+    if (test) {
+      drvPrgm = props.drvPrgms.filter((prgm) => {
+        return prgm.id === test.drvPrgm;
+      })[0];
+
+      invoice = props.invoices.filter((inv) => {
+        return inv.id === qual.invoice;
+      })[0];
+    }
 
     return (
-      <Grid item xs={2} key={qual.id}>
-        {test && drvPrgm && invoice && (
-          <QualCard
-            qual={qual}
-            test={test}
-            drvPrgm={drvPrgm}
-            invoice={invoice}
-          />
+      <React.Fragment key={qual.id}>
+        {test && (
+          <Grid item xs={2.4} key={qual.id}>
+            <QualCard
+              qual={qual}
+              test={test}
+              drvPrgm={drvPrgm}
+              invoice={invoice}
+            />
+          </Grid>
         )}
-      </Grid>
+      </React.Fragment>
     );
   });
 
   return (
-    dataReady && (
-      <React.Fragment>
-        <OutlinedCard>
-          <Grid container spacing={2}>
-            {QualCards}
-          </Grid>
-        </OutlinedCard>
-      </React.Fragment>
-    )
+    <React.Fragment>
+      <OutlinedCard>
+        <Grid container spacing={2}>
+          {QualCards}
+        </Grid>
+      </OutlinedCard>
+    </React.Fragment>
   );
 };
 

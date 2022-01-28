@@ -23,6 +23,8 @@ const SysRackCard = (props) => {
           key={rowNo}
           sysInRow={sysInRow}
           showSysInfoDialog={props.showSysInfoDialog}
+          quals={props.quals}
+          tests={props.tests}
         />
       </Grid>
     );

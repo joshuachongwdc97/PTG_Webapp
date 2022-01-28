@@ -17,6 +17,37 @@ const SysRow = (props) => {
 
     const SysStatus = sysStatus(sys);
 
+    // // Get Test Duration
+    // if (sys.qual) {
+    //   const qual = props.quals.filter((qual) => {
+    //     return qual.id === sys.qual;
+    //   })[0];
+
+    //   const test = props.tests.filter((test) => {
+    //     return test.id === qual.test;
+    //   })[0];
+
+    //   let testModeDuration;
+
+    //   if (test.modes.length > 1) {
+    //     testModeDuration = test.modes.filter((mode) => {
+    //       return mode.mode === sys.testMode;
+    //     })[0].duration;
+    //   }
+
+    //   console.log(testModeDuration);
+    // }
+
+    // if (SysStatus === "reserved") {
+    //   const testStart = new Date(sys.testStart);
+
+    //   const estimateTestEnd = new Date(
+    //     testStart.setHours(testStart.getHours() + 40.5)
+    //   );
+
+    //   console.log(estimateTestEnd);
+    // }
+
     return (
       <Grid item key={sys.id} xs={sysMargin} align="center">
         <BasicCardwTT
