@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { useHttpClient } from "../../../../../../Shared/hooks/http-hook";
-import { Grid, Divider } from "@mui/material";
+import { Grid, Divider, Button, IconButton } from "@mui/material";
 import {
   AccountCircle,
   BadgeRounded,
@@ -11,6 +11,7 @@ import {
 
 // ICONS
 import DescriptionRoundedIcon from "@mui/icons-material/DescriptionRounded";
+import CloudUploadRoundedIcon from "@mui/icons-material/CloudUploadRounded";
 
 // COMPONENTS
 import TextFieldWIcon from "../../../../../../Shared/components/Input/TextFieldWIcon";
@@ -94,7 +95,7 @@ const InvoiceInputs = (props) => {
           <TextFieldWIcon
             required
             label="Invoice ID"
-            icon={<AccountCircle />}
+            startIcon={<AccountCircle />}
             name="invid"
             value={props.inputState.invid}
             onChange={props.inputHandler}
@@ -109,7 +110,7 @@ const InvoiceInputs = (props) => {
           <TextFieldWIcon
             required
             label="Name"
-            icon={<BadgeRounded />}
+            startIcon={<BadgeRounded />}
             name="name"
             value={props.inputState.name}
             onChange={props.inputHandler}
@@ -127,7 +128,7 @@ const InvoiceInputs = (props) => {
           <TextFieldWIcon
             required
             label="Requestor"
-            icon={<AccountBoxRounded />}
+            startIcon={<AccountBoxRounded />}
             name="requestor"
             value={props.inputState.requestor}
             onChange={props.inputHandler}
@@ -139,7 +140,7 @@ const InvoiceInputs = (props) => {
           <TextFieldWIcon
             required
             label="Origin"
-            icon={<LocationOnRounded />}
+            startIcon={<LocationOnRounded />}
             name="origin"
             value={props.inputState.origin}
             onChange={props.inputHandler}
@@ -209,7 +210,7 @@ const InvoiceInputs = (props) => {
         <Grid item xs={12}>
           <TextFieldWIcon
             label="Description/Remarks"
-            icon={<DescriptionRoundedIcon />}
+            startIcon={<DescriptionRoundedIcon />}
             name="description"
             value={
               props.inputState.description ? props.inputState.description : ""
@@ -218,6 +219,48 @@ const InvoiceInputs = (props) => {
             disabled={disabled}
             autoComplete="off"
           ></TextFieldWIcon>
+        </Grid>
+        <Grid item xs={8.9}>
+          <TextFieldWIcon
+            label="File"
+            value={
+              props.inputState.filePath
+                ? props.inputState.filePath
+                : "No File Uploaded"
+            }
+            disabled={disabled}
+            endIcon={
+              <IconButton onChange={props.inputHandler} component="label">
+                <CloudUploadRoundedIcon />
+                <input type="file" name="filePath" hidden />
+              </IconButton>
+            }
+            readOnly
+          />
+        </Grid>
+        <Grid item xs={1} textAlign={"end"}>
+          <Button
+            variant="outlined"
+            onClick={props.openFileHandler}
+            sx={{ height: "100%" }}
+            disabled={
+              !(props.inputState.filePath && props.invDialogState === "view")
+            }
+          >
+            Open
+          </Button>
+        </Grid>
+        <Grid item xs={2.1} textAlign={"end"}>
+          <Button
+            variant="outlined"
+            onClick={props.downloadFileHandler}
+            sx={{ height: "100%" }}
+            disabled={
+              !(props.inputState.filePath && props.invDialogState === "view")
+            }
+          >
+            Download
+          </Button>
         </Grid>
       </Grid>
     </React.Fragment>
