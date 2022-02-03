@@ -18,6 +18,7 @@ const invoiceSchema = new Schema({
   },
   description: { type: String },
   schemaVersion: { type: String },
+  filePath: { type: String },
 });
 
 invoiceSchema.plugin(uniqueValidator);
