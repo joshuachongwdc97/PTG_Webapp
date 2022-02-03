@@ -4,6 +4,10 @@ const { validationResult } = require("express-validator");
 const mongoose = require("mongoose");
 
 const Invoice = require("../models/invoice");
+const open = require("open");
+const fs = require("fs");
+
+const rootPath = "C:\\Users\\1000293988\\Documents\\";
 
 const getInvoices = async (req, res, next) => {
   let invoices;
@@ -52,6 +56,7 @@ const addInvoice = async (req, res, next) => {
     requestor,
     drvPrgm,
     description,
+    filePath,
   } = req.body;
 
   let existingInvoice;
@@ -79,6 +84,7 @@ const addInvoice = async (req, res, next) => {
     requestor,
     drvPrgm,
     description,
+    filePath,
     schemaVersion,
   });
 
@@ -108,6 +114,7 @@ const updateInvoice = async (req, res, next) => {
     requestor,
     drvPrgm,
     description,
+    filePath,
   } = req.body;
   const id = req.params.id;
 
@@ -129,6 +136,7 @@ const updateInvoice = async (req, res, next) => {
   updatedInvoice.requestor = requestor;
   updatedInvoice.drvPrgm = drvPrgm;
   updatedInvoice.description = description;
+  updatedInvoice.filePath = filePath;
 
   try {
     await updatedInvoice.save();
@@ -174,8 +182,74 @@ const deleteInvoice = async (req, res, next) => {
   res.status(200).json({ message: "Deleted Invoice" });
 };
 
+const uploadFile = async (req, res, next) => {
+  const file = req.file;
+  const filename = file.originalname;
+
+  fs.writeFile(rootPath + filename, file.buffer, function (err) {
+    if (err) {
+      return next(err);
+    }
+  });
+
+  res.status(200).json({ message: "Uploaded File" });
+};
+
+const openFile = async (req, res, next) => {
+  const id = req.params.id;
+
+  let invoice;
+
+  try {
+    invoice = await Invoice.findById(id);
+  } catch (err) {
+    const error = new HttpError("Retrieving Invoice Failed", 500);
+    return next(error);
+  }
+
+  if (!invoice) {
+    const error = new HttpError("Could not find Invoice for this ID", 404);
+    return next(error);
+  }
+
+  try {
+    open(rootPath + invoice.filePath);
+  } catch (err) {
+    return next(err);
+  }
+
+  res.status(200).json({ message: "Opened File" });
+};
+
+const downloadFile = async (req, res, next) => {
+  const id = req.params.id;
+
+  let invoice;
+
+  try {
+    invoice = await Invoice.findById(id);
+  } catch (err) {
+    const error = new HttpError("Retrieving Invoice Failed", 500);
+    return next(error);
+  }
+
+  if (!invoice) {
+    const error = new HttpError("Could not find Invoice for this ID", 404);
+    return next(error);
+  }
+
+  try {
+    res.download(rootPath + invoice.filePath, invoice.filePath);
+  } catch (err) {
+    return next(err);
+  }
+};
+
 exports.getInvoices = getInvoices;
 exports.getInvoice = getInvoice;
 exports.addInvoice = addInvoice;
 exports.updateInvoice = updateInvoice;
 exports.deleteInvoice = deleteInvoice;
+exports.uploadFile = uploadFile;
+exports.openFile = openFile;
+exports.downloadFile = downloadFile;
