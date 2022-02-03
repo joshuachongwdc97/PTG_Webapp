@@ -107,7 +107,7 @@ const AddDrvPrgmDialog = (props) => {
         <Grid item xs={12}>
           <TextFieldWIcon
             label="Drive Program"
-            //icon={<SearchIcon />}
+            //startIcon={<SearchIcon />}
             name="drvPrgm"
             onChange={inputHandler}
             autoComplete="off"
@@ -117,7 +117,7 @@ const AddDrvPrgmDialog = (props) => {
         <Grid item xs={12}>
           <TextFieldWIcon
             label="Alias"
-            //icon={<SearchIcon />}
+            //startIcon={<SearchIcon />}
             name="alias"
             onChange={inputHandler}
             autoComplete="off"

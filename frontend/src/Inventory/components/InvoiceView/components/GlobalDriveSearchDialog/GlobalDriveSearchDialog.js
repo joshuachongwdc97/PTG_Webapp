@@ -33,7 +33,7 @@ const GlobalDriveSearchDialog = (props) => {
           <Grid item xs={12}>
             <TextFieldWIcon
               label="Serial Number"
-              icon={<SearchIcon />}
+              startIcon={<SearchIcon />}
               name="Serial Number"
               onChange={inputHandler}
               autoComplete="off"
