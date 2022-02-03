@@ -34,6 +34,7 @@ const InvoiceDialog = (props) => {
     drvPrgm: "",
     status: "",
     description: undefined,
+    filePath: undefined,
   });
   const [inputReady, setInputReady] = useState(false);
   const [drives, setDrives] = useState([]);
@@ -44,6 +45,8 @@ const InvoiceDialog = (props) => {
   const [showDelDialog, setShowDelDialog] = useState(false);
   const [unmodifiedState, setUnmodifiedState] = useState();
   const [modifiable, setModifiable] = useState(false);
+  const [uploadedFile, setUploadedFile] = useState();
+  const [invObjectId, setInvObjectId] = useState();
 
   // CHECK IF DATA MODIIFIED IN MODIFY STATE
   useEffect(() => {
@@ -56,6 +59,7 @@ const InvoiceDialog = (props) => {
         inputState.dateReturned !== unmodifiedState.dateReturned ||
         inputState.drvPrgm !== unmodifiedState.drvPrgm ||
         inputState.description !== unmodifiedState.description ||
+        inputState.filePath !== unmodifiedState.filePath ||
         drives !== unmodifiedState.drives
       ) {
         setModifiable(true);
@@ -78,6 +82,8 @@ const InvoiceDialog = (props) => {
         return drv.invid === props.selection[0];
       });
 
+      setInvObjectId(invoiceData.id);
+
       setInputState({
         ...inputState,
         name: invoiceData.name,
@@ -89,6 +95,7 @@ const InvoiceDialog = (props) => {
         drvPrgm: invoiceData.drvPrgm,
         status: invoiceData.status,
         description: invoiceData.description,
+        filePath: invoiceData.filePath,
       });
 
       setDrives(driveData);
@@ -146,11 +153,19 @@ const InvoiceDialog = (props) => {
   // INPUT HANDLER
   const inputHandler = (event) => {
     let value = event.target.value;
+
     if (event.target.name === "invid" || event.target.name === "name") {
       value = event.target.value.toUpperCase();
     }
-    if (event.target.name === "description" && event.target.value === "") {
+    if (
+      ["description", "filePath"].includes(event.target.name) &&
+      event.target.value === ""
+    ) {
       value = undefined;
+    } else if (event.target.name === "filePath") {
+      // remove "C:/fakepath/" to obtain file name
+      value = event.target.value.slice(12);
+      setUploadedFile(event.target.files[0]);
     }
 
     setInputState({
@@ -183,6 +198,7 @@ const InvoiceDialog = (props) => {
       dateReturned: undefined,
       drvPrgm: "",
       description: undefined,
+      filePath: undefined,
     });
     setDrives([]);
     setActiveTab("invoice");
@@ -371,9 +387,38 @@ const InvoiceDialog = (props) => {
       } catch (err) {}
     }
 
+    // SAVE UPLOADED FILES
+    if (inputState.filePath) {
+      const fileData = new FormData();
+      fileData.append("file", uploadedFile);
+
+      try {
+        await sendRequest(
+          "http://" + serverName + "/api/invoice/upload",
+          "POST",
+          fileData
+        );
+      } catch (err) {}
+    }
+
     setSubmitting(false);
     props.getData();
     props.close();
+  };
+
+  const openFileHandler = async () => {
+    try {
+      await sendRequest(`http://${serverName}/api/invoice/${invObjectId}/open`);
+    } catch (err) {}
+  };
+
+  const downloadFileHandler = async () => {
+    var popout = window.open(
+      `http://${serverName}/api/invoice/${invObjectId}/download`
+    );
+    window.setTimeout(function () {
+      popout.close();
+    }, 1000);
   };
 
   const DialogActions = (
@@ -474,6 +519,8 @@ const InvoiceDialog = (props) => {
                     invoices={props.invoices}
                     invDialogState={invDialogState}
                     setInvDialogInputState={setInputState}
+                    openFileHandler={openFileHandler}
+                    downloadFileHandler={downloadFileHandler}
                   />
                 </React.Fragment>
               ) : (
