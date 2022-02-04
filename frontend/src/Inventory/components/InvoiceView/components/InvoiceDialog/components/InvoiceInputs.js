@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { useHttpClient } from "../../../../../../Shared/hooks/http-hook";
-import { Grid, Divider, Button, IconButton } from "@mui/material";
+import { Grid, Divider } from "@mui/material";
 import {
   AccountCircle,
   BadgeRounded,
@@ -11,7 +11,6 @@ import {
 
 // ICONS
 import DescriptionRoundedIcon from "@mui/icons-material/DescriptionRounded";
-import CloudUploadRoundedIcon from "@mui/icons-material/CloudUploadRounded";
 
 // COMPONENTS
 import TextFieldWIcon from "../../../../../../Shared/components/Input/TextFieldWIcon";
@@ -19,6 +18,7 @@ import SelectMenu from "../../../../../../Shared/components/Input/SelectMenu";
 import DatePicker from "../../../../../../Shared/components/Input/DatePicker";
 import Animate from "../../../../../../Shared/transitions/Animate";
 import AddDrvPrgmDialog from "./AddDrvPrgmDialog";
+import FileAttachment from "../../../../../../Shared/components/Input/FileAttachment";
 
 // VARIABLES
 import { serverName } from "../../../../../../Shared/variables/Variables";
@@ -220,48 +220,34 @@ const InvoiceInputs = (props) => {
             autoComplete="off"
           ></TextFieldWIcon>
         </Grid>
-        <Grid item xs={8.9}>
-          <TextFieldWIcon
-            label="File"
-            value={
-              props.inputState.filePath
-                ? props.inputState.filePath
-                : "No File Uploaded"
-            }
-            disabled={disabled}
-            endIcon={
-              <IconButton onChange={props.inputHandler} component="label">
-                <CloudUploadRoundedIcon />
-                <input type="file" name="filePath" hidden />
-              </IconButton>
-            }
-            readOnly
-          />
+        {/* FILE ATTACHMENTS */}
+        <Grid item xs={12}>
+          <Divider>File Attachments</Divider>
         </Grid>
-        <Grid item xs={1} textAlign={"end"}>
-          <Button
-            variant="outlined"
-            onClick={props.openFileHandler}
-            sx={{ height: "100%" }}
-            disabled={
-              !(props.inputState.filePath && props.invDialogState === "view")
-            }
-          >
-            Open
-          </Button>
-        </Grid>
-        <Grid item xs={2.1} textAlign={"end"}>
-          <Button
-            variant="outlined"
-            onClick={props.downloadFileHandler}
-            sx={{ height: "100%" }}
-            disabled={
-              !(props.inputState.filePath && props.invDialogState === "view")
-            }
-          >
-            Download
-          </Button>
-        </Grid>
+        <FileAttachment
+          label="Invoice"
+          name="invFile"
+          value={props.inputState.invFile}
+          inputHandler={props.inputHandler}
+          textFieldDisabled={disabled}
+          buttonsDisabled={
+            !(props.inputState.invFile && props.invDialogState === "view")
+          }
+          openFileHandler={props.openFileHandler}
+          downloadFileHandler={props.downloadFileHandler}
+        />
+        <FileAttachment
+          label="Request Form"
+          name="reqFormFile"
+          value={props.inputState.reqFormFile}
+          inputHandler={props.inputHandler}
+          textFieldDisabled={disabled}
+          buttonsDisabled={
+            !(props.inputState.reqFormFile && props.invDialogState === "view")
+          }
+          openFileHandler={props.openFileHandler}
+          downloadFileHandler={props.downloadFileHandler}
+        />
       </Grid>
     </React.Fragment>
   );

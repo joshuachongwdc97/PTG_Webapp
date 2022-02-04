@@ -7,7 +7,8 @@ const Invoice = require("../models/invoice");
 const open = require("open");
 const fs = require("fs");
 
-const rootPath = "C:\\Users\\1000293988\\Documents\\";
+const invRootPath = "C:\\Users\\1000293988\\Documents\\INVOICES\\";
+const reqFormRootPath = "C:\\Users\\1000293988\\Documents\\REQUEST_FORMS\\";
 
 const getInvoices = async (req, res, next) => {
   let invoices;
@@ -56,7 +57,8 @@ const addInvoice = async (req, res, next) => {
     requestor,
     drvPrgm,
     description,
-    filePath,
+    invFile,
+    reqFormFile,
   } = req.body;
 
   let existingInvoice;
@@ -84,7 +86,8 @@ const addInvoice = async (req, res, next) => {
     requestor,
     drvPrgm,
     description,
-    filePath,
+    invFile,
+    reqFormFile,
     schemaVersion,
   });
 
@@ -114,7 +117,8 @@ const updateInvoice = async (req, res, next) => {
     requestor,
     drvPrgm,
     description,
-    filePath,
+    invFile,
+    reqFormFile,
   } = req.body;
   const id = req.params.id;
 
@@ -136,7 +140,8 @@ const updateInvoice = async (req, res, next) => {
   updatedInvoice.requestor = requestor;
   updatedInvoice.drvPrgm = drvPrgm;
   updatedInvoice.description = description;
-  updatedInvoice.filePath = filePath;
+  updatedInvoice.invFile = invFile;
+  updatedInvoice.reqFormFile = reqFormFile;
 
   try {
     await updatedInvoice.save();
@@ -185,6 +190,8 @@ const deleteInvoice = async (req, res, next) => {
 const uploadFile = async (req, res, next) => {
   const file = req.file;
   const filename = file.originalname;
+  const fileType = req.params.fileType;
+  const rootPath = fileType === "invFile" ? invRootPath : reqFormRootPath;
 
   fs.writeFile(rootPath + filename, file.buffer, function (err) {
     if (err) {
@@ -197,6 +204,8 @@ const uploadFile = async (req, res, next) => {
 
 const openFile = async (req, res, next) => {
   const id = req.params.id;
+  const fileType = req.params.fileType;
+  const rootPath = fileType === "invFile" ? invRootPath : reqFormRootPath;
 
   let invoice;
 
@@ -212,8 +221,11 @@ const openFile = async (req, res, next) => {
     return next(error);
   }
 
+  const fileName =
+    fileType === "invFile" ? invoice.invFile : invoice.reqFormFile;
+
   try {
-    open(rootPath + invoice.filePath);
+    open(rootPath + fileName);
   } catch (err) {
     return next(err);
   }
@@ -223,6 +235,8 @@ const openFile = async (req, res, next) => {
 
 const downloadFile = async (req, res, next) => {
   const id = req.params.id;
+  const fileType = req.params.fileType;
+  const rootPath = fileType === "invFile" ? invRootPath : reqFormRootPath;
 
   let invoice;
 
@@ -238,8 +252,11 @@ const downloadFile = async (req, res, next) => {
     return next(error);
   }
 
+  const fileName =
+    fileType === "invFile" ? invoice.invFile : invoice.reqFormFile;
+
   try {
-    res.download(rootPath + invoice.filePath, invoice.filePath);
+    res.download(rootPath + fileName);
   } catch (err) {
     return next(err);
   }
