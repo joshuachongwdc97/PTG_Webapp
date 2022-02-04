@@ -18,6 +18,7 @@ import SelectMenu from "../../../../../../Shared/components/Input/SelectMenu";
 import DatePicker from "../../../../../../Shared/components/Input/DatePicker";
 import Animate from "../../../../../../Shared/transitions/Animate";
 import AddDrvPrgmDialog from "./AddDrvPrgmDialog";
+import FileAttachment from "../../../../../../Shared/components/Input/FileAttachment";
 
 // VARIABLES
 import { serverName } from "../../../../../../Shared/variables/Variables";
@@ -94,7 +95,7 @@ const InvoiceInputs = (props) => {
           <TextFieldWIcon
             required
             label="Invoice ID"
-            icon={<AccountCircle />}
+            startIcon={<AccountCircle />}
             name="invid"
             value={props.inputState.invid}
             onChange={props.inputHandler}
@@ -109,7 +110,7 @@ const InvoiceInputs = (props) => {
           <TextFieldWIcon
             required
             label="Name"
-            icon={<BadgeRounded />}
+            startIcon={<BadgeRounded />}
             name="name"
             value={props.inputState.name}
             onChange={props.inputHandler}
@@ -127,7 +128,7 @@ const InvoiceInputs = (props) => {
           <TextFieldWIcon
             required
             label="Requestor"
-            icon={<AccountBoxRounded />}
+            startIcon={<AccountBoxRounded />}
             name="requestor"
             value={props.inputState.requestor}
             onChange={props.inputHandler}
@@ -139,7 +140,7 @@ const InvoiceInputs = (props) => {
           <TextFieldWIcon
             required
             label="Origin"
-            icon={<LocationOnRounded />}
+            startIcon={<LocationOnRounded />}
             name="origin"
             value={props.inputState.origin}
             onChange={props.inputHandler}
@@ -209,7 +210,7 @@ const InvoiceInputs = (props) => {
         <Grid item xs={12}>
           <TextFieldWIcon
             label="Description/Remarks"
-            icon={<DescriptionRoundedIcon />}
+            startIcon={<DescriptionRoundedIcon />}
             name="description"
             value={
               props.inputState.description ? props.inputState.description : ""
@@ -219,6 +220,34 @@ const InvoiceInputs = (props) => {
             autoComplete="off"
           ></TextFieldWIcon>
         </Grid>
+        {/* FILE ATTACHMENTS */}
+        <Grid item xs={12}>
+          <Divider>File Attachments</Divider>
+        </Grid>
+        <FileAttachment
+          label="Invoice"
+          name="invFile"
+          value={props.inputState.invFile}
+          inputHandler={props.inputHandler}
+          textFieldDisabled={disabled}
+          buttonsDisabled={
+            !(props.inputState.invFile && props.invDialogState === "view")
+          }
+          openFileHandler={props.openFileHandler}
+          downloadFileHandler={props.downloadFileHandler}
+        />
+        <FileAttachment
+          label="Request Form"
+          name="reqFormFile"
+          value={props.inputState.reqFormFile}
+          inputHandler={props.inputHandler}
+          textFieldDisabled={disabled}
+          buttonsDisabled={
+            !(props.inputState.reqFormFile && props.invDialogState === "view")
+          }
+          openFileHandler={props.openFileHandler}
+          downloadFileHandler={props.downloadFileHandler}
+        />
       </Grid>
     </React.Fragment>
   );

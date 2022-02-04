@@ -18,6 +18,8 @@ const invoiceSchema = new Schema({
   },
   description: { type: String },
   schemaVersion: { type: String },
+  invFile: { type: String },
+  reqFormFile: { type: String },
 });
 
 invoiceSchema.plugin(uniqueValidator);

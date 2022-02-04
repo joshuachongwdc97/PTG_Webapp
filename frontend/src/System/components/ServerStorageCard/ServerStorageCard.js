@@ -24,9 +24,7 @@ const ServerStorageCard = () => {
         ["D:", "E:"].includes(drv.drive)
       );
       setStorageData(filteredDrives);
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
   useEffect(() => {

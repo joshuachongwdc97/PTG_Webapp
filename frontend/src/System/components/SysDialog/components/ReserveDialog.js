@@ -66,7 +66,7 @@ const ReserveDialog = (props) => {
       <TextFieldWIcon
         required
         label="Input your Name"
-        icon={<AccountCircleRoundedIcon />}
+        startIcon={<AccountCircleRoundedIcon />}
         name="name"
         value={inputState}
         onChange={inputHandler}

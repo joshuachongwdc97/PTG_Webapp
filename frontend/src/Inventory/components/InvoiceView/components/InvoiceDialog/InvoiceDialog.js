@@ -34,6 +34,8 @@ const InvoiceDialog = (props) => {
     drvPrgm: "",
     status: "",
     description: undefined,
+    invFile: undefined,
+    reqFormFile: undefined,
   });
   const [inputReady, setInputReady] = useState(false);
   const [drives, setDrives] = useState([]);
@@ -44,6 +46,9 @@ const InvoiceDialog = (props) => {
   const [showDelDialog, setShowDelDialog] = useState(false);
   const [unmodifiedState, setUnmodifiedState] = useState();
   const [modifiable, setModifiable] = useState(false);
+  const [invFile, setInvFile] = useState();
+  const [reqFormFile, setReqFormFile] = useState();
+  const [invObjectId, setInvObjectId] = useState();
 
   // CHECK IF DATA MODIIFIED IN MODIFY STATE
   useEffect(() => {
@@ -56,6 +61,8 @@ const InvoiceDialog = (props) => {
         inputState.dateReturned !== unmodifiedState.dateReturned ||
         inputState.drvPrgm !== unmodifiedState.drvPrgm ||
         inputState.description !== unmodifiedState.description ||
+        inputState.invFile !== unmodifiedState.invFile ||
+        inputState.reqFormFile !== unmodifiedState.reqFormFile ||
         drives !== unmodifiedState.drives
       ) {
         setModifiable(true);
@@ -78,6 +85,8 @@ const InvoiceDialog = (props) => {
         return drv.invid === props.selection[0];
       });
 
+      setInvObjectId(invoiceData.id);
+
       setInputState({
         ...inputState,
         name: invoiceData.name,
@@ -89,6 +98,8 @@ const InvoiceDialog = (props) => {
         drvPrgm: invoiceData.drvPrgm,
         status: invoiceData.status,
         description: invoiceData.description,
+        invFile: invoiceData.invFile,
+        reqFormFile: invoiceData.reqFormFile,
       });
 
       setDrives(driveData);
@@ -146,11 +157,23 @@ const InvoiceDialog = (props) => {
   // INPUT HANDLER
   const inputHandler = (event) => {
     let value = event.target.value;
+
     if (event.target.name === "invid" || event.target.name === "name") {
       value = event.target.value.toUpperCase();
     }
-    if (event.target.name === "description" && event.target.value === "") {
+    if (
+      ["description", "invFile", "reqFormFile"].includes(event.target.name) &&
+      event.target.value === ""
+    ) {
       value = undefined;
+    } else if (["invFile", "reqFormFile"].includes(event.target.name)) {
+      // remove "C:/fakepath/" to obtain file name
+      value = event.target.value.slice(12);
+      if (event.target.name === "invFile") {
+        setInvFile(event.target.files[0]);
+      } else {
+        setReqFormFile(event.target.files[0]);
+      }
     }
 
     setInputState({
@@ -183,6 +206,8 @@ const InvoiceDialog = (props) => {
       dateReturned: undefined,
       drvPrgm: "",
       description: undefined,
+      invFile: undefined,
+      reqFormFile: undefined,
     });
     setDrives([]);
     setActiveTab("invoice");
@@ -423,9 +448,53 @@ const InvoiceDialog = (props) => {
       } catch (err) {}
     }
 
+    // SAVE FILE ATTACHMENTS
+    if (invFile) {
+      const fileData = new FormData();
+      fileData.append("file", invFile);
+
+      try {
+        await sendRequest(
+          "http://" + serverName + "/api/invoice/upload/invFile",
+          "POST",
+          fileData
+        );
+      } catch (err) {}
+    }
+
+    if (reqFormFile) {
+      const fileData = new FormData();
+      fileData.append("file", reqFormFile);
+
+      try {
+        await sendRequest(
+          "http://" + serverName + "/api/invoice/upload/reqFormFile",
+          "POST",
+          fileData
+        );
+      } catch (err) {}
+    }
+
     setSubmitting(false);
     props.getData();
     props.close();
+  };
+
+  const openFileHandler = async (fileType) => {
+    try {
+      await sendRequest(
+        `http://${serverName}/api/invoice/${invObjectId}/open/${fileType}`
+      );
+    } catch (err) {}
+  };
+
+  const downloadFileHandler = async (fileType) => {
+    var popout = window.open(
+      `http://${serverName}/api/invoice/${invObjectId}/download/${fileType}`
+    );
+    window.setTimeout(function () {
+      popout.close();
+    }, 1000);
   };
 
   const DialogActions = (
@@ -526,6 +595,8 @@ const InvoiceDialog = (props) => {
                     invoices={props.invoices}
                     invDialogState={invDialogState}
                     setInvDialogInputState={setInputState}
+                    openFileHandler={openFileHandler}
+                    downloadFileHandler={downloadFileHandler}
                   />
                 </React.Fragment>
               ) : (

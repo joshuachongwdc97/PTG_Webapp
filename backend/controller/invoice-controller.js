@@ -4,6 +4,11 @@ const { validationResult } = require("express-validator");
 const mongoose = require("mongoose");
 
 const Invoice = require("../models/invoice");
+const open = require("open");
+const fs = require("fs");
+
+const invRootPath = "E:\\PTG_Storage_B\\INVOICES";
+const reqFormRootPath = "E:\\PTG_Storage_B\\REQUEST_FORMS";
 
 const getInvoices = async (req, res, next) => {
   let invoices;
@@ -52,6 +57,8 @@ const addInvoice = async (req, res, next) => {
     requestor,
     drvPrgm,
     description,
+    invFile,
+    reqFormFile,
   } = req.body;
 
   let existingInvoice;
@@ -79,6 +86,8 @@ const addInvoice = async (req, res, next) => {
     requestor,
     drvPrgm,
     description,
+    invFile,
+    reqFormFile,
     schemaVersion,
   });
 
@@ -108,6 +117,8 @@ const updateInvoice = async (req, res, next) => {
     requestor,
     drvPrgm,
     description,
+    invFile,
+    reqFormFile,
   } = req.body;
   const id = req.params.id;
 
@@ -129,6 +140,8 @@ const updateInvoice = async (req, res, next) => {
   updatedInvoice.requestor = requestor;
   updatedInvoice.drvPrgm = drvPrgm;
   updatedInvoice.description = description;
+  updatedInvoice.invFile = invFile;
+  updatedInvoice.reqFormFile = reqFormFile;
 
   try {
     await updatedInvoice.save();
@@ -174,8 +187,86 @@ const deleteInvoice = async (req, res, next) => {
   res.status(200).json({ message: "Deleted Invoice" });
 };
 
+const uploadFile = async (req, res, next) => {
+  const file = req.file;
+  const filename = file.originalname;
+  const fileType = req.params.fileType;
+  const rootPath = fileType === "invFile" ? invRootPath : reqFormRootPath;
+
+  fs.writeFile(rootPath + filename, file.buffer, function (err) {
+    if (err) {
+      return next(err);
+    }
+  });
+
+  res.status(200).json({ message: "Uploaded File" });
+};
+
+const openFile = async (req, res, next) => {
+  const id = req.params.id;
+  const fileType = req.params.fileType;
+  const rootPath = fileType === "invFile" ? invRootPath : reqFormRootPath;
+
+  let invoice;
+
+  try {
+    invoice = await Invoice.findById(id);
+  } catch (err) {
+    const error = new HttpError("Retrieving Invoice Failed", 500);
+    return next(error);
+  }
+
+  if (!invoice) {
+    const error = new HttpError("Could not find Invoice for this ID", 404);
+    return next(error);
+  }
+
+  const fileName =
+    fileType === "invFile" ? invoice.invFile : invoice.reqFormFile;
+
+  try {
+    open(rootPath + fileName);
+  } catch (err) {
+    return next(err);
+  }
+
+  res.status(200).json({ message: "Opened File" });
+};
+
+const downloadFile = async (req, res, next) => {
+  const id = req.params.id;
+  const fileType = req.params.fileType;
+  const rootPath = fileType === "invFile" ? invRootPath : reqFormRootPath;
+
+  let invoice;
+
+  try {
+    invoice = await Invoice.findById(id);
+  } catch (err) {
+    const error = new HttpError("Retrieving Invoice Failed", 500);
+    return next(error);
+  }
+
+  if (!invoice) {
+    const error = new HttpError("Could not find Invoice for this ID", 404);
+    return next(error);
+  }
+
+  const fileName =
+    fileType === "invFile" ? invoice.invFile : invoice.reqFormFile;
+
+  try {
+    res.download(rootPath + fileName);
+  } catch (err) {
+    return next(err);
+  }
+};
+
 exports.getInvoices = getInvoices;
 exports.getInvoice = getInvoice;
 exports.addInvoice = addInvoice;
 exports.updateInvoice = updateInvoice;
 exports.deleteInvoice = deleteInvoice;
+exports.uploadFile = uploadFile;
+exports.openFile = openFile;
+exports.downloadFile = downloadFile;

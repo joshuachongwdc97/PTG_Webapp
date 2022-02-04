@@ -31,8 +31,12 @@ const TextFieldWIcon = (props) => {
       label={props.label}
       InputProps={{
         startAdornment: (
-          <InputAdornment position="start">{props.icon}</InputAdornment>
+          <InputAdornment position="start">{props.startIcon}</InputAdornment>
         ),
+        endAdornment: (
+          <InputAdornment position="end">{props.endIcon}</InputAdornment>
+        ),
+        readOnly: props.readOnly,
       }}
       fullWidth
       onChange={props.onChange}
