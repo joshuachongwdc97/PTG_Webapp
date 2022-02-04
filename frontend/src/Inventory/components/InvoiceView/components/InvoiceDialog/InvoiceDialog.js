@@ -397,7 +397,7 @@ const InvoiceDialog = (props) => {
     }
 
     // SAVE FILE ATTACHMENTS
-    if (inputState.invFile) {
+    if (invFile) {
       const fileData = new FormData();
       fileData.append("file", invFile);
 
@@ -410,7 +410,7 @@ const InvoiceDialog = (props) => {
       } catch (err) {}
     }
 
-    if (inputState.reqFormFile) {
+    if (reqFormFile) {
       const fileData = new FormData();
       fileData.append("file", reqFormFile);
 
