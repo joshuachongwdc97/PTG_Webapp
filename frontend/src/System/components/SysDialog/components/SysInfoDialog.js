@@ -43,18 +43,21 @@ const SysInfoDialog = (props) => {
   const [releasing, setReleasing] = useState(false);
   const [estTestEnd, setEstTestEnd] = useState();
 
-  console.log(estTestEnd);
-
   useEffect(
     () => {
       if (props.open && props.sys && props.test) {
         const testDuration = getTestDuration(props.test, props.sys.testMode);
         setEstTestEnd(getEstTestEnd(props.sys.testStart, testDuration));
-        console.log(getTimeRemaining(estTestEnd));
       }
     }, // eslint-disable-next-line
     [props.open, props.sys, props.test]
   );
+
+  useEffect(() => {
+    if (estTestEnd) {
+      console.log(getTimeRemaining(estTestEnd));
+    }
+  }, [estTestEnd]);
 
   useEffect(
     () => {
