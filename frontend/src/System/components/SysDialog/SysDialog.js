@@ -102,18 +102,20 @@ const SysDialog = (props) => {
 
   return (
     <React.Fragment>
-      <SysInfoDialog
-        open={showSysInfoDialog}
-        close={() => {
-          setShowSysInfoDialog(false);
-          setSelectedSys();
-        }}
-        sys={selectedSys}
-        test={test}
-        qual={qual}
-        invoice={invoice}
-        getData={props.getData}
-      />
+      {props.open && (
+        <SysInfoDialog
+          open={showSysInfoDialog}
+          close={() => {
+            setShowSysInfoDialog(false);
+            setSelectedSys();
+          }}
+          sys={selectedSys}
+          test={test}
+          qual={qual}
+          invoice={invoice}
+          getData={props.getData}
+        />
+      )}
 
       <BasicDialog
         close={props.close}
