@@ -235,6 +235,46 @@ const InvoiceDialog = (props) => {
     }
   };
 
+  const keepDrvHandler = async () => {
+    // update useState drives' status that are selected to keep
+    const updatedDrives = drives.map((drv) =>
+      selectedDrvs.includes(drv.id) ? { ...drv, status: "Keep" } : drv
+    );
+
+    setDrives(updatedDrives);
+    setSelectedDrvs([]);
+
+    // update drives' status in database
+    try {
+      await sendRequest(
+        "http://" + serverName + "/api/drive/keep",
+        "PATCH",
+        JSON.stringify({ ids: selectedDrvs }),
+        { "Content-Type": "application/json" }
+      );
+    } catch (err) {}
+  };
+
+  const unkeepDrvHandler = async () => {
+    // update useState drives' status that are selected to unkeep
+    const updatedDrives = drives.map((drv) =>
+      selectedDrvs.includes(drv.id) ? { ...drv, status: undefined } : drv
+    );
+
+    setDrives(updatedDrives);
+    setSelectedDrvs([]);
+
+    // update drives' status in database
+    try {
+      await sendRequest(
+        "http://" + serverName + "/api/drive/unkeep",
+        "PATCH",
+        JSON.stringify({ ids: selectedDrvs }),
+        { "Content-Type": "application/json" }
+      );
+    } catch (err) {}
+  };
+
   const returnToggleHandler = async () => {
     const NewInv = {
       ...inputState,
@@ -257,11 +297,23 @@ const InvoiceDialog = (props) => {
       });
     }
 
+    const resetDrives = drives.map((drv) => ({ ...drv, status: undefined }));
+    setDrives(resetDrives);
+
     try {
       await sendRequest(
         `http://${serverName}/api/invoice/${props.selection[0]}`,
         "PATCH",
         JSON.stringify(NewInv),
+        { "Content-Type": "application/json" }
+      );
+    } catch (err) {}
+
+    try {
+      await sendRequest(
+        "http://" + serverName + "/api/drive/unkeep",
+        "PATCH",
+        JSON.stringify({ ids: drives.map((drv) => drv.id) }),
         { "Content-Type": "application/json" }
       );
     } catch (err) {}
@@ -484,6 +536,9 @@ const InvoiceDialog = (props) => {
                   selection={selectedDrvs}
                   selectedHandler={drvSelectedHandler}
                   delDrvHandler={delDrvHandler}
+                  keepDrvHandler={keepDrvHandler}
+                  unkeepDrvHandler={unkeepDrvHandler}
+                  invStatus={inputState.status}
                 />
               )}
             </OutlinedCard>

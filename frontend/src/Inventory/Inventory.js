@@ -31,7 +31,10 @@ import getAgingSumm from "./components/LineGraphCard/getAgingSumm";
 const Inventory = () => {
   const { sendRequest } = useHttpClient();
 
+  // tracks if getData() has completed on first call / first render
   const [dataReady, setDataReady] = useState(false);
+  // tracks if getData() has completed on subsequent calls
+  const [changeReady, setChangeReady] = useState(false);
   const [invoices, setInvoices] = useState([]);
   const [drives, setDrives] = useState([]);
   const [drvPrgms, setDrvPrgms] = useState([]);
@@ -40,8 +43,10 @@ const Inventory = () => {
   const [flipSummCard, setFlipSummCard] = useState({ flipSummCard: false });
   const [pieData, setPieData] = useState();
   const [lineData, setLineData] = useState();
+  const [selectedPeriod, setSelectedPeriod] = useState("past 3 months");
 
   const getData = async () => {
+    setChangeReady(false);
     try {
       let responseData = await sendRequest(
         "http://" + serverName + "/api/invoice"
@@ -59,6 +64,7 @@ const Inventory = () => {
 
     console.log("Data fetched from server");
     setDataReady(true);
+    setChangeReady(true);
   };
 
   useEffect(
@@ -75,13 +81,15 @@ const Inventory = () => {
   );
 
   // set chart data to display active drive data by default
+  // charts are automatically updated when a user closes an InvoiceDialog to reflect new data
   useEffect(() => {
-    if (dataReady) {
-      setPieData(getActiveTypes(invoices, drives, drvPrgms, "drives"));
-      setLineData(getAgingSumm(invoices, drives, "past 3 months", "drives"));
+    if (changeReady) {
+      const category = !flipSummCard.flipSummCard ? "drives" : "invoices";
+      setPieData(getActiveTypes(invoices, drives, drvPrgms, category));
+      setLineData(getAgingSumm(invoices, drives, selectedPeriod, category));
     }
     // eslint-disable-next-line
-  }, [dataReady]);
+  }, [changeReady]);
 
   // handler to manage the flipped state of the SummCard
   const flipSummCardHandler = () => {
@@ -99,8 +107,6 @@ const Inventory = () => {
       setLineData(getAgingSumm(invoices, drives, "past 3 months", "drives"));
     }
   };
-
-  const [selectedPeriod, setSelectedPeriod] = useState("past 3 months");
 
   // handler to manage period change on line graph
   const changePeriodHandler = (event) => {
