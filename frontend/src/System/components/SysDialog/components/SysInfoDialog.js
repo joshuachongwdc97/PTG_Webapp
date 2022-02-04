@@ -18,6 +18,9 @@ import Animate from "../../../../Shared/transitions/Animate";
 
 // FUNCTIONS
 import SysStatus from "../../../../Shared/functions/SysStatus";
+import getTestDuration from "../../../../Shared/functions/getTestDuration";
+import getEstTestEnd from "../../../../Shared/functions/getEstTestEnd";
+import getTimeRemaining from "../../../../Shared/functions/getTimeRemaining";
 
 // ICONS
 import CodeRoundedIcon from "@mui/icons-material/CodeRounded";
@@ -38,11 +41,27 @@ const SysInfoDialog = (props) => {
   const [showDelDialog, setShowDelDialog] = useState(false);
   const [showReserveDialog, setShowReserveDialog] = useState(false);
   const [releasing, setReleasing] = useState(false);
+  const [estTestEnd, setEstTestEnd] = useState();
+
+  console.log(estTestEnd);
+
+  useEffect(
+    () => {
+      if (props.open && props.sys && props.test) {
+        const testDuration = getTestDuration(props.test, props.sys.testMode);
+        setEstTestEnd(getEstTestEnd(props.sys.testStart, testDuration));
+        console.log(getTimeRemaining(estTestEnd));
+      }
+    }, // eslint-disable-next-line
+    [props.open, props.sys, props.test]
+  );
 
   useEffect(
     () => {
       if (props.open) {
         setStatus(SysStatus(props.sys));
+      } else {
+        setEstTestEnd();
       }
     }, // eslint-disable-next-line
     [props.open]
