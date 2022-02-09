@@ -99,7 +99,7 @@ const DriveUpload = (props) => {
   return (
     <React.Fragment>
       <Grid container spacing={2}>
-        {props.invDialogState === "modify" && (
+        {["modify", "new"].includes(props.invDialogState) && (
           <React.Fragment>
             <Grid item xs={6}>
               <Animate show>
