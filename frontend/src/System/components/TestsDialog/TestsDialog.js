@@ -35,7 +35,7 @@ const TestsDialog = (props) => {
       close={props.close}
       title="Supported Tests"
       maxWidth="lg"
-      position={{ sx: { position: "fixed", top: "3%" } }}
+      position={{ position: "fixed", top: "3%" }}
     >
       <Grid container spacing={1.5}>
         <Grid item xs={12}>
