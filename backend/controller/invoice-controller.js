@@ -7,8 +7,8 @@ const Invoice = require("../models/invoice");
 const open = require("open");
 const fs = require("fs");
 
-const invRootPath = "E:\\PTG_Storage_B\\INVOICES";
-const reqFormRootPath = "E:\\PTG_Storage_B\\REQUEST_FORMS";
+const invRootPath = "E:\\PTG_Storage_B\\INVOICES\\";
+const reqFormRootPath = "E:\\PTG_Storage_B\\REQUEST_FORMS\\";
 
 const getInvoices = async (req, res, next) => {
   let invoices;
