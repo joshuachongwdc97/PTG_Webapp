@@ -41,26 +41,35 @@ const getDrive = async (req, res, next) => {
   }
 };
 
-const getDrivebySN = async (req,res,next) => {
-  const sn = req.params.sn
+const getDrivebySN = async (req, res, next) => {
+  const sn = req.params.sn;
 
-  let drive
+  let drive;
 
   try {
-    drive = await Drive.findOne({sn: sn});
+    drive = await Drive.findOne({ sn: sn });
   } catch (err) {
     const error = new HttpError("Drive Fetching Failed", 500);
     return next(error);
   }
 
-  console.log(drive)
+  if (drive) {
+    try {
+      drive = await Drive.findById(drive.id);
+    } catch (err) {
+      const error = new HttpError("Drive Fetching Failed", 500);
+      return next(error);
+    }
+  }
 
   if (drive) {
-    res.status(404).json({ message: "Drive Found" });
+    res.json({
+      drive: drive.toObject({ getters: true }),
+    });
   } else {
     res.status(404).json({ message: "Drive Not Found" });
   }
-}
+};
 
 const addDrives = async (req, res, next) => {
   const { drives } = req.body;
