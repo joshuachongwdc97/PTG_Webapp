@@ -39,7 +39,9 @@ const SysRow = (props) => {
         >
           <Grid container spacing={1.5}>
             <Grid item xs={12} align="center">
-              <Typography variant="subtitle2">{sys.rackLoc}</Typography>
+              <Typography variant="subtitle2" sx={{ fontSize: "12px" }}>
+                {sys.rackLoc}
+              </Typography>
             </Grid>
             <Grid item xs={12}>
               <LinearProgress
@@ -64,7 +66,7 @@ const SysRow = (props) => {
                     ? 100
                     : 0
                 }
-                sx={{ maxWidth: "30px", width: "80%", borderRadius: 5 }}
+                sx={{ maxWidth: "30px", width: "100%", borderRadius: 5 }}
               />
             </Grid>
           </Grid>
