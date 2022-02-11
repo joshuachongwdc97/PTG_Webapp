@@ -5,8 +5,8 @@ const router = express.Router();
 
 const driveController = require("../controller/drive-controller");
 
+router.get("/sn/:sn", driveController.getDrivebySN);
 router.get("/:id", driveController.getDrive);
-router.get("/:sn", driveController.getDrivebySN);
 router.get("/", driveController.getDrives);
 
 router.post(
