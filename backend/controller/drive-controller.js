@@ -47,7 +47,7 @@ const getDrivebySN = async (req,res,next) => {
   let drive
 
   try {
-    drive = await Drive.find({sn: sn});
+    drive = await Drive.findOne({sn: sn});
   } catch (err) {
     const error = new HttpError("Drive Fetching Failed", 500);
     return next(error);
