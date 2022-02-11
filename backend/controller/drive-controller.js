@@ -41,6 +41,27 @@ const getDrive = async (req, res, next) => {
   }
 };
 
+const getDrivebySN = async (req,res,next) => {
+  const sn = req.params.sn
+
+  let drive
+
+  try {
+    drive = await Drive.find({sn: sn});
+  } catch (err) {
+    const error = new HttpError("Drive Fetching Failed", 500);
+    return next(error);
+  }
+
+  if (drive) {
+    res.json({
+      drive: drive.toObject({ getters: true }),
+    });
+  } else {
+    res.status(404).json({ message: "Drive Not Found" });
+  }
+}
+
 const addDrives = async (req, res, next) => {
   const { drives } = req.body;
 
@@ -164,7 +185,7 @@ const unkeepDrives = async (req, res, next) => {
     });
     sess.commitTransaction();
   } catch (err) {
-    const error = new HttpError("Keeping Drives Failed", 500);
+    const error = new HttpError("Unkeep Drives Failed", 500);
     return next(error);
   }
 
@@ -173,6 +194,7 @@ const unkeepDrives = async (req, res, next) => {
 
 exports.getDrives = getDrives;
 exports.getDrive = getDrive;
+exports.getDrivebySN = getDrivebySN;
 exports.addDrives = addDrives;
 exports.deleteDrives = deleteDrives;
 exports.keepDrives = keepDrives;
