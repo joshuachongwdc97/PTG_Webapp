@@ -38,7 +38,7 @@ const SysRackCard = (props) => {
             label={"Rack " + props.rackNo}
             color="primary"
             variant="contained"
-            sx={{ width: "100%", borderRadius: 2 }}
+            sx={{ width: "100%", borderRadius: 2, fontWeight: "550" }}
           />
         </Grid>
 

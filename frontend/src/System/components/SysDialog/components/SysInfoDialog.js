@@ -272,9 +272,7 @@ const SysInfoDialog = (props) => {
                       <Grid item xs={5}>
                         <Typography variant="caption" color="textSecondary">
                           SN :{" "}
-                          {props.sys.drive
-                            ? props.sys.drive
-                            : "No Test Drive Connected"}
+                          {props.sys.drive ? props.sys.drive : "Unavailable"}
                         </Typography>
                       </Grid>
                       <Grid item xs={7}>
