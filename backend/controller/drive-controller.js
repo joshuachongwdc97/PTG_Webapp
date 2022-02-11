@@ -53,10 +53,10 @@ const getDrivebySN = async (req,res,next) => {
     return next(error);
   }
 
+  console.log(drive)
+
   if (drive) {
-    res.json({
-      drive: drive.toObject({ getters: true }),
-    });
+    res.status(404).json({ message: "Drive Found" });
   } else {
     res.status(404).json({ message: "Drive Not Found" });
   }
