@@ -11,6 +11,7 @@ const OutlinedCard = (props) => {
       sx={{
         minWidth: props.minWidth,
         maxWidth: props.maxWidth,
+        minHeight: props.minHeight,
         maxHeight: props.maxHeight,
         height: "100%",
         display: "flex",

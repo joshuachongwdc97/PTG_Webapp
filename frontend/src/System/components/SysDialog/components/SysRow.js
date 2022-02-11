@@ -9,6 +9,14 @@ import BasicCardwTT from "../../../../Shared/components/Card/BasicCardwTT";
 import sysStatus from "../../../../Shared/functions/SysStatus";
 
 const SysRow = (props) => {
+  const stateProgressVariant = {
+    online: "determinate",
+    reserved: "indeterminate",
+    offline: "determinate",
+    "test in progress": "indeterminate",
+    "test completed": "determinate",
+  };
+
   const systems = props.sysInRow.map((sys) => {
     let sysMargin = 2.4;
     if (props.sysInRow.length > 5) {
@@ -54,11 +62,7 @@ const SysRow = (props) => {
                     ? "success"
                     : "primary"
                 }
-                variant={
-                  SysStatus === "reserved" || SysStatus === "test in progress"
-                    ? "indeterminate"
-                    : "determinate"
-                }
+                variant={stateProgressVariant[SysStatus]}
                 value={
                   SysStatus === "online" ||
                   SysStatus === "reserved" ||

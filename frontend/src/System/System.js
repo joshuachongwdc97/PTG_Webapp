@@ -70,15 +70,12 @@ const System = (props) => {
   };
 
   const getData = async () => {
-    console.log("Fetching Data");
-
     getInvoices();
     getTests();
     getDrvPrgms();
     getQuals();
     getSystems();
 
-    console.log("Data fetched");
     setDataReady(true);
   };
 

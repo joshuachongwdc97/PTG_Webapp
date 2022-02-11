@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useHttpClient } from "../../../../Shared/hooks/http-hook";
 import { serverName } from "../../../../Shared/variables/Variables";
+import { SysStatusColors } from "../../../../Shared/variables/SysStatusColors";
 
 // Images
 import GIF from "../../../../Shared/assets/comp_hw.gif";
 
-import { Button, Grid, Typography } from "@mui/material";
+import { Button, Grid, Typography, Divider } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 
 import Dialog from "../../../../Shared/components/Dialog/Dialog";
 import MediaCard from "../../../../Shared/components/Card/MediaCard";
-// import AvatarCard from "../../../../Shared/components/Card/AvatarCard";
 import OutlinedCard from "../../../../Shared/components/Card/OutlinedCard";
 import SysDeleteDialog from "./SysDeleteDialog";
 import ReserveDialog from "./ReserveDialog";
@@ -18,19 +18,14 @@ import Animate from "../../../../Shared/transitions/Animate";
 
 // FUNCTIONS
 import SysStatus from "../../../../Shared/functions/SysStatus";
+import { capFirstLetter } from "../../../../Shared/functions/CapFirstLetter";
 import getTestDuration from "../../../../Shared/functions/getTestDuration";
 import getEstTestEnd from "../../../../Shared/functions/getEstTestEnd";
 import getTimeRemaining from "../../../../Shared/functions/getTimeRemaining";
 
 // ICONS
-// import CodeRoundedIcon from "@mui/icons-material/CodeRounded";
 import MyLocationRoundedIcon from "@mui/icons-material/MyLocationRounded";
 import NumbersRoundedIcon from "@mui/icons-material/NumbersRounded";
-// import AlbumRoundedIcon from "@mui/icons-material/AlbumRounded";
-// import CableRoundedIcon from "@mui/icons-material/CableRounded";
-// import MemoryRoundedIcon from "@mui/icons-material/MemoryRounded";
-// import HttpRoundedIcon from "@mui/icons-material/HttpRounded";
-// import DeviceHubRoundedIcon from "@mui/icons-material/DeviceHubRounded";
 import DesktopAccessDisabledRoundedIcon from "@mui/icons-material/DesktopAccessDisabledRounded";
 import BookmarkAddedRoundedIcon from "@mui/icons-material/BookmarkAddedRounded";
 import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
@@ -38,6 +33,7 @@ import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
 const SysInfoDialog = (props) => {
   const { sendRequest } = useHttpClient();
   const [status, setStatus] = useState();
+  const [drive, setDrive] = useState();
   const [showDelDialog, setShowDelDialog] = useState(false);
   const [showReserveDialog, setShowReserveDialog] = useState(false);
   const [releasing, setReleasing] = useState(false);
@@ -48,6 +44,12 @@ const SysInfoDialog = (props) => {
       if (props.open && props.sys && props.test) {
         const testDuration = getTestDuration(props.test, props.sys.testMode);
         setEstTestEnd(getEstTestEnd(props.sys.testStart, testDuration));
+      }
+
+      if (props.open && props.sys) {
+        if (props.sys.drive) {
+          getDriveDetails();
+        }
       }
     }, // eslint-disable-next-line
     [props.open, props.sys, props.test]
@@ -69,6 +71,15 @@ const SysInfoDialog = (props) => {
     }, // eslint-disable-next-line
     [props.open]
   );
+
+  const getDriveDetails = async () => {
+    try {
+      let responseData = await sendRequest(
+        "http://" + serverName + "/api/drive/sn/" + props.sys.drive
+      );
+      setDrive(responseData.drive);
+    } catch (err) {}
+  };
 
   const releaseSysHandler = async () => {
     setReleasing(true);
@@ -165,31 +176,26 @@ const SysInfoDialog = (props) => {
         {props.sys && (
           <React.Fragment>
             <Grid container spacing={1.5}>
-              {/* <Grid item xs={12}>
-                <Button
-                  size="large"
-                  variant="outlined"
-                  fullWidth
-                  color={
-                    status === "online"
-                      ? "success"
-                      : status === "reserved"
-                      ? "warning"
-                      : "secondary"
-                  }
-                >
-                  {status}
-                </Button>
-              </Grid> */}
               <Grid item xs={5} container spacing={1.5}>
+                <Grid item xs={12}>
+                  <Button
+                    size="large"
+                    variant="contained"
+                    fullWidth
+                    startIcon={<NumbersRoundedIcon />}
+                    color={SysStatusColors[status]}
+                  >
+                    {props.sys.sysId}
+                  </Button>
+                </Grid>
                 <Grid item xs={12}>
                   <Animate show>
                     {status === "offline" ? (
-                      <OutlinedCard align="center" click height={300}>
+                      <OutlinedCard align="center" click minHeight={300}>
                         <Grid container alignItems={"center"} spacing={3}>
                           <Grid item xs={12} align="center">
                             <DesktopAccessDisabledRoundedIcon
-                              sx={{ height: "100px", width: "100px" }}
+                            // sx={{ height: "100px", width: "100px" }}
                             />
                           </Grid>
                           <Grid item xs={12} align="center">
@@ -202,127 +208,111 @@ const SysInfoDialog = (props) => {
                     )}
                   </Animate>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12}>
                   <Button
-                    size="large"
-                    variant="outlined"
-                    fullWidth
-                    startIcon={<NumbersRoundedIcon />}
-                    color={
-                      status === "online"
-                        ? "success"
-                        : status === "reserved"
-                        ? "warning"
-                        : status === "offline"
-                        ? "error"
-                        : "primary"
-                    }
-                  >
-                    {props.sys.sysId}
-                  </Button>
-                </Grid>
-                <Grid item xs={6}>
-                  <Button
-                    size="large"
                     variant="outlined"
                     fullWidth
                     startIcon={<MyLocationRoundedIcon />}
-                    color={
-                      status === "online"
-                        ? "success"
-                        : status === "reserved"
-                        ? "warning"
-                        : status === "offline"
-                        ? "error"
-                        : "primary"
-                    }
                   >
                     {"R" + props.sys.rackRow + " - " + props.sys.rackLoc}
                   </Button>
                 </Grid>
               </Grid>
-              <Grid item xs={3.5} container spacing={1.5}>
+              <Grid item xs container spacing={1.5}>
                 <Grid item xs={12}>
                   <OutlinedCard>
                     <Grid container spacing={1}>
                       <Grid item xs={12}>
-                        <Typography>Hardware Specs</Typography>
+                        <Typography variant="subtitle2">
+                          Hardware Specs
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={5}>
+                        <Typography variant="caption" color="textSecondary">
+                          Chipset : {props.sys.chipset}
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={7}>
+                        <Typography variant="caption" color="textSecondary">
+                          HBA : {props.sys.hba}
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Divider
+                          sx={{ marginTop: "10px", marginBottom: "10px" }}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Typography variant="subtitle2">
+                          Connection Details
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={5}>
+                        <Typography variant="caption" color="textSecondary">
+                          Status :{" "}
+                          {status ? capFirstLetter(status) : "Unavailable"}
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={7}>
+                        <Typography variant="caption" color="textSecondary">
+                          IP Address :{" "}
+                          {props.sys.ip ? props.sys.ip : "Unavailable"}
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Divider
+                          sx={{ marginTop: "10px", marginBottom: "10px" }}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Typography variant="subtitle2">
+                          Drive Connected
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={5}>
+                        <Typography variant="caption" color="textSecondary">
+                          SN :{" "}
+                          {props.sys.drive
+                            ? props.sys.drive
+                            : "No Test Drive Connected"}
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={7}>
+                        <Typography variant="caption" color="textSecondary">
+                          Label: {drive ? drive.label : "Unavailable"}
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Divider
+                          sx={{ marginTop: "10px", marginBottom: "10px" }}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Typography variant="subtitle2">
+                          Test Details
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={6}>
+                        <Typography variant="caption" color="textSecondary">
+                          {!props.sys.qual
+                            ? "No Jobs Detected"
+                            : props.test && props.invoice
+                            ? "[" +
+                              props.test.test +
+                              "] [" +
+                              props.qual.soda +
+                              "] - " +
+                              props.invoice.name
+                            : "Test Info Unavailable"}
+                        </Typography>
                       </Grid>
                     </Grid>
                   </OutlinedCard>
                 </Grid>
               </Grid>
               {/* <Grid item xs={2.5} container spacing={1.5}>
-                  <Grid item xs={12}>
-                    <Animate show delay="0.5s">
-                      <AvatarCard
-                        title={props.sys.sysId}
-                        letterSpacing="1px"
-                        fontWeight="350"
-                        icon={<NumbersRoundedIcon fontSize="small" />}
-                      />
-                    </Animate>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Animate show delay="0.6s">
-                      <AvatarCard
-                        title={
-                          "R" + props.sys.rackRow + " - " + props.sys.rackLoc
-                        }
-                        letterSpacing="1px"
-                        fontWeight="350"
-                        icon={<MyLocationRoundedIcon fontSize="small" />}
-                      />
-                    </Animate>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Animate show delay="0.7s">
-                      <AvatarCard
-                        title={props.sys.chipset}
-                        letterSpacing="1px"
-                        fontWeight="350"
-                        icon={<MemoryRoundedIcon fontSize="medium" />}
-                      />
-                    </Animate>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Animate show delay="0.8s">
-                      <AvatarCard
-                        title={props.sys.hba}
-                        letterSpacing="1px"
-                        fontWeight="350"
-                        icon={<CableRoundedIcon fontSize="small" />}
-                      />
-                    </Animate>
-                  </Grid>
-                </Grid>
-                <Grid item xs={4.5} container spacing={1.5}>
-                  <Grid item xs={12}>
-                    <Animate show delay="1.5s">
-                      <AvatarCard
-                        title={
-                          props.sys.ip ? props.sys.ip : "Unable to obtain IP"
-                        }
-                        letterSpacing="1px"
-                        fontWeight="350"
-                        icon={<HttpRoundedIcon fontSize="medium" />}
-                      />
-                    </Animate>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Animate show delay="1.7s">
-                      <AvatarCard
-                        title={
-                          props.sys.drive
-                            ? props.sys.drive
-                            : "No Test Drive Connected"
-                        }
-                        letterSpacing="1px"
-                        fontWeight="350"
-                        icon={<AlbumRoundedIcon fontSize="medium" />}
-                      />
-                    </Animate>
-                  </Grid>
+                  
+                 
                   <Grid item xs={12}>
                     <Animate show delay="1.9s">
                       <AvatarCard
