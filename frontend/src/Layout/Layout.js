@@ -24,6 +24,7 @@ import ViewQuiltRoundedIcon from "@mui/icons-material/ViewQuiltRounded";
 import DesktopWindowsRoundedIcon from "@mui/icons-material/DesktopWindowsRounded";
 import LightModeRoundedIcon from "@mui/icons-material/LightModeRounded";
 import DarkModeRoundedIcon from "@mui/icons-material/DarkModeRounded";
+import GroupsRoundedIcon from "@mui/icons-material/GroupsRounded";
 
 const drawerWidth = 240;
 
@@ -158,6 +159,12 @@ const Layout = (props) => {
               <DesktopWindowsRoundedIcon />
             </ListItemIcon>
             <ListItemText primary="System Tracker" />
+          </ListItem>
+          <ListItem button key="team" component={Link} to="/team">
+            <ListItemIcon>
+              <GroupsRoundedIcon />
+            </ListItemIcon>
+            <ListItemText primary="Team" />
           </ListItem>
         </List>
       </Drawer>
