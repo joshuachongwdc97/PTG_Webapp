@@ -76,6 +76,7 @@ const SysRackCard = (props) => {
             : "Not Responding"
         }
         placement={"bottom-end"}
+        key={stat}
       >
         <Grid item container xs={1.5}>
           <Grid item xs={12} align="center">
