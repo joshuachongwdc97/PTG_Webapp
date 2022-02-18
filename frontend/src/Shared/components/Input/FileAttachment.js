@@ -10,7 +10,7 @@ import CloudUploadRoundedIcon from "@mui/icons-material/CloudUploadRounded";
 const FileAttachment = (props) => {
   return (
     <React.Fragment>
-      <Grid item xs={8.9}>
+      <Grid item xs={10}>
         <TextFieldWIcon
           label={props.label}
           value={props.value ? props.value : "No File Uploaded"}
@@ -24,7 +24,7 @@ const FileAttachment = (props) => {
           readOnly
         />
       </Grid>
-      <Grid item xs={1} textAlign={"end"}>
+      {/* <Grid item xs={1} textAlign={"end"}>
         <Button
           variant="outlined"
           onClick={() => {
@@ -35,8 +35,8 @@ const FileAttachment = (props) => {
         >
           Open
         </Button>
-      </Grid>
-      <Grid item xs={2.1} textAlign={"end"}>
+      </Grid> */}
+      <Grid item xs={2} textAlign={"end"}>
         <Button
           variant="outlined"
           onClick={() => {
