@@ -17,7 +17,7 @@ import ReserveDialog from "./ReserveDialog";
 import Animate from "../../../../Shared/transitions/Animate";
 
 // FUNCTIONS
-import SysStatus from "../../../../Shared/functions/sysStatus";
+import sysStatus from "../../../../Shared/functions/sysStatus";
 import { capFirstLetter } from "../../../../Shared/functions/CapFirstLetter";
 import getTestDuration from "../../../../Shared/functions/getTestDuration";
 import getEstTestEnd from "../../../../Shared/functions/getEstTestEnd";
@@ -64,7 +64,7 @@ const SysInfoDialog = (props) => {
   useEffect(
     () => {
       if (props.open) {
-        setStatus(SysStatus(props.sys));
+        setStatus(sysStatus(props.sys));
       } else {
         setEstTestEnd();
       }

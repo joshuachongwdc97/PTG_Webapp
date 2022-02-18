@@ -17,6 +17,7 @@ import ServerStorageCard from "./components/ServerStorageCard/ServerStorageCard"
 
 // VARIABLES
 import { serverName } from "../Shared/variables/Variables";
+import SysSummaryCard from "./components/SysSummaryCard/SysSummaryCard";
 
 const System = (props) => {
   const { sendRequest } = useHttpClient();
@@ -182,6 +183,13 @@ const System = (props) => {
                   setShowTestsDialog(true);
                 }}
               />
+            </Animate>
+          )}
+        </Grid>
+        <Grid item>
+          {dataReady && (
+            <Animate show={dataReady}>
+              <SysSummaryCard sys={systems} />
             </Animate>
           )}
         </Grid>

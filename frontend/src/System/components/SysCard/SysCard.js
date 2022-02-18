@@ -5,7 +5,7 @@ import { green } from "@mui/material/colors";
 import BasicCountCardwPB from "../../../Shared/components/Card/BasicCountCardwPB";
 
 // FUNCTIONS
-import SysStatus from "../../../Shared/functions/sysStatus";
+import sysStatus from "../../../Shared/functions/sysStatus";
 
 // ICONS
 import DesktopWindowsRoundedIcon from "@mui/icons-material/DesktopWindowsRounded";
@@ -16,7 +16,7 @@ const SysCard = (props) => {
   useEffect(() => {
     setAvailSys(
       props.sys.filter((sys) => {
-        const status = SysStatus(sys);
+        const status = sysStatus(sys);
         return status === "online" || status === "offline";
       })
     );
