@@ -6,7 +6,7 @@ import { Grid, Typography, LinearProgress } from "@mui/material";
 import BasicCardwTT from "../../../../Shared/components/Card/BasicCardwTT";
 
 // FUNCTIONS
-import sysStatus from "../../../../Shared/functions/SysStatus";
+import sysStatus from "../../../../Shared/functions/sysStatus";
 
 const SysRow = (props) => {
   const stateProgressVariant = {
