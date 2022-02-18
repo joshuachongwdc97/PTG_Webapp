@@ -23,11 +23,15 @@ const TestsDialog = (props) => {
 
   // manually resets filter because dialog component does not unmount on close
   // open and close only controls the visibility
-  useEffect(() => {
-    if (props.open) {
-      getTestDetCards();
-    }
-  }, [props.open]);
+  useEffect(
+    () => {
+      if (props.open) {
+        getTestDetCards();
+      }
+    },
+    // eslint-disable-next-line
+    [props.open]
+  );
 
   return (
     <BasicDialog
