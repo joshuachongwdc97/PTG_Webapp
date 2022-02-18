@@ -12,6 +12,7 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
 import Layout from "./Layout/Layout";
+import Team from "./Team/Team";
 
 const Main = () => {
   const [dark, setDark] = useState(true);
@@ -43,6 +44,9 @@ const Main = () => {
                 </Route>
                 <Route path="/system" exact={true}>
                   <System />
+                </Route>
+                <Route path="/team" exact={true}>
+                  <Team />
                 </Route>
               </Switch>
             </Layout>
