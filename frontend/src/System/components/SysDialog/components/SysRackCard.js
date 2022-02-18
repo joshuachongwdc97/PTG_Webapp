@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import OutlinedCard from "../../../../Shared/components/Card/OutlinedCard";
 import SysRow from "./SysRow";
-import sysStatus from "../../../../Shared/functions/SysStatus";
+import sysStatus from "../../../../Shared/functions/sysStatus";
 
 // VARIABLES
 import { SysStatusColors } from "../../../../Shared/variables/SysStatusColors";
@@ -93,7 +93,7 @@ const SysRackCard = (props) => {
                   ? 100
                   : 0
               }
-              sx={{ maxWidth: "30px", width: "100%", borderRadius: 5 }}
+              sx={{ maxWidth: "30px", width: "70%", borderRadius: 5 }}
             />
           </Grid>
         </Grid>

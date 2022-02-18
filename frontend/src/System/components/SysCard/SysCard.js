@@ -5,7 +5,7 @@ import { green } from "@mui/material/colors";
 import BasicCountCardwPB from "../../../Shared/components/Card/BasicCountCardwPB";
 
 // FUNCTIONS
-import SysStatus from "../../../Shared/functions/SysStatus";
+import SysStatus from "../../../Shared/functions/sysStatus";
 
 // ICONS
 import DesktopWindowsRoundedIcon from "@mui/icons-material/DesktopWindowsRounded";
