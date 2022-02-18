@@ -21,7 +21,7 @@ const SysRow = (props) => {
     const SysStatus = sysStatus(sys);
 
     let matchSearch;
-    if (sys.drive) {
+    if (sys.drive && props.inputState !== "") {
       matchSearch = sys.drive.includes(props.inputState) ? "#474747" : false;
     }
 
