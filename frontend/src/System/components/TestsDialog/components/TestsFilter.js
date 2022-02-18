@@ -100,7 +100,10 @@ const TestsFilter = (props) => {
           {option.name}
         </MenuItem>
       )}
-      renderInput={(params) => <TextField {...params} label="Custom Filter" />}
+      renderInput={(params) => {
+        params.inputProps.value = params.inputProps.value.toUpperCase();
+        return <TextField {...params} label="Custom Filter" />;
+      }}
       isOptionEqualToValue={(option, value) => option.name === value.name}
       onChange={(event, value) => submitFilterHandler(value)}
     />
