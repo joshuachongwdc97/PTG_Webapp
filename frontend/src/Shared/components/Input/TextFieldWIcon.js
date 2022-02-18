@@ -49,6 +49,7 @@ const TextFieldWIcon = (props) => {
       placeholder={props.placeholder}
       autoFocus={props.autoFocus}
       onFocus={props.onFocus}
+      variant={props.variant}
     />
   );
 };

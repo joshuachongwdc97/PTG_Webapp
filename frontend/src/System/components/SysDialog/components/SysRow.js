@@ -20,6 +20,11 @@ const SysRow = (props) => {
 
     const SysStatus = sysStatus(sys);
 
+    let matchSearch;
+    if (sys.drive) {
+      matchSearch = sys.drive.includes(props.inputState) ? "#474747" : false;
+    }
+
     return (
       <Grid item key={sys.id} xs={sysMargin} align="center">
         <BasicCardwTT
@@ -39,6 +44,7 @@ const SysRow = (props) => {
           onClick={() => {
             props.showSysInfoDialog(sys);
           }}
+          backgroundColor={matchSearch}
         >
           <Grid container spacing={1.5}>
             <Grid item xs={12} align="center">

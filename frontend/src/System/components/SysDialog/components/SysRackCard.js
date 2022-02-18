@@ -37,6 +37,7 @@ const SysRackCard = (props) => {
           showSysInfoDialog={props.showSysInfoDialog}
           quals={props.quals}
           tests={props.tests}
+          inputState={props.inputState}
         />
       </Grid>
     );
