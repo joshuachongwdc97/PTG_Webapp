@@ -5,7 +5,7 @@ import ReactCardFlip from "react-card-flip";
 import { Grid, Divider } from "@mui/material";
 
 // Assets
-import GIF from "../Shared/assets/cny.gif";
+import GIF from "../Shared/assets/factory.gif";
 
 // Self Built Components
 import DrvCard from "./components/DrvCard/DrvCard";
