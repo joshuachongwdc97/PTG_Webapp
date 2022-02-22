@@ -33,6 +33,7 @@ const QualView = (props) => {
               test={test}
               drvPrgm={drvPrgm}
               invoice={invoice}
+              getQuals={props.getQuals}
             />
           </Grid>
         )}

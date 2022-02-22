@@ -1,7 +1,7 @@
 import * as React from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
-import { CardActionArea } from "@mui/material";
+import { CardActionArea, Divider } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 
 const BasicCard = (props) => {
@@ -22,7 +22,12 @@ const BasicCard = (props) => {
       ) : (
         <CardContent>{props.children}</CardContent>
       )}
-      {props.actions && <CardActions>{props.actions}</CardActions>}
+      {props.actions && (
+        <React.Fragment>
+          <Divider />
+          <CardActions>{props.actions}</CardActions>
+        </React.Fragment>
+      )}
     </Card>
   );
 };

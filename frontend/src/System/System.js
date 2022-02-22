@@ -205,6 +205,7 @@ const System = (props) => {
                 invoices={invoices}
                 tests={tests}
                 drvPrgms={drvPrgms}
+                getQuals={getQuals}
               />
             </Animate>
           )}
