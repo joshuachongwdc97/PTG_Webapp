@@ -16,7 +16,7 @@ const SysDialog = (props) => {
   const [test, setTest] = useState();
   const [invoice, setInvoice] = useState();
   const [qual, setQual] = useState();
-  const [inputState, setInputState] = useState();
+  const [inputState, setInputState] = useState("");
 
   // Refresh System Details
   useEffect(
@@ -108,10 +108,7 @@ const SysDialog = (props) => {
 
   const inputHandler = (event) => {
     let value = event.target.value.toUpperCase();
-
-    if (value.length >= 5) {
-      setInputState(value);
-    }
+    setInputState(value);
   };
 
   return (
@@ -133,7 +130,7 @@ const SysDialog = (props) => {
 
       <BasicDialog
         close={() => {
-          setInputState();
+          setInputState("");
           props.close();
         }}
         open={props.open}
@@ -147,7 +144,7 @@ const SysDialog = (props) => {
               startIcon={<SearchRoundedIcon />}
               placeholder="Serial Number"
               onChange={inputHandler}
-              // no value={inputState} because inputState is not reflective of user input as inputState is only set when user input.length >= 5
+              value={inputState}
             />
           </Grid>
           {RackCards}
