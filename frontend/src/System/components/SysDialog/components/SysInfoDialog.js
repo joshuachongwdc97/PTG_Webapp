@@ -49,6 +49,8 @@ const SysInfoDialog = (props) => {
       if (props.open && props.sys) {
         if (props.sys.drive) {
           getDriveDetails();
+        } else {
+          setDrive();
         }
       }
     }, // eslint-disable-next-line
