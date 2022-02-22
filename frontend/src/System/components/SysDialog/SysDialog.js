@@ -83,27 +83,39 @@ const SysDialog = (props) => {
     }
   }, [props.invoices, props.tests, qual]);
 
-  const RackCards = rackNoArr.map((rackNo) => {
+  let RackCards = [];
+  rackNoArr.forEach((rackNo) => {
     const sysInRack = props.systems.filter((sys) => {
-      return sys.rackNo === rackNo;
+      if (sys.rackNo === rackNo) {
+        if (
+          !props.selectedQual ||
+          (props.selectedQual && props.selectedQual === sys.qual)
+        ) {
+          return true;
+        }
+      }
+
+      return false;
     });
 
-    return (
-      <Grid item xs={4} key={rackNo}>
-        <SysRackCard
-          rackNo={rackNo}
-          sysInRack={sysInRack}
-          key={rackNo}
-          showSysInfoDialog={(sys) => {
-            setShowSysInfoDialog(true);
-            setSelectedSys(sys);
-          }}
-          quals={props.quals}
-          tests={props.tests}
-          inputState={inputState}
-        />
-      </Grid>
-    );
+    if (sysInRack.length) {
+      RackCards.push(
+        <Grid item xs={4} key={rackNo}>
+          <SysRackCard
+            rackNo={rackNo}
+            sysInRack={sysInRack}
+            key={rackNo}
+            showSysInfoDialog={(sys) => {
+              setShowSysInfoDialog(true);
+              setSelectedSys(sys);
+            }}
+            quals={props.quals}
+            tests={props.tests}
+            inputState={inputState}
+          />
+        </Grid>
+      );
+    }
   });
 
   const inputHandler = (event) => {

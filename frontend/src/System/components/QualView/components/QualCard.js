@@ -28,7 +28,13 @@ const QualCard = (props) => {
   const actions = (
     <React.Fragment>
       <Tooltip title="View Systems">
-        <IconButton size="small">
+        <IconButton
+          size="small"
+          onClick={() => {
+            props.setSelectedQual(props.qual.id);
+            props.setShowSysDialog(true);
+          }}
+        >
           <DesktopWindowsRoundedIcon fontSize="small" />
         </IconButton>
       </Tooltip>

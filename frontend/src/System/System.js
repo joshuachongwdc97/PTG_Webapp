@@ -32,6 +32,7 @@ const System = (props) => {
   const [showAddTestDialog, setShowAddTestDialog] = useState(false);
   const [showTestsDialog, setShowTestsDialog] = useState(false);
   const [showNewQualDialog, setShowNewQualDialog] = useState(false);
+  const [selectedQual, setSelectedQual] = useState("");
 
   const getSystems = async () => {
     try {
@@ -150,6 +151,8 @@ const System = (props) => {
         getTests={getTests}
         getInvoices={getInvoices}
         getDrvPrgms={getDrvPrgms}
+        selectedQual={selectedQual}
+        setSelectedQual={setSelectedQual}
       />
 
       {/* TESTS DIALOG */}
@@ -169,6 +172,7 @@ const System = (props) => {
               <SysCard
                 sys={systems}
                 onClick={() => {
+                  setSelectedQual("");
                   setShowSysDialog(true);
                 }}
               />
@@ -206,6 +210,8 @@ const System = (props) => {
                 tests={tests}
                 drvPrgms={drvPrgms}
                 getQuals={getQuals}
+                setShowSysDialog={setShowSysDialog}
+                setSelectedQual={setSelectedQual}
               />
             </Animate>
           )}

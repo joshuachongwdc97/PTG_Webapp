@@ -34,6 +34,8 @@ const QualView = (props) => {
               drvPrgm={drvPrgm}
               invoice={invoice}
               getQuals={props.getQuals}
+              setShowSysDialog={props.setShowSysDialog}
+              setSelectedQual={props.setSelectedQual}
             />
           </Grid>
         )}
