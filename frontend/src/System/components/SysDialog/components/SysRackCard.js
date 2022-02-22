@@ -11,11 +11,11 @@ import {
 } from "@mui/material";
 import OutlinedCard from "../../../../Shared/components/Card/OutlinedCard";
 import SysRow from "./SysRow";
-import sysStatus from "../../../../Shared/functions/sysStatus";
 
 // VARIABLES
 import { SysStatusColors } from "../../../../Shared/variables/SysStatusColors";
 import { StateProgressVariant } from "../../../../Shared/variables/StateProgressVariant";
+import getSysSumm from "../../../../Shared/functions/getSysSumm";
 
 const SysRackCard = (props) => {
   let SysRowArr = props.sysInRack.map((sys) => {
@@ -43,23 +43,7 @@ const SysRackCard = (props) => {
     );
   });
 
-  let SummaryStats = {
-    online: 0,
-    reserved: 0,
-    offline: 0,
-    "test in progress": 0,
-    "test completed": 0,
-  };
-
-  props.sysInRack.forEach((sys) => {
-    const SysStatus = sysStatus(sys);
-
-    if (SysStatus === "error") {
-      SummaryStats["offline"] += 1;
-    } else {
-      SummaryStats[SysStatus] += 1;
-    }
-  });
+  let SummaryStats = getSysSumm(props.sysInRack);
 
   SummaryStats = Object.keys(SummaryStats).map((stat) => {
     return (

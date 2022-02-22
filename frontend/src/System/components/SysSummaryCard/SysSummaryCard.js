@@ -5,33 +5,15 @@ import CountUp from "react-countup";
 // COMPONENTS
 import BasicCard from "../../../Shared/components/Card/BasicCard";
 
-// FUNCTIONS
-import sysStatus from "../../../Shared/functions/sysStatus";
-
 // ICONS
 import SpeedRoundedIcon from "@mui/icons-material/SpeedRounded";
 import DesktopAccessDisabledRoundedIcon from "@mui/icons-material/DesktopAccessDisabledRounded";
 import BookmarkAddedRoundedIcon from "@mui/icons-material/BookmarkAddedRounded";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
+import getSysSumm from "../../../Shared/functions/getSysSumm";
 
 const SysSummaryCard = (props) => {
-  const sysSummary = {
-    online: 0,
-    reserved: 0,
-    offline: 0,
-    "test in progress": 0,
-    "test completed": 0,
-  };
-
-  props.sys.forEach((sys) => {
-    const SysStatus = sysStatus(sys);
-
-    if (SysStatus === "error") {
-      sysSummary["offline"] += 1;
-    } else {
-      sysSummary[SysStatus] += 1;
-    }
-  });
+  const sysSummary = getSysSumm(props.sys);
 
   return (
     <BasicCard>
