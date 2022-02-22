@@ -31,17 +31,19 @@ const Team = () => {
   const acknowledgements = [];
 
   const [showMbrInfoDialog, setShowMbrInfoDialog] = useState(false);
-  const [selectedMbrInfo, setSelectedMbrInfo] = useState({});
+  const [selectedMbrInfo, setSelectedMbrInfo] = useState();
 
   return (
     <React.Fragment>
-      <MbrInfoDialog
-        open={showMbrInfoDialog}
-        close={() => {
-          setShowMbrInfoDialog(false);
-        }}
-        mbrInfo={selectedMbrInfo}
-      />
+      {selectedMbrInfo && (
+        <MbrInfoDialog
+          open={showMbrInfoDialog}
+          close={() => {
+            setShowMbrInfoDialog(false);
+          }}
+          mbrInfo={selectedMbrInfo}
+        />
+      )}
 
       <Grid container rowSpacing={4}>
         <Grid item xs={12}>

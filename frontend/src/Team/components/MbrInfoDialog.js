@@ -1,5 +1,5 @@
-import { Avatar, Grid, Typography } from "@mui/material";
 import React from "react";
+import { Avatar, Grid, Typography } from "@mui/material";
 
 // COMPONENTS
 import Dialog from "../../Shared/components/Dialog/Dialog";
