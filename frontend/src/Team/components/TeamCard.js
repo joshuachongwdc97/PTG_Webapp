@@ -23,10 +23,10 @@ const TeamCard = (props) => {
             {props.team.map((member) => {
               return (
                 <MemberCard
-                  name={member.name}
-                  avatarName={member.avatarName}
-                  avatarColor={member.avatarColor}
-                  position={member.position}
+                  mbrInfo={member}
+                  setShowMbrInfoDialog={props.setShowMbrInfoDialog}
+                  setSelectedMbrInfo={props.setSelectedMbrInfo}
+                  key={member.email}
                 />
               );
             })}
