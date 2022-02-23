@@ -26,7 +26,7 @@ const SysDeleteDialog = (props) => {
 
   return (
     <AlertDialog
-      title={"Delete Invoice"}
+      title={"Delete System"}
       close={props.close}
       open={props.open}
       closeTitle={"Cancel"}
