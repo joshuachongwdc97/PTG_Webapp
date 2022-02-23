@@ -6,15 +6,23 @@ import { SysStatusColors } from "../../../../Shared/variables/SysStatusColors";
 // Images
 import GIF from "../../../../Shared/assets/comp_hw.gif";
 
-import { Button, Grid, Typography, Divider } from "@mui/material";
+import {
+  Button,
+  Grid,
+  Typography,
+  Divider,
+  CircularProgress,
+} from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 
+// COMPONENTS
 import Dialog from "../../../../Shared/components/Dialog/Dialog";
 import MediaCard from "../../../../Shared/components/Card/MediaCard";
 import OutlinedCard from "../../../../Shared/components/Card/OutlinedCard";
 import SysDeleteDialog from "./SysDeleteDialog";
 import ReserveDialog from "./ReserveDialog";
 import Animate from "../../../../Shared/transitions/Animate";
+import SysResetDialog from "./SysResetDialog";
 
 // FUNCTIONS
 import sysStatus from "../../../../Shared/functions/sysStatus";
@@ -29,6 +37,7 @@ import NumbersRoundedIcon from "@mui/icons-material/NumbersRounded";
 import DesktopAccessDisabledRoundedIcon from "@mui/icons-material/DesktopAccessDisabledRounded";
 import BookmarkAddedRoundedIcon from "@mui/icons-material/BookmarkAddedRounded";
 import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
+import RestartAltRoundedIcon from "@mui/icons-material/RestartAltRounded";
 
 const SysInfoDialog = (props) => {
   const { sendRequest } = useHttpClient();
@@ -36,7 +45,10 @@ const SysInfoDialog = (props) => {
   const [drive, setDrive] = useState();
   const [showDelDialog, setShowDelDialog] = useState(false);
   const [showReserveDialog, setShowReserveDialog] = useState(false);
+  const [showResetDialog, setShowResetDialog] = useState(false);
+  const [reserving, setReserving] = useState(false);
   const [releasing, setReleasing] = useState(false);
+  const [resetting, setResetting] = useState(false);
   const [estTestEnd, setEstTestEnd] = useState();
 
   useEffect(
@@ -70,8 +82,11 @@ const SysInfoDialog = (props) => {
       } else {
         setEstTestEnd();
       }
+      setReserving(false);
+      setReleasing(false);
+      setResetting(false);
     }, // eslint-disable-next-line
-    [props.open]
+    [props.open, props.sys]
   );
 
   const getDriveDetails = async () => {
@@ -93,15 +108,15 @@ const SysInfoDialog = (props) => {
         { "Content-Type": "application/json" }
       );
     } catch (err) {}
-    setReleasing(false);
+
     props.getData();
   };
 
   const DialogActions = (
     <Grid container spacing={2}>
-      <Grid item xs={6}>
+      <Grid item xs={status !== "online" ? 4 : 6}>
         {status !== "reserved" ? (
-          <Button
+          <LoadingButton
             variant="contained"
             color="success"
             size="large"
@@ -110,9 +125,14 @@ const SysInfoDialog = (props) => {
             onClick={() => {
               setShowReserveDialog(true);
             }}
+            loading={reserving}
+            loadingPosition="start"
+            loadingIndicator={
+              <CircularProgress color="inherit" size={16} disableShrink />
+            }
           >
             RESERVE
-          </Button>
+          </LoadingButton>
         ) : (
           <LoadingButton
             variant="contained"
@@ -123,12 +143,36 @@ const SysInfoDialog = (props) => {
             onClick={releaseSysHandler}
             loading={releasing}
             loadingPosition="start"
+            loadingIndicator={
+              <CircularProgress color="inherit" size={16} disableShrink />
+            }
           >
             RELEASE
           </LoadingButton>
         )}
       </Grid>
-      <Grid item xs={6}>
+      {status !== "online" && (
+        <Grid item xs={4}>
+          <LoadingButton
+            variant="contained"
+            color="primary"
+            size="large"
+            fullWidth
+            startIcon={<RestartAltRoundedIcon />}
+            onClick={() => {
+              setShowResetDialog(true);
+            }}
+            loading={resetting}
+            loadingPosition="start"
+            loadingIndicator={
+              <CircularProgress color="inherit" size={16} disableShrink />
+            }
+          >
+            RESET
+          </LoadingButton>
+        </Grid>
+      )}
+      <Grid item xs={status !== "online" ? 4 : 6}>
         <Button
           variant="contained"
           color="error"
@@ -160,6 +204,16 @@ const SysInfoDialog = (props) => {
         }}
       />
 
+      <SysResetDialog
+        open={showResetDialog}
+        close={() => {
+          setShowResetDialog(false);
+        }}
+        mac={props.open ? props.sys.mac : null}
+        getData={props.getData}
+        setResetting={setResetting}
+      />
+
       <ReserveDialog
         open={showReserveDialog}
         close={() => {
@@ -167,6 +221,7 @@ const SysInfoDialog = (props) => {
         }}
         id={props.open ? props.sys.id : null}
         getData={props.getData}
+        setReserving={setReserving}
       />
 
       <Dialog
