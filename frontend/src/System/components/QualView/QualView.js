@@ -33,6 +33,7 @@ const QualView = (props) => {
               test={test}
               drvPrgm={drvPrgm}
               invoice={invoice}
+              systems={props.systems}
               getQuals={props.getQuals}
               setShowSysDialog={props.setShowSysDialog}
               setSelectedQual={props.setSelectedQual}

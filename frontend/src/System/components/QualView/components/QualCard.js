@@ -23,6 +23,7 @@ import BasicCard from "../../../../Shared/components/Card/BasicCard";
 const QualCard = (props) => {
   const { sendRequest } = useHttpClient();
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
+  const [showEndAlert, setShowEndAlert] = useState(false);
 
   // QUAL CARD ACTIONS
   const actions = (
@@ -39,7 +40,12 @@ const QualCard = (props) => {
         </IconButton>
       </Tooltip>
       <Tooltip title="Mark As Complete">
-        <IconButton size="small">
+        <IconButton
+          size="small"
+          onClick={() => {
+            setShowEndAlert(true);
+          }}
+        >
           <DoneAllRoundedIcon fontSize="small" color="success" />
         </IconButton>
       </Tooltip>
@@ -66,6 +72,34 @@ const QualCard = (props) => {
     } catch (err) {}
   };
 
+  const endQualHandler = async () => {
+    try {
+      await sendRequest(
+        "http://" + serverName + "/api/qual/end/" + props.qual.id,
+        "PATCH"
+      );
+    } catch (err) {}
+
+    const qualSystems = [];
+    props.systems.forEach((sys) => {
+      if (sys.qual === props.qual.id) {
+        qualSystems.push(sys.mac);
+      }
+    });
+
+    try {
+      await sendRequest(
+        "http://" + serverName + "/api/system/test/reset",
+        "PATCH",
+        JSON.stringify({ macs: qualSystems }),
+        { "Content-Type": "application/json" }
+      );
+
+      props.getQuals();
+      setShowEndAlert(false);
+    } catch (err) {}
+  };
+
   return (
     <React.Fragment>
       <AlertDialog
@@ -79,6 +113,20 @@ const QualCard = (props) => {
         closeColor="primary"
         title="Deleting Job"
         proceed={delQualHandler}
+      >
+        Are you sure?
+      </AlertDialog>
+      <AlertDialog
+        open={showEndAlert}
+        close={() => {
+          setShowEndAlert(false);
+        }}
+        proceedTitle="End"
+        proceedColor="error"
+        closeTitle="Cancel"
+        closeColor="primary"
+        title="End Job"
+        proceed={endQualHandler}
       >
         Are you sure?
       </AlertDialog>
