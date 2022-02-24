@@ -46,13 +46,62 @@ const SysInfoDialog = (props) => {
   const [estTestEnd, setEstTestEnd] = useState();
   const [timeRemaining, setTimeRemaining] = useState([0, 0]);
   const [testDur, setTestDur] = useState(0);
+  const [testPercent, setTestPercent] = useState(0);
+  const [testError, setTestError] = useState(false);
 
+  // Check if test completed early or too late (tolerance 1 hour)
+  useEffect(
+    () => {
+      const timeRemainingMins = timeRemaining[0] * 60 + timeRemaining[1];
+
+      // Test Completed Too Early
+      if (status === "test completed" && timeRemainingMins > 60 && !testError) {
+        setTestError(true);
+      }
+
+      // Test Not Completed After Est Time End
+      if (
+        status === "test in progress" &&
+        timeRemainingMins < -60 &&
+        !testError
+      ) {
+        setTestError(true);
+      }
+    }, // eslint-disable-next-line
+    [status, timeRemaining]
+  );
+
+  // Calculate Progress Percentage
+  useEffect(() => {
+    if (testDur && timeRemaining[0] * 60 + timeRemaining[1]) {
+      const percent =
+        ((testDur * 60 - timeRemaining[0] * 60 - timeRemaining[1]) /
+          (testDur * 60)) *
+        100;
+
+      // If current time exceeds estimated end time, set percentage to 99
+      if (timeRemaining[0] < 0 && timeRemaining[1] < 0) {
+        setTestPercent(99);
+      } else if (status === "test completed") {
+        setTestPercent(100);
+      } else {
+        setTestPercent(percent);
+      }
+    } else {
+      setTestPercent(0);
+    }
+  }, [testDur, timeRemaining, status]);
+
+  // Get Drive Details / Estimated Test End Time / Test Duration
   useEffect(
     () => {
       if (props.open && props.sys && props.test) {
         const testDuration = getTestDuration(props.test, props.sys.testMode);
         setEstTestEnd(getEstTestEnd(props.sys.testStart, testDuration));
         setTestDur(parseInt(testDuration));
+      } else {
+        setEstTestEnd();
+        setTestDur(0);
       }
 
       if (props.open && props.sys) {
@@ -66,6 +115,7 @@ const SysInfoDialog = (props) => {
     [props.open, props.sys, props.test]
   );
 
+  // Calculate Time Remaining
   useEffect(() => {
     if (estTestEnd) {
       setTimeRemaining(getTimeRemaining(estTestEnd));
@@ -83,7 +133,7 @@ const SysInfoDialog = (props) => {
       if (props.open) {
         setStatus(sysStatus(props.sys));
       } else {
-        setEstTestEnd();
+        setTestError(false);
       }
     }, // eslint-disable-next-line
     [props.open]
@@ -211,9 +261,7 @@ const SysInfoDialog = (props) => {
                       <OutlinedCard align="center" click minHeight={300}>
                         <Grid container alignItems={"center"} spacing={3}>
                           <Grid item xs={12} align="center">
-                            <DesktopAccessDisabledRoundedIcon
-                            // sx={{ height: "100px", width: "100px" }}
-                            />
+                            <DesktopAccessDisabledRoundedIcon />
                           </Grid>
                           <Grid item xs={12} align="center">
                             <Typography>System Offline</Typography>
@@ -321,43 +369,41 @@ const SysInfoDialog = (props) => {
                             : "Test Info Unavailable"}
                         </Typography>
                       </Grid>
-                      {props.sys.qual && (
+                      {props.sys.qual && !testError && (
                         <React.Fragment>
-                          <Grid item xs={12}>
+                          <Grid item xs={8}>
                             <Typography variant="caption" color="textSecondary">
-                              {"Time Remaining : " +
-                                timeRemaining[0] +
-                                " hrs " +
-                                timeRemaining[1] +
-                                " mins"}
+                              {timeRemaining[0] >= 0 && timeRemaining[1] >= 0
+                                ? "Time Remaining : " +
+                                  timeRemaining[0] +
+                                  " hrs " +
+                                  timeRemaining[1] +
+                                  " mins"
+                                : "Test Near Completion"}
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={4} align="right">
+                            <Typography variant="caption" color="textSecondary">
+                              {Math.floor(testPercent) + "%"}
                             </Typography>
                           </Grid>
                           <Grid item xs={12}>
                             <LinearProgress
                               variant="buffer"
-                              value={
-                                testDur &&
-                                timeRemaining[0] * 60 + timeRemaining[1]
-                                  ? ((testDur * 60 -
-                                      timeRemaining[0] * 60 -
-                                      timeRemaining[1]) /
-                                      (testDur * 60)) *
-                                    100
-                                  : 0
-                              }
-                              valueBuffer={
-                                testDur &&
-                                timeRemaining[0] * 60 + timeRemaining[1]
-                                  ? ((testDur * 60 -
-                                      timeRemaining[0] * 60 -
-                                      timeRemaining[1]) /
-                                      (testDur * 60)) *
-                                    100
-                                  : 0
-                              }
+                              value={testPercent}
+                              valueBuffer={testPercent}
+                              color={testPercent >= 100 ? "success" : "primary"}
                             />
                           </Grid>
                         </React.Fragment>
+                      )}
+
+                      {props.sys.qual && testError && (
+                        <Grid item xs={12}>
+                          <Typography variant="caption" color="error">
+                            Test Error Detected, please check system logs
+                          </Typography>
+                        </Grid>
                       )}
                     </Grid>
                   </OutlinedCard>
