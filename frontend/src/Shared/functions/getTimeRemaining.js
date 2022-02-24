@@ -3,7 +3,11 @@ const getTimeRemaining = (endDate) => {
 
   const minutesRemaining = endDate - now;
 
-  return minutesRemaining / 1000 / 60;
+  // Return in hours and minutes
+  return [
+    Math.floor(minutesRemaining / 1000 / 60 / 60),
+    Math.floor((minutesRemaining / 1000 / 60) % 60),
+  ];
 };
 
 export default getTimeRemaining;

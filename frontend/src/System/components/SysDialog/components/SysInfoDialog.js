@@ -6,7 +6,13 @@ import { SysStatusColors } from "../../../../Shared/variables/SysStatusColors";
 // Images
 import GIF from "../../../../Shared/assets/comp_hw.gif";
 
-import { Button, Grid, Typography, Divider } from "@mui/material";
+import {
+  Button,
+  Grid,
+  Typography,
+  Divider,
+  LinearProgress,
+} from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 
 import Dialog from "../../../../Shared/components/Dialog/Dialog";
@@ -38,12 +44,15 @@ const SysInfoDialog = (props) => {
   const [showReserveDialog, setShowReserveDialog] = useState(false);
   const [releasing, setReleasing] = useState(false);
   const [estTestEnd, setEstTestEnd] = useState();
+  const [timeRemaining, setTimeRemaining] = useState([0, 0]);
+  const [testDur, setTestDur] = useState(0);
 
   useEffect(
     () => {
       if (props.open && props.sys && props.test) {
         const testDuration = getTestDuration(props.test, props.sys.testMode);
         setEstTestEnd(getEstTestEnd(props.sys.testStart, testDuration));
+        setTestDur(parseInt(testDuration));
       }
 
       if (props.open && props.sys) {
@@ -59,7 +68,13 @@ const SysInfoDialog = (props) => {
 
   useEffect(() => {
     if (estTestEnd) {
-      console.log(getTimeRemaining(estTestEnd));
+      setTimeRemaining(getTimeRemaining(estTestEnd));
+      const interval = setInterval(() => {
+        setTimeRemaining(getTimeRemaining(estTestEnd));
+      }, 60000);
+      return () => clearInterval(interval);
+    } else {
+      setTimeRemaining([0, 0]);
     }
   }, [estTestEnd]);
 
@@ -292,7 +307,7 @@ const SysInfoDialog = (props) => {
                           Test Details
                         </Typography>
                       </Grid>
-                      <Grid item xs={6}>
+                      <Grid item xs={12}>
                         <Typography variant="caption" color="textSecondary">
                           {!props.sys.qual
                             ? "No Jobs Detected"
@@ -306,35 +321,48 @@ const SysInfoDialog = (props) => {
                             : "Test Info Unavailable"}
                         </Typography>
                       </Grid>
+                      {props.sys.qual && (
+                        <React.Fragment>
+                          <Grid item xs={12}>
+                            <Typography variant="caption" color="textSecondary">
+                              {"Time Remaining : " +
+                                timeRemaining[0] +
+                                " hrs " +
+                                timeRemaining[1] +
+                                " mins"}
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <LinearProgress
+                              variant="buffer"
+                              value={
+                                testDur &&
+                                timeRemaining[0] * 60 + timeRemaining[1]
+                                  ? ((testDur * 60 -
+                                      timeRemaining[0] * 60 -
+                                      timeRemaining[1]) /
+                                      (testDur * 60)) *
+                                    100
+                                  : 0
+                              }
+                              valueBuffer={
+                                testDur &&
+                                timeRemaining[0] * 60 + timeRemaining[1]
+                                  ? ((testDur * 60 -
+                                      timeRemaining[0] * 60 -
+                                      timeRemaining[1]) /
+                                      (testDur * 60)) *
+                                    100
+                                  : 0
+                              }
+                            />
+                          </Grid>
+                        </React.Fragment>
+                      )}
                     </Grid>
                   </OutlinedCard>
                 </Grid>
               </Grid>
-              {/* <Grid item xs={2.5} container spacing={1.5}>
-                  
-                 
-                  <Grid item xs={12}>
-                    <Animate show delay="1.9s">
-                      <AvatarCard
-                        title={
-                          !props.sys.qual
-                            ? "No Jobs Detected"
-                            : props.test && props.invoice
-                            ? "[" +
-                              props.test.test +
-                              "] [" +
-                              props.qual.soda +
-                              "] - " +
-                              props.invoice.name
-                            : "Test Info Unavailable"
-                        }
-                        letterSpacing="1px"
-                        fontWeight="350"
-                        icon={<CodeRoundedIcon fontSize="medium" />}
-                      />
-                    </Animate>
-                  </Grid>
-                </Grid> */}
             </Grid>
           </React.Fragment>
         )}

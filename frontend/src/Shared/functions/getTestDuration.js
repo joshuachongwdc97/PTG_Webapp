@@ -3,9 +3,9 @@ const getTestDuration = (test, currentMode) => {
 
   if (currentMode === "TCG_MB") {
     currentMode = "TCG MAX BANDS";
+  } else if (!currentMode) {
+    currentMode = "ATA";
   }
-
-  console.log(currentMode);
 
   if (test.modes.length > 1) {
     testModeDuration = test.modes.filter((mode) => {
