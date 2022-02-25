@@ -305,39 +305,45 @@ const testEnd = async (req, res, next) => {
 };
 
 const testReset = async (req, res, next) => {
-  const { mac } = req.body;
-
-  let system = [];
+  const { macs } = req.body;
 
   try {
-    system = await System.find({ mac: mac });
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+    macs.forEach(async (mac) => {
+      let system = [];
+
+      try {
+        system = await System.find({ mac: mac });
+      } catch (err) {
+        throw new HttpError("System Fetching Failed Using MAC", 500);
+      }
+
+      if (system.length > 0) {
+        try {
+          sysToUpdate = await System.findById(system[0].id);
+        } catch (err) {
+          throw new HttpError("System Fetching Failed using ID", 500);
+        }
+
+        sysToUpdate.qual = undefined;
+        sysToUpdate.testMode = undefined;
+        sysToUpdate.testStart = undefined;
+        sysToUpdate.testEnd = undefined;
+
+        try {
+          await sysToUpdate.save({ session: sess });
+        } catch (err) {
+          throw new HttpError("Test Status Reset Failed", 500);
+        }
+      }
+    });
+    await sess.commitTransaction();
   } catch (err) {
-    const error = new HttpError("System Fetching Failed Using MAC", 500);
-    return next(error);
+    return next(err);
   }
 
-  if (system.length > 0) {
-    try {
-      sysToUpdate = await System.findById(system[0].id);
-    } catch (err) {
-      const error = new HttpError("System Fetching Failed using ID", 500);
-      return next(error);
-    }
-
-    sysToUpdate.qual = undefined;
-    sysToUpdate.testMode = undefined;
-    sysToUpdate.testStart = undefined;
-    sysToUpdate.testEnd = undefined;
-
-    try {
-      await sysToUpdate.save();
-    } catch (err) {
-      const error = new HttpError("Test Status Reset Failed", 500);
-      return next(error);
-    }
-
-    res.status(201).json("Test Status Reset Successful");
-  }
+  res.status(201).json("Test Status Reset Successful");
 };
 
 exports.addSystems = addSystems;

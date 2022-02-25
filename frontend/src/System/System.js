@@ -209,7 +209,9 @@ const System = (props) => {
                 invoices={invoices}
                 tests={tests}
                 drvPrgms={drvPrgms}
+                systems={systems}
                 getQuals={getQuals}
+                getSystems={getSystems}
                 setShowSysDialog={setShowSysDialog}
                 setSelectedQual={setSelectedQual}
               />
