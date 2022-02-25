@@ -95,6 +95,7 @@ const QualCard = (props) => {
         { "Content-Type": "application/json" }
       );
 
+      props.getSystems();
       props.getQuals();
       setShowEndAlert(false);
     } catch (err) {}
