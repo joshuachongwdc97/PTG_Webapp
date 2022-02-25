@@ -25,6 +25,7 @@ const ReserveDialog = (props) => {
   };
 
   const reserveSysHandler = async () => {
+    props.setReserving(true);
     setSubmitting(true);
 
     try {
