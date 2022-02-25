@@ -16,7 +16,7 @@ const SysResetDialog = (props) => {
       await sendRequest(
         "http://" + serverName + "/api/system/test/reset",
         "PATCH",
-        JSON.stringify({ mac: props.mac }),
+        JSON.stringify({ macs: [props.mac] }),
         { "Content-Type": "application/json" }
       );
     } catch (err) {}
