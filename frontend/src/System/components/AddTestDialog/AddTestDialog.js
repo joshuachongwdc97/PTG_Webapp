@@ -209,7 +209,7 @@ const AddTestDialog = (props) => {
           delModeHandler(mode.mode);
         }}
         key={mode.mode}
-        style={{ marginRight: "5px" }}
+        sx={{ marginRight: "5px" }}
         color="primary"
       />
     );

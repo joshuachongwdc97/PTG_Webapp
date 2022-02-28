@@ -94,7 +94,7 @@ const TestsFilter = (props) => {
           <Checkbox
             icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
             checkedIcon={<CheckBoxIcon fontSize="small" />}
-            style={{ marginRight: 8 }}
+            sx={{ marginRight: 1 }}
             checked={selected}
           />
           {option.name}

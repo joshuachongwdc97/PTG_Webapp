@@ -150,7 +150,7 @@ const QualCard = (props) => {
           <Grid
             item
             xs={12}
-            style={{
+            sx={{
               overflow: "hidden",
               textOverflow: "ellipsis",
             }}

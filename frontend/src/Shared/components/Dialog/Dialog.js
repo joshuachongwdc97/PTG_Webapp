@@ -27,7 +27,7 @@ const BasicDialog = (props) => {
       fullWidth
       fullScreen={props.fullScreen}
       maxWidth={props.maxWidth}
-      style={{ minHeight: props.minHeight }}
+      sx={{ minHeight: props.minHeight }}
       PaperProps={{
         sx: { borderRadius: 3, position: props.position, top: props.top },
       }}
@@ -60,7 +60,7 @@ const BasicDialog = (props) => {
       {props.actions && (
         <React.Fragment>
           <Divider />
-          <DialogActions style={{ padding: "23px" }}>
+          <DialogActions sx={{ padding: "23px" }}>
             {props.actions}
           </DialogActions>
         </React.Fragment>
