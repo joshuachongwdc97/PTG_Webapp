@@ -17,7 +17,7 @@ import ServerStorageCard from "./components/ServerStorageCard/ServerStorageCard"
 
 // VARIABLES
 import { serverName } from "../Shared/variables/Variables";
-import SysSummaryCard from "./components/SysSummaryCard/SysSummaryCard";
+import SysSummCard from "./components/SysSummCard/SysSummCard";
 
 // FUNCTIONS
 import sysStatus from "../Shared/functions/sysStatus";
@@ -229,7 +229,7 @@ const System = (props) => {
         <Grid item>
           {dataReady && (
             <Animate show={dataReady}>
-              <SysSummaryCard sys={systems} />
+              <SysSummCard sys={systems} />
             </Animate>
           )}
         </Grid>
