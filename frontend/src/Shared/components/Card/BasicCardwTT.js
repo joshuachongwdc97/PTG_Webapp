@@ -13,6 +13,7 @@ const BasicCardwTT = (props) => {
           maxWidth: props.maxWidth,
           height: "100%",
           backgroundColor: props.backgroundColor,
+          borderRadius: 3,
         }}
         raised
         onClick={props.onClick}

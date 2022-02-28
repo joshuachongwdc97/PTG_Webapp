@@ -61,7 +61,7 @@ const LineGraphCard = (props) => {
           onClick={props.changePeriodHandler}
           value="past 3 months"
           size="small"
-          style={
+          sx={
             props.selectedPeriod === "past 3 months"
               ? undefined
               : { color: "#8f8f8f" }
@@ -74,7 +74,7 @@ const LineGraphCard = (props) => {
           onClick={props.changePeriodHandler}
           value="past 6 months"
           size="small"
-          style={
+          sx={
             props.selectedPeriod === "past 6 months"
               ? undefined
               : { color: "#8f8f8f" }
@@ -87,7 +87,7 @@ const LineGraphCard = (props) => {
           onClick={props.changePeriodHandler}
           value="past year"
           size="small"
-          style={
+          sx={
             props.selectedPeriod === "past year"
               ? undefined
               : { color: "#8f8f8f" }

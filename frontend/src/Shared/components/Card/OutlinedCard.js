@@ -16,6 +16,7 @@ const OutlinedCard = (props) => {
         height: "100%",
         display: "flex",
         flexDirection: "row",
+        borderRadius: 3,
       }}
     >
       {props.click ? (

@@ -74,7 +74,7 @@ const SummCard = (props) => {
           <Grid item xs={12} align="center">
             <Chip
               variant="outlined"
-              style={{
+              sx={{
                 color: "hsl(44, 99%, 66%)",
                 borderColor: "hsl(44, 99%, 66%)",
               }}
