@@ -1,6 +1,5 @@
 import React from "react";
-import { Grid, Typography, Stepper, Step, StepLabel } from "@mui/material";
-import CountUp from "react-countup";
+import { Grid, Typography, Divider } from "@mui/material";
 
 // COMPONENTS
 import BasicCard from "../../../Shared/components/Card/BasicCard";
@@ -11,6 +10,7 @@ import DesktopAccessDisabledRoundedIcon from "@mui/icons-material/DesktopAccessD
 import BookmarkAddedRoundedIcon from "@mui/icons-material/BookmarkAddedRounded";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import getSysSumm from "../../../Shared/functions/getSysSumm";
+import SysSummStat from "./SysSummStat";
 
 const SysSummaryCard = (props) => {
   const sysSummary = getSysSumm(props.sys);
@@ -23,64 +23,44 @@ const SysSummaryCard = (props) => {
             Active Systems (Summary)
           </Typography>
         </Grid>
-        <Grid item xs={12}>
-          <Stepper>
-            <Step key={"reserved"} active>
-              <StepLabel icon={<BookmarkAddedRoundedIcon color="warning" />}>
-                <Typography variant="h3">
-                  <CountUp
-                    start={0}
-                    end={sysSummary["reserved"]}
-                    duration={1}
-                  />
-                </Typography>
-                <Typography variant="body2" color="textSecondary">
-                  Reserved
-                </Typography>
-              </StepLabel>
-            </Step>
-            <Step key={"test in progress"} active>
-              <StepLabel icon={<SpeedRoundedIcon color="primary" />}>
-                <Typography variant="h3">
-                  <CountUp
-                    start={0}
-                    end={sysSummary["test in progress"]}
-                    duration={1}
-                  />
-                </Typography>
-                <Typography variant="body2" color="textSecondary">
-                  In Progress
-                </Typography>
-              </StepLabel>
-            </Step>
-            <Step key={"offline"} active>
-              <StepLabel
-                icon={<DesktopAccessDisabledRoundedIcon color="error" />}
-              >
-                <Typography variant="h3">
-                  <CountUp start={0} end={sysSummary["offline"]} duration={1} />
-                </Typography>
-                <Typography variant="body2" color="textSecondary">
-                  Offline
-                </Typography>
-              </StepLabel>
-            </Step>
-
-            <Step key={"test completed"} active>
-              <StepLabel icon={<CheckCircleRoundedIcon color="success" />}>
-                <Typography variant="h3">
-                  <CountUp
-                    start={0}
-                    end={sysSummary["test completed"]}
-                    duration={1}
-                  />
-                </Typography>
-                <Typography variant="body2" color="textSecondary">
-                  Completed
-                </Typography>
-              </StepLabel>
-            </Step>
-          </Stepper>
+        <Grid item container xs={12}>
+          <Grid item xs={2.25}>
+            <SysSummStat
+              stat="Reserved"
+              value={sysSummary["reserved"]}
+              icon={<BookmarkAddedRoundedIcon color="warning" />}
+            />
+          </Grid>
+          <Grid item xs={1} alignSelf="center">
+            <Divider color="#636363" />
+          </Grid>
+          <Grid item xs={2.25}>
+            <SysSummStat
+              stat="In Progress"
+              value={sysSummary["test in progress"]}
+              icon={<SpeedRoundedIcon color="primary" />}
+            />
+          </Grid>
+          <Grid item xs={1} alignSelf="center">
+            <Divider color="#636363" />
+          </Grid>
+          <Grid item xs={2.25}>
+            <SysSummStat
+              stat="Offline"
+              value={sysSummary["offline"]}
+              icon={<DesktopAccessDisabledRoundedIcon color="error" />}
+            />
+          </Grid>
+          <Grid item xs={1} alignSelf="center">
+            <Divider color="#636363" />
+          </Grid>
+          <Grid item xs={2.25}>
+            <SysSummStat
+              stat="Completed"
+              value={sysSummary["test completed"]}
+              icon={<CheckCircleRoundedIcon color="success" />}
+            />
+          </Grid>
         </Grid>
       </Grid>
     </BasicCard>
