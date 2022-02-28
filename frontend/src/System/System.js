@@ -44,31 +44,39 @@ const System = (props) => {
   };
 
   const getQuals = async () => {
-    let responseData = await sendRequest(
-      "http://" + serverName + "/api/qual/all"
-    );
-    setQuals(responseData.quals);
+    try {
+      let responseData = await sendRequest(
+        "http://" + serverName + "/api/qual/all"
+      );
+      setQuals(responseData.quals);
+    } catch (err) {}
   };
 
   const getInvoices = async () => {
-    let responseData = await sendRequest(
-      "http://" + serverName + "/api/invoice"
-    );
-    setInvoices(responseData.invoices);
+    try {
+      let responseData = await sendRequest(
+        "http://" + serverName + "/api/invoice"
+      );
+      setInvoices(responseData.invoices);
+    } catch (err) {}
   };
 
   const getTests = async () => {
-    let responseData = await sendRequest(
-      "http://" + serverName + "/api/test/all"
-    );
-    setTests(responseData.tests);
+    try {
+      let responseData = await sendRequest(
+        "http://" + serverName + "/api/test/all"
+      );
+      setTests(responseData.tests);
+    } catch (err) {}
   };
 
   const getDrvPrgms = async () => {
-    let responseData = await sendRequest(
-      "http://" + serverName + "/api/drvProgram"
-    );
-    setDrvPrgms(responseData.programs);
+    try {
+      let responseData = await sendRequest(
+        "http://" + serverName + "/api/drvProgram"
+      );
+      setDrvPrgms(responseData.programs);
+    } catch (err) {}
   };
 
   const getData = async () => {
