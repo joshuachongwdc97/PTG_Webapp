@@ -16,14 +16,15 @@ const OutlinedCard = (props) => {
         height: "100%",
         display: "flex",
         flexDirection: "row",
+        borderRadius: 3,
       }}
     >
       {props.click ? (
-        <CardActionArea sx={{ height: "100%" }}>
+        <CardActionArea style={{ height: "100%" }}>
           <CardContent>{props.children}</CardContent>
         </CardActionArea>
       ) : (
-        <Grid container alignItems={props.align} sx={{ height: "100%" }}>
+        <Grid container alignItems={props.align} style={{ height: "100%" }}>
           <Grid item xs={12}>
             <CardContent>{props.children}</CardContent>
           </Grid>
