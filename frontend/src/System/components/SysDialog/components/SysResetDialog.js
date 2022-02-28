@@ -21,8 +21,9 @@ const SysResetDialog = (props) => {
       );
     } catch (err) {}
 
+    props.getSystems();
+    props.setResetting(false);
     props.close();
-    props.getData();
   };
 
   return (

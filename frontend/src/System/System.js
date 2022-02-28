@@ -93,7 +93,7 @@ const System = (props) => {
     setDataReady(true);
   };
 
-  // Get Data
+  // Get Data Periodically
   useEffect(
     () => {
       getData();

@@ -246,7 +246,7 @@ const SysInfoDialog = (props) => {
           setShowResetDialog(false);
         }}
         mac={props.open ? props.sys.mac : null}
-        getData={props.getData}
+        getSystems={props.getSystems}
         setResetting={setResetting}
       />
 
