@@ -4,10 +4,10 @@ import sysStatus from "./sysStatus";
 const getSysSumm = (systems) => {
   const sysSummary = {
     online: 0,
-    reserved: 0,
-    offline: 0,
-    "test in progress": 0,
     "test completed": 0,
+    "test in progress": 0,
+    offline: 0,
+    reserved: 0,
   };
 
   systems.forEach((sys) => {
