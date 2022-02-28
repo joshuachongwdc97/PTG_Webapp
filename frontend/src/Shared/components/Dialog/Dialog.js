@@ -28,7 +28,9 @@ const BasicDialog = (props) => {
       fullScreen={props.fullScreen}
       maxWidth={props.maxWidth}
       style={{ minHeight: props.minHeight }}
-      PaperProps={{ sx: props.position }}
+      PaperProps={{
+        sx: { borderRadius: 3, position: props.position, top: props.top },
+      }}
     >
       {props.fullScreen && (
         <AppBar sx={{ position: "relative" }}>

@@ -11,7 +11,12 @@ import {
 
 const AlertDialog = (props) => {
   return (
-    <Dialog open={props.open} onClose={props.close} keepMounted={false}>
+    <Dialog
+      open={props.open}
+      onClose={props.close}
+      keepMounted={false}
+      PaperProps={{ sx: { borderRadius: 3 } }}
+    >
       <DialogTitle id="alert-dialog-title">{props.title}</DialogTitle>
       <DialogContent>{props.children}</DialogContent>
       <DialogActions style={{ padding: "23px" }}>
