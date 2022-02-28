@@ -12,8 +12,8 @@ import BookmarkAddedRoundedIcon from "@mui/icons-material/BookmarkAddedRounded";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import getSysSumm from "../../../Shared/functions/getSysSumm";
 
-const SysSummaryCard = (props) => {
-  const sysSummary = getSysSumm(props.sys);
+const SysSummCard = (props) => {
+  const sysSumm = getSysSumm(props.sys);
 
   return (
     <BasicCard>
@@ -28,11 +28,7 @@ const SysSummaryCard = (props) => {
             <Step key={"reserved"} active>
               <StepLabel icon={<BookmarkAddedRoundedIcon color="warning" />}>
                 <Typography variant="h3">
-                  <CountUp
-                    start={0}
-                    end={sysSummary["reserved"]}
-                    duration={1}
-                  />
+                  <CountUp start={0} end={sysSumm["reserved"]} duration={1} />
                 </Typography>
                 <Typography variant="body2" color="textSecondary">
                   Reserved
@@ -44,7 +40,7 @@ const SysSummaryCard = (props) => {
                 <Typography variant="h3">
                   <CountUp
                     start={0}
-                    end={sysSummary["test in progress"]}
+                    end={sysSumm["test in progress"]}
                     duration={1}
                   />
                 </Typography>
@@ -58,7 +54,7 @@ const SysSummaryCard = (props) => {
                 icon={<DesktopAccessDisabledRoundedIcon color="error" />}
               >
                 <Typography variant="h3">
-                  <CountUp start={0} end={sysSummary["offline"]} duration={1} />
+                  <CountUp start={0} end={sysSumm["offline"]} duration={1} />
                 </Typography>
                 <Typography variant="body2" color="textSecondary">
                   Offline
@@ -71,7 +67,7 @@ const SysSummaryCard = (props) => {
                 <Typography variant="h3">
                   <CountUp
                     start={0}
-                    end={sysSummary["test completed"]}
+                    end={sysSumm["test completed"]}
                     duration={1}
                   />
                 </Typography>
@@ -87,4 +83,4 @@ const SysSummaryCard = (props) => {
   );
 };
 
-export default SysSummaryCard;
+export default SysSummCard;
