@@ -39,7 +39,7 @@ const SysDialog = (props) => {
   useEffect(
     () => {
       if (selectedSys) {
-        const newSysDetails = props.systems.filter((sys) => {
+        const newSysDetails = props.systems2.filter((sys) => {
           return sys.id === selectedSys.id;
         });
         setSelectedSys(newSysDetails[0]);

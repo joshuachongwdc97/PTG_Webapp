@@ -54,29 +54,6 @@ const SysInfoDialog = (props) => {
   const [timeRemaining, setTimeRemaining] = useState([0, 0]);
   const [testDur, setTestDur] = useState(0);
   const [testPercent, setTestPercent] = useState(0);
-  const [testError, setTestError] = useState(false);
-
-  // Check if test completed early or too late (tolerance 1 hour)
-  useEffect(
-    () => {
-      const timeRemainingMins = timeRemaining[0] * 60 + timeRemaining[1];
-
-      // Test Completed Too Early
-      if (status === "test completed" && timeRemainingMins > 60 && !testError) {
-        setTestError(true);
-      }
-
-      // Test Not Completed After Est Time End
-      if (
-        status === "test in progress" &&
-        timeRemainingMins < -60 &&
-        !testError
-      ) {
-        setTestError(true);
-      }
-    }, // eslint-disable-next-line
-    [status, timeRemaining]
-  );
 
   // Calculate Progress Percentage
   useEffect(() => {
@@ -140,7 +117,6 @@ const SysInfoDialog = (props) => {
       if (props.open) {
         setStatus(sysStatus(props.sys));
       } else {
-        setTestError(false);
       }
       setReserving(false);
       setReleasing(false);
@@ -419,7 +395,7 @@ const SysInfoDialog = (props) => {
                             : "Test Info Unavailable"}
                         </Typography>
                       </Grid>
-                      {props.sys.qual && !testError && (
+                      {props.sys.qual && props.sys.stat !== "test error" && (
                         <React.Fragment>
                           <Grid item xs={8}>
                             <Typography variant="caption" color="textSecondary">
@@ -448,7 +424,7 @@ const SysInfoDialog = (props) => {
                         </React.Fragment>
                       )}
 
-                      {props.sys.qual && testError && (
+                      {props.sys.qual && props.sys.stat === "test error" && (
                         <Grid item xs={12}>
                           <Typography variant="caption" color="error">
                             Test Error Detected, please check system logs

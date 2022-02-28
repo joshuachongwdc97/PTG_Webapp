@@ -6,19 +6,19 @@ import { Grid, Typography, LinearProgress } from "@mui/material";
 import BasicCardwTT from "../../../../Shared/components/Card/BasicCardwTT";
 
 // FUNCTIONS
-import sysStatus from "../../../../Shared/functions/sysStatus";
+import { capFirstLetter } from "../../../../Shared/functions/CapFirstLetter";
 
 // VARIABLES
 import { StateProgressVariant } from "../../../../Shared/variables/StateProgressVariant";
+import { SysStatusColors } from "../../../../Shared/variables/SysStatusColors";
 
 const SysRow = (props) => {
   const systems = props.sysInRow.map((sys) => {
+    // System Row Margin (Defines how many systems in a row)
     let sysMargin = 2.4;
     if (props.sysInRow.length > 5) {
       sysMargin = 2;
     }
-
-    const SysStatus = sysStatus(sys);
 
     let matchSearch;
     if (sys.drive && props.inputState) {
@@ -29,17 +29,7 @@ const SysRow = (props) => {
       <Grid item key={sys.id} xs={sysMargin} align="center">
         <BasicCardwTT
           click
-          ttTitle={
-            SysStatus === "reserved"
-              ? sys.status
-              : SysStatus === "online"
-              ? "Ready"
-              : SysStatus === "test in progress"
-              ? "Test In Progress"
-              : SysStatus === "test completed"
-              ? "Test Completed"
-              : "Not Responding"
-          }
+          ttTitle={capFirstLetter(sys.stat)}
           ttPlacement="top"
           onClick={() => {
             props.showSysInfoDialog(sys);
@@ -54,20 +44,13 @@ const SysRow = (props) => {
             </Grid>
             <Grid item xs={12}>
               <LinearProgress
-                color={
-                  SysStatus === "reserved"
-                    ? "warning"
-                    : SysStatus === "error" || SysStatus === "offline"
-                    ? "error"
-                    : SysStatus === "online"
-                    ? "success"
-                    : "primary"
-                }
-                variant={StateProgressVariant[SysStatus]}
+                color={SysStatusColors[sys.stat]}
+                variant={StateProgressVariant[sys.stat]}
                 value={
-                  SysStatus === "online" ||
-                  SysStatus === "reserved" ||
-                  SysStatus === "test completed"
+                  sys.stat === "online" ||
+                  sys.stat === "reserved" ||
+                  sys.stat === "test completed" ||
+                  sys.stat === "test error"
                     ? 100
                     : 0
                 }

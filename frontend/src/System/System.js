@@ -19,9 +19,13 @@ import ServerStorageCard from "./components/ServerStorageCard/ServerStorageCard"
 import { serverName } from "../Shared/variables/Variables";
 import SysSummaryCard from "./components/SysSummaryCard/SysSummaryCard";
 
+// FUNCTIONS
+import sysStatus from "../Shared/functions/sysStatus";
+
 const System = (props) => {
   const { sendRequest } = useHttpClient();
   const [systems, setSystems] = useState([]);
+  const [systems2, setSystems2] = useState([]);
   const [quals, setQuals] = useState([]);
   const [invoices, setInvoices] = useState([]);
   const [tests, setTests] = useState([]);
@@ -89,6 +93,7 @@ const System = (props) => {
     setDataReady(true);
   };
 
+  // Get Data
   useEffect(
     () => {
       getData();
@@ -101,6 +106,29 @@ const System = (props) => {
     // eslint-disable-next-line
     []
   );
+
+  // Populate System Status
+  useEffect(() => {
+    if (systems.length > 0 && quals.length > 0 && tests.length > 0) {
+      setSystems2(
+        systems.map((sys) => {
+          if (sys.qual) {
+            const testID = quals.filter((qual) => {
+              return qual.id === sys.qual;
+            })[0].test;
+
+            const test = tests.filter((test) => {
+              return test.id === testID.toString();
+            })[0];
+
+            return { ...sys, stat: sysStatus(sys, test) };
+          } else {
+            return { ...sys, stat: sysStatus(sys) };
+          }
+        })
+      );
+    }
+  }, [systems, quals, tests]);
 
   return (
     <React.Fragment>
@@ -150,7 +178,7 @@ const System = (props) => {
         close={() => {
           setShowSysDialog(false);
         }}
-        systems={systems}
+        systems={systems2}
         invoices={invoices}
         tests={tests}
         quals={quals}

@@ -16,6 +16,7 @@ import SysRow from "./SysRow";
 import { SysStatusColors } from "../../../../Shared/variables/SysStatusColors";
 import { StateProgressVariant } from "../../../../Shared/variables/StateProgressVariant";
 import getSysSumm from "../../../../Shared/functions/getSysSumm";
+import { capFirstLetter } from "../../../../Shared/functions/CapFirstLetter";
 
 const SysRackCard = (props) => {
   let SysRowArr = props.sysInRack.map((sys) => {
@@ -47,21 +48,7 @@ const SysRackCard = (props) => {
 
   SummaryStats = Object.keys(SummaryStats).map((stat) => {
     return (
-      <Tooltip
-        title={
-          stat === "reserved"
-            ? "Reserved"
-            : stat === "online"
-            ? "Ready"
-            : stat === "test in progress"
-            ? "Test In Progress"
-            : stat === "test completed"
-            ? "Test Completed"
-            : "Not Responding"
-        }
-        placement={"bottom-end"}
-        key={stat}
-      >
+      <Tooltip title={capFirstLetter(stat)} placement={"bottom-end"} key={stat}>
         <Grid item container xs={1.5}>
           <Grid item xs={12} align="center">
             <Typography variant="subtitle2" color={"textSecondary"}>
