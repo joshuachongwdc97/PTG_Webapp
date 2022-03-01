@@ -19,7 +19,7 @@ const SysSummCard = (props) => {
   const sysSumm = getSysSumm(props.sys);
 
   return (
-    <BasicCard>
+    <BasicCard maxWidth="700px">
       <Grid container rowSpacing={2}>
         <Grid item xs={12}>
           <Typography variant="subtitle2" color="textSecondary">
