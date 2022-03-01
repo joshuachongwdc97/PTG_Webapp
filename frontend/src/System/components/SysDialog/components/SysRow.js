@@ -1,16 +1,7 @@
 import React from "react";
-
-import { Grid, Typography, LinearProgress } from "@mui/material";
-
-// COMPONENTS
-import BasicCardwTT from "../../../../Shared/components/Card/BasicCardwTT";
-
-// FUNCTIONS
-import { capFirstLetter } from "../../../../Shared/functions/CapFirstLetter";
+import { Grid } from "@mui/material";
 
 // VARIABLES
-import { StateProgressVariant } from "../../../../Shared/variables/StateProgressVariant";
-import { SysStatusColors } from "../../../../Shared/variables/SysStatusColors";
 import SysRowCard from "./SysRowCard";
 
 const SysRow = (props) => {
