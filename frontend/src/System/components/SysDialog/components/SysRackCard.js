@@ -4,10 +4,10 @@ import React from "react";
 import { Chip, Grid, Divider } from "@mui/material";
 import OutlinedCard from "../../../../Shared/components/Card/OutlinedCard";
 import SysRow from "./SysRow";
+import SysRackSumm from "./SysRackSumm";
 
 // VARIABLES
 import getSysSumm from "../../../../Shared/functions/getSysSumm";
-import SysRackSumm from "./SysRackSumm";
 
 const SysRackCard = (props) => {
   let SysRowArr = props.sysInRack.map((sys) => {
