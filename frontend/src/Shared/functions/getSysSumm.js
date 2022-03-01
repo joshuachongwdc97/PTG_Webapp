@@ -12,8 +12,7 @@ const getSysSumm = (systems) => {
   };
 
   systems.forEach((sys) => {
-    const SysStatus = sysStatus(sys);
-    sysSummary[SysStatus] += 1;
+    sysSummary[sys.stat] += 1;
   });
 
   return sysSummary;
