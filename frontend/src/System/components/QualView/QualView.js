@@ -42,7 +42,7 @@ const QualView = (props) => {
               systems={systems}
               getQuals={props.getQuals}
               getSystems={props.getSystems}
-              setShowSysDialog={props.setShowSysDialog}
+              setShowQualSysDialog={props.setShowQualSysDialog}
               setSelectedQual={props.setSelectedQual}
             />
           </Grid>

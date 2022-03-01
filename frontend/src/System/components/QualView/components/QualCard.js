@@ -77,8 +77,8 @@ const QualCard = (props) => {
         <IconButton
           size="small"
           onClick={() => {
-            props.setSelectedQual(props.qual.id);
-            props.setShowSysDialog(true);
+            props.setSelectedQual(props.qual);
+            props.setShowQualSysDialog(true);
           }}
         >
           <DesktopWindowsRoundedIcon fontSize="small" />
