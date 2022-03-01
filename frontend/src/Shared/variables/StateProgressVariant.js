@@ -4,4 +4,5 @@ export const StateProgressVariant = {
   offline: "determinate",
   "test in progress": "indeterminate",
   "test completed": "determinate",
+  "test error": "determinate",
 };

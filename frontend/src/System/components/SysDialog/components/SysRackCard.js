@@ -57,6 +57,8 @@ const SysRackCard = (props) => {
             ? "Test In Progress"
             : stat === "test completed"
             ? "Test Completed"
+            : stat === "test error"
+            ? "Test Error"
             : "Not Responding"
         }
         placement={"bottom-end"}
@@ -75,7 +77,8 @@ const SysRackCard = (props) => {
               value={
                 stat === "online" ||
                 stat === "reserved" ||
-                stat === "test completed"
+                stat === "test completed" ||
+                stat === "test error"
                   ? 100
                   : 0
               }

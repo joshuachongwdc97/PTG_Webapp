@@ -4,4 +4,5 @@ export const SysStatusColors = {
   offline: "error",
   "test in progress": "primary",
   "test completed": "primary",
+  "test error": "error",
 };
