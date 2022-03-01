@@ -50,6 +50,7 @@ const TextFieldWIcon = (props) => {
       autoFocus={props.autoFocus}
       onFocus={props.onFocus}
       variant={props.variant}
+      size={props.size}
     />
   );
 };
