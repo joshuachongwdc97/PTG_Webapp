@@ -5,5 +5,4 @@ export const StateProgressVariant = {
   "test error": "determinate",
   "test in progress": "indeterminate",
   "test completed": "determinate",
-  "test error": "determinate",
 };

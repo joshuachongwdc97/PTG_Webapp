@@ -1,6 +1,3 @@
-// COMPONENTS
-import sysStatus from "./sysStatus";
-
 const getSysSumm = (systems) => {
   const sysSummary = {
     online: 0,
