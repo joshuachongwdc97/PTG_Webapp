@@ -14,6 +14,7 @@ import TestsDialog from "./components/TestsDialog/TestsDialog";
 import NewQualDialog from "./components/NewQualDialog/NewQualDialog";
 import QualView from "./components/QualView/QualView";
 import ServerStorageCard from "./components/ServerStorageCard/ServerStorageCard";
+import QualSysDialog from "./components/QualSysDialog/QualSysDialog";
 
 // VARIABLES
 import { serverName } from "../Shared/variables/Variables";
@@ -39,6 +40,7 @@ const System = (props) => {
   const [showAddTestDialog, setShowAddTestDialog] = useState(false);
   const [showTestsDialog, setShowTestsDialog] = useState(false);
   const [showNewQualDialog, setShowNewQualDialog] = useState(false);
+  const [showQualSysDialog, setShowQualSysDialog] = useState(false);
   const [selectedQual, setSelectedQual] = useState("");
 
   const getSystems = async () => {
@@ -219,8 +221,6 @@ const System = (props) => {
         getTests={getTests}
         getInvoices={getInvoices}
         getDrvPrgms={getDrvPrgms}
-        selectedQual={selectedQual}
-        setSelectedQual={setSelectedQual}
       />
 
       {/* TESTS DIALOG */}
@@ -231,6 +231,20 @@ const System = (props) => {
         }}
         drvPrgms={drvPrgms}
         tests={tests}
+      />
+
+      {/* VIEW QUAL SYSTEMS DIALOG */}
+      <QualSysDialog
+        open={showQualSysDialog}
+        close={() => {
+          setShowQualSysDialog(false);
+        }}
+        selectedQual={selectedQual}
+        systems={systems2}
+        invoices={invoices}
+        tests={tests}
+        quals={quals}
+        getSystems={getSystems}
       />
 
       <Grid container spacing={2}>
@@ -280,7 +294,7 @@ const System = (props) => {
                 systems={systems2}
                 getQuals={getQuals}
                 getSystems={getSystems}
-                setShowSysDialog={setShowSysDialog}
+                setShowQualSysDialog={setShowQualSysDialog}
                 setSelectedQual={setSelectedQual}
               />
             </Animate>
