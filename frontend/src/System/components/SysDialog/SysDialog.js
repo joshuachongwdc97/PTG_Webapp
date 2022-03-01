@@ -87,12 +87,7 @@ const SysDialog = (props) => {
   rackNoArr.forEach((rackNo) => {
     const sysInRack = props.systems.filter((sys) => {
       if (sys.rackNo === rackNo) {
-        if (
-          !props.selectedQual ||
-          (props.selectedQual && props.selectedQual === sys.qual)
-        ) {
-          return true;
-        }
+        return true;
       }
 
       return false;

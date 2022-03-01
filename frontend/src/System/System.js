@@ -221,8 +221,6 @@ const System = (props) => {
         getTests={getTests}
         getInvoices={getInvoices}
         getDrvPrgms={getDrvPrgms}
-        selectedQual={selectedQual}
-        setSelectedQual={setSelectedQual}
       />
 
       {/* TESTS DIALOG */}
