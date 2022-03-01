@@ -17,6 +17,7 @@ import { SysStatusColors } from "../../../../Shared/variables/SysStatusColors";
 import { StateProgressVariant } from "../../../../Shared/variables/StateProgressVariant";
 import getSysSumm from "../../../../Shared/functions/getSysSumm";
 import { capFirstLetter } from "../../../../Shared/functions/CapFirstLetter";
+import SysRackSumm from "./SysRackSumm";
 
 const SysRackCard = (props) => {
   let SysRowArr = props.sysInRack.map((sys) => {
@@ -44,43 +45,6 @@ const SysRackCard = (props) => {
     );
   });
 
-  const sysSumm = getSysSumm(props.sysInRack);
-
-  let SummaryStats = [];
-  Object.keys(sysSumm).forEach((stat) => {
-    if (sysSumm[stat] > 0) {
-      SummaryStats.push(
-        <Tooltip
-          title={capFirstLetter(stat)}
-          placement={"bottom-end"}
-          key={stat}
-        >
-          <Grid item container xs={1.5}>
-            <Grid item xs={12} align="center">
-              <Typography variant="subtitle2" color={"textSecondary"}>
-                {sysSumm[stat]}
-              </Typography>
-            </Grid>
-            <Grid item xs={12} align="center">
-              <LinearProgress
-                color={SysStatusColors[stat]}
-                variant={StateProgressVariant[stat]}
-                value={
-                  stat === "online" ||
-                  stat === "reserved" ||
-                  stat === "test completed"
-                    ? 100
-                    : 0
-                }
-                sx={{ maxWidth: "30px", width: "70%", borderRadius: 5 }}
-              />
-            </Grid>
-          </Grid>
-        </Tooltip>
-      );
-    }
-  });
-
   return (
     <OutlinedCard>
       <Grid container rowSpacing={2} columnSpacing={2}>
@@ -101,7 +65,7 @@ const SysRackCard = (props) => {
           alignItems="center"
           justifyContent="end"
         >
-          {SummaryStats}
+          <SysRackSumm sysSumm={getSysSumm(props.sysInRack)} />
         </Grid>
 
         <Grid item xs={12}>
