@@ -11,6 +11,7 @@ import { capFirstLetter } from "../../../../Shared/functions/CapFirstLetter";
 // VARIABLES
 import { StateProgressVariant } from "../../../../Shared/variables/StateProgressVariant";
 import { SysStatusColors } from "../../../../Shared/variables/SysStatusColors";
+import SysRowCard from "./SysRowCard";
 
 const SysRow = (props) => {
   const systems = props.sysInRow.map((sys) => {
@@ -27,38 +28,11 @@ const SysRow = (props) => {
 
     return (
       <Grid item key={sys.id} xs={sysMargin} align="center">
-        <BasicCardwTT
-          click
-          ttTitle={capFirstLetter(sys.stat)}
-          ttPlacement="top"
-          onClick={() => {
-            props.showSysInfoDialog(sys);
-          }}
-          backgroundColor={matchSearch}
-        >
-          <Grid container spacing={1.5}>
-            <Grid item xs={12} align="center">
-              <Typography variant="subtitle2" sx={{ fontSize: "12px" }}>
-                {sys.rackLoc}
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <LinearProgress
-                color={SysStatusColors[sys.stat]}
-                variant={StateProgressVariant[sys.stat]}
-                value={
-                  sys.stat === "online" ||
-                  sys.stat === "reserved" ||
-                  sys.stat === "test completed" ||
-                  sys.stat === "test error"
-                    ? 100
-                    : 0
-                }
-                sx={{ maxWidth: "30px", width: "100%", borderRadius: 5 }}
-              />
-            </Grid>
-          </Grid>
-        </BasicCardwTT>
+        <SysRowCard
+          sys={sys}
+          matchSearch={matchSearch}
+          showSysInfoDialog={props.showSysInfoDialog}
+        />
       </Grid>
     );
   });
