@@ -21,6 +21,9 @@ import SysSummCard from "./components/SysSummCard/SysSummCard";
 
 // FUNCTIONS
 import sysStatus from "../Shared/functions/sysStatus";
+import getTestDuration from "../Shared/functions/getTestDuration";
+import getEstTestEnd from "../Shared/functions/getEstTestEnd";
+import getTimeRemaining from "../Shared/functions/getTimeRemaining";
 
 const System = (props) => {
   const { sendRequest } = useHttpClient();
@@ -107,21 +110,50 @@ const System = (props) => {
     []
   );
 
-  // Populate System Status
+  // Populate System State with Test Status
   useEffect(() => {
     if (systems.length > 0 && quals.length > 0 && tests.length > 0) {
       setSystems2(
         systems.map((sys) => {
           if (sys.qual) {
-            const testID = quals.filter((qual) => {
+            let testID = quals.filter((qual) => {
               return qual.id === sys.qual;
-            })[0].test;
+            });
 
-            const test = tests.filter((test) => {
-              return test.id === testID.toString();
-            })[0];
+            if (testID.length > 0) {
+              testID = testID[0].test;
 
-            return { ...sys, stat: sysStatus(sys, test) };
+              const test = tests.filter((test) => {
+                return test.id === testID.toString();
+              })[0];
+
+              const stat = sysStatus(sys, test);
+              const testDur = getTestDuration(test, sys.testMode);
+              const estTestEnd = getEstTestEnd(sys.testStart, testDur);
+              const timeRem = getTimeRemaining(estTestEnd);
+              let modeProgress = Math.floor(
+                ((testDur * 60 - (timeRem[0] * 60 + timeRem[1])) /
+                  (testDur * 60)) *
+                  100
+              );
+
+              if (sys.testEnd && stat !== "test error") {
+                modeProgress = 100;
+              } else if (!sys.testEnd && modeProgress > 100) {
+                modeProgress = 99;
+              }
+
+              return {
+                ...sys,
+                stat,
+                testDur,
+                estTestEnd,
+                timeRem,
+                modeProgress,
+              };
+            } else {
+              return { ...sys, stat: sysStatus(sys) };
+            }
           } else {
             return { ...sys, stat: sysStatus(sys) };
           }
@@ -245,7 +277,7 @@ const System = (props) => {
                 invoices={invoices}
                 tests={tests}
                 drvPrgms={drvPrgms}
-                systems={systems}
+                systems={systems2}
                 getQuals={getQuals}
                 getSystems={getSystems}
                 setShowSysDialog={setShowSysDialog}

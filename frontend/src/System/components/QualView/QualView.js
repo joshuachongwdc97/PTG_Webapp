@@ -7,12 +7,14 @@ import QualCard from "./components/QualCard";
 
 const QualView = (props) => {
   const QualCards = props.quals.map((qual) => {
+    // Get Current Qual's Test
     const test = props.tests.filter((test) => {
       return test.id === qual.test;
     })[0];
 
     let drvPrgm;
     let invoice;
+    let systems;
 
     if (test) {
       drvPrgm = props.drvPrgms.filter((prgm) => {
@@ -22,6 +24,10 @@ const QualView = (props) => {
       invoice = props.invoices.filter((inv) => {
         return inv.id === qual.invoice;
       })[0];
+
+      systems = props.systems.filter((sys) => {
+        return sys.qual === qual.id;
+      });
     }
 
     return (
@@ -33,7 +39,7 @@ const QualView = (props) => {
               test={test}
               drvPrgm={drvPrgm}
               invoice={invoice}
-              systems={props.systems}
+              systems={systems}
               getQuals={props.getQuals}
               getSystems={props.getSystems}
               setShowSysDialog={props.setShowSysDialog}

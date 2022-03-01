@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHttpClient } from "../../../../Shared/hooks/http-hook";
 import { serverName } from "../../../../Shared/variables/Variables";
 
 import AlertDialog from "../../../../Shared/components/Dialog/AlertDialog";
+
+// FUNCTIONS
+import getTimeRemaining from "../../../../Shared/functions/getTimeRemaining";
+import getDuration from "../../../../Shared/functions/getDuration";
+import average from "../../../../Shared/functions/averageArr";
 
 import {
   Chip,
@@ -24,6 +29,46 @@ const QualCard = (props) => {
   const { sendRequest } = useHttpClient();
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const [showEndAlert, setShowEndAlert] = useState(false);
+  const [timeRem, setTimeRem] = useState([0, 0]);
+  const [duration, setDuration] = useState([0, 0]);
+  const [progress, setProgress] = useState(0);
+  const [modeProgress, setModeProgress] = useState(0);
+
+  // Get Time Remaining & Total Qual Duration (Planned)
+  useEffect(() => {
+    if (props.qual.plannedEnd) {
+      const plannedStart = new Date(props.qual.plannedStart);
+      const plannedEnd = new Date(props.qual.plannedEnd);
+
+      setTimeRem(getTimeRemaining(plannedEnd));
+      setDuration(getDuration(plannedStart, plannedEnd));
+    } else {
+      setTimeRem([0, 0]);
+    }
+  }, [props.qual]);
+
+  // Calculate Qual Progress
+  useEffect(() => {
+    if (timeRem !== [0, 0] && duration !== [0, 0]) {
+      const timeRemMins = timeRem[0] * 60 + timeRem[1];
+      const durationMins = duration[0] * 60 + duration[1];
+
+      // eslint-disable-next-line
+      setProgress(
+        Math.floor(((durationMins - timeRemMins) / durationMins) * 100)
+      );
+    }
+  }, [timeRem, duration]);
+
+  // Get Mode Progress
+  useEffect(() => {
+    if (props.systems.length > 0) {
+      const progressArr = props.systems.map((sys) => {
+        return sys.modeProgress;
+      });
+      setModeProgress(Math.floor(average(progressArr)));
+    }
+  }, [props.systems]);
 
   // QUAL CARD ACTIONS
   const actions = (
@@ -156,21 +201,71 @@ const QualCard = (props) => {
             }}
           >
             <Typography
-              variant="subtitle2"
+              variant="caption"
               noWrap
               sx={{ fontWeight: "500" }}
               color="textSecondary"
             >
-              {props.invoice ? props.invoice.name : "Invoice Not Found"}
+              {props.invoice ? props.invoice.name : "Invoice Removed"}
             </Typography>
           </Grid>
-          <Grid item xs={12}>
-            <LinearProgress
-              variant="indeterminate"
-              value={100}
-              color={"primary"}
-              sx={{ borderRadius: "10px", marginTop: "10px" }}
-            />
+
+          {/* Mode Progress */}
+          {props.test.modes.length > 1 && (
+            <Grid item xs={12} container>
+              <Grid item xs={8}>
+                <Typography variant="caption" color="textSecondary">
+                  Mode Progress
+                </Typography>
+              </Grid>
+              <Grid item xs={4} align="right">
+                <Typography variant="caption" color="textSecondary">
+                  {modeProgress + "%"}
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <LinearProgress
+                  variant={
+                    progress > 100 || progress === 0 ? "determinate" : "buffer"
+                  }
+                  value={modeProgress}
+                  valueBuffer={modeProgress}
+                  color={modeProgress === 100 ? "success" : "primary"}
+                  sx={{
+                    borderRadius: "10px",
+                    marginTop: "5px",
+                  }}
+                />
+              </Grid>
+            </Grid>
+          )}
+
+          {/* OVERALL PROGRESS */}
+          <Grid item xs={12} container>
+            <Grid item xs={8}>
+              <Typography variant="caption" color="textSecondary">
+                Qual Progress
+              </Typography>
+            </Grid>
+            <Grid item xs={4} align="right">
+              <Typography variant="caption" color="textSecondary">
+                {progress <= 100 ? progress + "%" : "!"}
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <LinearProgress
+                variant={
+                  progress > 100 || progress === 0 ? "indeterminate" : "buffer"
+                }
+                value={progress}
+                valueBuffer={progress}
+                color={progress > 100 ? "warning" : "primary"}
+                sx={{
+                  borderRadius: "10px",
+                  marginTop: "5px",
+                }}
+              />
+            </Grid>
           </Grid>
         </Grid>
       </BasicCard>
