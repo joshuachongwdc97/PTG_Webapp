@@ -229,7 +229,7 @@ const System = (props) => {
         <Grid item>
           {dataReady && (
             <Animate show={dataReady}>
-              <SysSummCard sys={systems} />
+              <SysSummCard sys={systems2} />
             </Animate>
           )}
         </Grid>
