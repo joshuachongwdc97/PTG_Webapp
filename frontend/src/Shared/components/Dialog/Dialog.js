@@ -9,8 +9,15 @@ import {
   IconButton,
   Typography,
   Divider,
+  Grid,
 } from "@mui/material";
 import Slide from "@mui/material/Slide";
+
+// COMPONENTS
+import TextFieldWIcon from "../../../Shared/components/Input/TextFieldWIcon";
+
+// ICONS
+import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -35,17 +42,38 @@ const BasicDialog = (props) => {
       {props.fullScreen && (
         <AppBar sx={{ position: "relative" }}>
           <Toolbar>
-            <Typography sx={{ ml: 0, flex: 1 }} variant="h6" component="div">
-              {props.title}
-            </Typography>
-            <IconButton
-              edge="start"
-              color="inherit"
-              onClick={props.close}
-              aria-label="close"
-            >
-              <KeyboardArrowDownRoundedIcon />
-            </IconButton>
+            <Grid container alignItems="center">
+              <Grid item xs={props.searchBar ? 9.5 : 11.5}>
+                <Typography
+                  sx={{ ml: 0, flex: 1 }}
+                  variant="h6"
+                  component="div"
+                >
+                  {props.title}
+                </Typography>
+              </Grid>
+              {props.searchBar && (
+                <Grid item xs={2}>
+                  <TextFieldWIcon
+                    startIcon={<SearchRoundedIcon />}
+                    placeholder={props.placeholder}
+                    onChange={props.onChange}
+                    value={props.value}
+                    size="small"
+                  />
+                </Grid>
+              )}
+              <Grid item xs={0.5} align="end">
+                <IconButton
+                  edge="start"
+                  color="inherit"
+                  onClick={props.close}
+                  aria-label="close"
+                >
+                  <KeyboardArrowDownRoundedIcon />
+                </IconButton>
+              </Grid>
+            </Grid>
           </Toolbar>
         </AppBar>
       )}
