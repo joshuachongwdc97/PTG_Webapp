@@ -68,7 +68,8 @@ const SysRackCard = (props) => {
                 value={
                   stat === "online" ||
                   stat === "reserved" ||
-                  stat === "test completed"
+                  stat === "test completed" ||
+                  stat === "test error"
                     ? 100
                     : 0
                 }
