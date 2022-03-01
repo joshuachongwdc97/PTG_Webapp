@@ -38,7 +38,7 @@ const SysDialog = (props) => {
   // Use Effect to update Selected System Details on change
   useEffect(
     () => {
-      if (selectedSys) {
+      if (selectedSys && props.systems) {
         const newSysDetails = props.systems.filter((sys) => {
           return sys.id === selectedSys.id;
         });
@@ -106,8 +106,8 @@ const SysDialog = (props) => {
             sysInRack={sysInRack}
             key={rackNo}
             showSysInfoDialog={(sys) => {
-              setShowSysInfoDialog(true);
               setSelectedSys(sys);
+              setShowSysInfoDialog(true);
             }}
             quals={props.quals}
             tests={props.tests}
@@ -137,6 +137,7 @@ const SysDialog = (props) => {
           qual={qual}
           invoice={invoice}
           getData={props.getData}
+          getSystems={props.getSystems}
         />
       )}
 

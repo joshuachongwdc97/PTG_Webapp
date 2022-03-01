@@ -15,8 +15,8 @@ import BookmarkAddedRoundedIcon from "@mui/icons-material/BookmarkAddedRounded";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 
-const SysSummaryCard = (props) => {
-  const sysSummary = getSysSumm(props.sys);
+const SysSummCard = (props) => {
+  const sysSumm = getSysSumm(props.sys);
 
   return (
     <BasicCard>
@@ -30,7 +30,7 @@ const SysSummaryCard = (props) => {
           <Grid item xs={1.76}>
             <SysSummStat
               stat="Offline"
-              value={sysSummary["offline"]}
+              value={sysSumm["offline"]}
               icon={<DesktopAccessDisabledRoundedIcon htmlColor="#b32b19" />}
             />
           </Grid>
@@ -40,7 +40,7 @@ const SysSummaryCard = (props) => {
           <Grid item xs={1.76}>
             <SysSummStat
               stat="Reserved"
-              value={sysSummary["reserved"]}
+              value={sysSumm["reserved"]}
               icon={<BookmarkAddedRoundedIcon color="warning" />}
             />
           </Grid>
@@ -50,7 +50,7 @@ const SysSummaryCard = (props) => {
           <Grid item xs={1.76}>
             <SysSummStat
               stat="In Progress"
-              value={sysSummary["test in progress"]}
+              value={sysSumm["test in progress"]}
               icon={<SpeedRoundedIcon color="primary" />}
             />
           </Grid>
@@ -60,7 +60,7 @@ const SysSummaryCard = (props) => {
           <Grid item xs={1.76}>
             <SysSummStat
               stat="Error"
-              value={sysSummary["test error"]}
+              value={sysSumm["test error"]}
               icon={<WarningRoundedIcon color="error" />}
             />
           </Grid>
@@ -70,7 +70,7 @@ const SysSummaryCard = (props) => {
           <Grid item xs={1.76}>
             <SysSummStat
               stat="Completed"
-              value={sysSummary["test completed"]}
+              value={sysSumm["test completed"]}
               icon={<CheckCircleRoundedIcon color="success" />}
             />
           </Grid>
@@ -80,4 +80,4 @@ const SysSummaryCard = (props) => {
   );
 };
 
-export default SysSummaryCard;
+export default SysSummCard;

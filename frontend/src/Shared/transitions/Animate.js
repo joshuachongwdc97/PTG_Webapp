@@ -12,7 +12,7 @@ const Animate = (props) => {
       mountOnEnter
       unmountOnExit
     >
-      <Paper sx={{ height: "100%" }}>{props.children}</Paper>
+      <Paper sx={{ height: "100%", borderRadius: 3 }}>{props.children}</Paper>
     </Fade>
   );
 };

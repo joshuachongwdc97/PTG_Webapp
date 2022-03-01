@@ -16,6 +16,7 @@ import SysRow from "./SysRow";
 import { SysStatusColors } from "../../../../Shared/variables/SysStatusColors";
 import { StateProgressVariant } from "../../../../Shared/variables/StateProgressVariant";
 import getSysSumm from "../../../../Shared/functions/getSysSumm";
+import { capFirstLetter } from "../../../../Shared/functions/CapFirstLetter";
 
 const SysRackCard = (props) => {
   let SysRowArr = props.sysInRack.map((sys) => {
@@ -43,51 +44,41 @@ const SysRackCard = (props) => {
     );
   });
 
-  let SummaryStats = getSysSumm(props.sysInRack);
+  const sysSumm = getSysSumm(props.sysInRack);
 
-  SummaryStats = Object.keys(SummaryStats).map((stat) => {
-    return (
-      <Tooltip
-        title={
-          stat === "reserved"
-            ? "Reserved"
-            : stat === "online"
-            ? "Ready"
-            : stat === "test in progress"
-            ? "Test In Progress"
-            : stat === "test completed"
-            ? "Test Completed"
-            : stat === "test error"
-            ? "Test Error"
-            : "Not Responding"
-        }
-        placement={"bottom-end"}
-        key={stat}
-      >
-        <Grid item container xs={1.5}>
-          <Grid item xs={12} align="center">
-            <Typography variant="subtitle2" color={"textSecondary"}>
-              {SummaryStats[stat]}
-            </Typography>
+  let SummaryStats = [];
+  Object.keys(sysSumm).forEach((stat) => {
+    if (sysSumm[stat] > 0) {
+      SummaryStats.push(
+        <Tooltip
+          title={capFirstLetter(stat)}
+          placement={"bottom-end"}
+          key={stat}
+        >
+          <Grid item container xs={1.5}>
+            <Grid item xs={12} align="center">
+              <Typography variant="subtitle2" color={"textSecondary"}>
+                {sysSumm[stat]}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} align="center">
+              <LinearProgress
+                color={SysStatusColors[stat]}
+                variant={StateProgressVariant[stat]}
+                value={
+                  stat === "online" ||
+                  stat === "reserved" ||
+                  stat === "test completed"
+                    ? 100
+                    : 0
+                }
+                sx={{ maxWidth: "30px", width: "70%", borderRadius: 5 }}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={12} align="center">
-            <LinearProgress
-              color={SysStatusColors[stat]}
-              variant={StateProgressVariant[stat]}
-              value={
-                stat === "online" ||
-                stat === "reserved" ||
-                stat === "test completed" ||
-                stat === "test error"
-                  ? 100
-                  : 0
-              }
-              sx={{ maxWidth: "30px", width: "70%", borderRadius: 5 }}
-            />
-          </Grid>
-        </Grid>
-      </Tooltip>
-    );
+        </Tooltip>
+      );
+    }
   });
 
   return (

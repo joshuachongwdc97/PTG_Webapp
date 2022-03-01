@@ -10,6 +10,7 @@ const MediaCard = (props) => {
         minWidth: props.minWidth,
         maxWidth: props.maxWidth,
         height: "100%",
+        borderRadius: 3,
       }}
       raised
     >
