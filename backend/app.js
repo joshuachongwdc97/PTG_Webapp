@@ -35,7 +35,7 @@ app.use("/api/test", testRoutes);
 app.use("/api/qual", qualRoutes);
 app.use("/api/drvType", drvTypeRoutes);
 app.use("/api/drive", driveRoutes);
-app.use("api/job", jobRoutes);
+app.use("/api/job", jobRoutes);
 
 // Path Not Existant Error
 app.use((req, res, next) => {
@@ -54,7 +54,7 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-  .connect("mongodb://localhost:27017/ptg_database", {
+  .connect("mongodb://mps-ed-ptgval:27017/ptg_database", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,

@@ -16,7 +16,7 @@ router.post(
   [check("test").not().isEmpty()],
   [check("invoice").not().isEmpty()],
   [check("status").not().isEmpty()],
-  jobController.addQual
+  jobController.addJob
 );
 
 router.patch("/start/:id", jobController.startJob);
