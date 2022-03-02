@@ -11,6 +11,7 @@ import {
 
 // ICONS
 import DescriptionRoundedIcon from "@mui/icons-material/DescriptionRounded";
+import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
 
 // COMPONENTS
 import TextFieldWIcon from "../../../../../../Shared/components/Input/TextFieldWIcon";
@@ -207,7 +208,18 @@ const InvoiceInputs = (props) => {
             </Grid>
           </React.Fragment>
         )}
-        <Grid item xs={12}>
+        <Grid item xs={6}>
+          <TextFieldWIcon
+            label="Attention"
+            startIcon={<InfoRoundedIcon />}
+            name="attention"
+            value={props.inputState.attention ? props.inputState.attention : ""}
+            onChange={props.inputHandler}
+            disabled={disabled}
+            autoComplete="off"
+          ></TextFieldWIcon>
+        </Grid>
+        <Grid item xs={6}>
           <TextFieldWIcon
             label="Description/Remarks"
             startIcon={<DescriptionRoundedIcon />}
