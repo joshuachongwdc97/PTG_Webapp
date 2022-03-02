@@ -9,9 +9,9 @@ import SysInfoDialog from "./components/SysInfoDialog";
 const SysDialog = (props) => {
   const [showSysInfoDialog, setShowSysInfoDialog] = useState(false);
   const [selectedSys, setSelectedSys] = useState();
-  const [test, setTest] = useState();
-  const [invoice, setInvoice] = useState();
-  const [qual, setQual] = useState();
+  // const [test, setTest] = useState();
+  // const [invoice, setInvoice] = useState();
+  // const [qual, setQual] = useState();
   const [inputState, setInputState] = useState("");
 
   // Refresh System Details
@@ -45,39 +45,39 @@ const SysDialog = (props) => {
   );
 
   // Get Selected Sys Qual Details
-  useEffect(() => {
-    if (selectedSys) {
-      if (selectedSys.qual) {
-        setQual(
-          props.quals.filter((qual) => {
-            return qual.id === selectedSys.qual;
-          })[0]
-        );
-      }
-    } else {
-      setQual();
-    }
-  }, [selectedSys, props.quals]);
+  // useEffect(() => {
+  //   if (selectedSys) {
+  //     if (selectedSys.qual) {
+  //       setQual(
+  //         props.quals.filter((qual) => {
+  //           return qual.id === selectedSys.qual;
+  //         })[0]
+  //       );
+  //     }
+  //   } else {
+  //     setQual();
+  //   }
+  // }, [selectedSys, props.quals]);
 
   // Get More Qual Details
-  useEffect(() => {
-    if (qual) {
-      setInvoice(
-        props.invoices.filter((inv) => {
-          return inv.id === qual.invoice;
-        })[0]
-      );
+  // useEffect(() => {
+  //   if (qual) {
+  //     setInvoice(
+  //       props.invoices.filter((inv) => {
+  //         return inv.id === qual.invoice;
+  //       })[0]
+  //     );
 
-      setTest(
-        props.tests.filter((test) => {
-          return test.id === qual.test;
-        })[0]
-      );
-    } else {
-      setInvoice();
-      setTest();
-    }
-  }, [props.invoices, props.tests, qual]);
+  //     setTest(
+  //       props.tests.filter((test) => {
+  //         return test.id === qual.test;
+  //       })[0]
+  //     );
+  //   } else {
+  //     setInvoice();
+  //     setTest();
+  //   }
+  // }, [props.invoices, props.tests, qual]);
 
   let RackCards = [];
   rackNoArr.forEach((rackNo) => {
@@ -124,9 +124,9 @@ const SysDialog = (props) => {
             setSelectedSys();
           }}
           sys={selectedSys}
-          test={test}
-          qual={qual}
-          invoice={invoice}
+          // test={test}
+          // qual={qual}
+          // invoice={invoice}
           getData={props.getData}
           getSystems={props.getSystems}
         />

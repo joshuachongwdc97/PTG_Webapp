@@ -11,7 +11,7 @@ import {
   Grid,
   Typography,
   Divider,
-  LinearProgress,
+  // LinearProgress,
   CircularProgress,
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
@@ -26,11 +26,11 @@ import Animate from "../../../../Shared/transitions/Animate";
 import SysResetDialog from "./SysResetDialog";
 
 // FUNCTIONS
-import sysStatus from "../../../../Shared/functions/sysStatus";
+// import sysStatus from "../../../../Shared/functions/sysStatus";
 import { capFirstLetter } from "../../../../Shared/functions/CapFirstLetter";
-import getTestDuration from "../../../../Shared/functions/getTestDuration";
-import getEstTestEnd from "../../../../Shared/functions/getEstTestEnd";
-import getTimeRemaining from "../../../../Shared/functions/getTimeRemaining";
+// import getTestDuration from "../../../../Shared/functions/getTestDuration";
+// import getEstTestEnd from "../../../../Shared/functions/getEstTestEnd";
+// import getTimeRemaining from "../../../../Shared/functions/getTimeRemaining";
 
 // ICONS
 import MyLocationRoundedIcon from "@mui/icons-material/MyLocationRounded";
@@ -50,43 +50,43 @@ const SysInfoDialog = (props) => {
   const [reserving, setReserving] = useState(false);
   const [releasing, setReleasing] = useState(false);
   const [resetting, setResetting] = useState(false);
-  const [estTestEnd, setEstTestEnd] = useState();
-  const [timeRemaining, setTimeRemaining] = useState([0, 0]);
-  const [testDur, setTestDur] = useState(0);
-  const [testPercent, setTestPercent] = useState(0);
+  // const [estTestEnd, setEstTestEnd] = useState();
+  // const [timeRemaining, setTimeRemaining] = useState([0, 0]);
+  // const [testDur, setTestDur] = useState(0);
+  // const [testPercent, setTestPercent] = useState(0);
 
   // Calculate Progress Percentage
-  useEffect(() => {
-    if (testDur && timeRemaining[0] * 60 + timeRemaining[1]) {
-      const percent =
-        ((testDur * 60 - timeRemaining[0] * 60 - timeRemaining[1]) /
-          (testDur * 60)) *
-        100;
+  // useEffect(() => {
+  //   if (testDur && timeRemaining[0] * 60 + timeRemaining[1]) {
+  //     const percent =
+  //       ((testDur * 60 - timeRemaining[0] * 60 - timeRemaining[1]) /
+  //         (testDur * 60)) *
+  //       100;
 
-      // If current time exceeds estimated end time, set percentage to 99
-      if (timeRemaining[0] < 0 && timeRemaining[1] < 0) {
-        setTestPercent(99);
-      } else if (status === "test completed") {
-        setTestPercent(100);
-      } else {
-        setTestPercent(percent);
-      }
-    } else {
-      setTestPercent(0);
-    }
-  }, [testDur, timeRemaining, status]);
+  //     // If current time exceeds estimated end time, set percentage to 99
+  //     if (timeRemaining[0] < 0 && timeRemaining[1] < 0) {
+  //       setTestPercent(99);
+  //     } else if (status === "test completed") {
+  //       setTestPercent(100);
+  //     } else {
+  //       setTestPercent(percent);
+  //     }
+  //   } else {
+  //     setTestPercent(0);
+  //   }
+  // }, [testDur, timeRemaining, status]);
 
   // Get Drive Details / Estimated Test End Time / Test Duration
   useEffect(
     () => {
-      if (props.open && props.sys && props.test) {
-        const testDuration = getTestDuration(props.test, props.sys.testMode);
-        setEstTestEnd(getEstTestEnd(props.sys.testStart, testDuration));
-        setTestDur(parseInt(testDuration));
-      } else {
-        setEstTestEnd();
-        setTestDur(0);
-      }
+      // if (props.open && props.sys && props.test) {
+      //   const testDuration = getTestDuration(props.test, props.sys.testMode);
+      //   setEstTestEnd(getEstTestEnd(props.sys.testStart, testDuration));
+      //   setTestDur(parseInt(testDuration));
+      // } else {
+      //   setEstTestEnd();
+      //   setTestDur(0);
+      // }
 
       if (props.open && props.sys) {
         if (props.sys.drive) {
@@ -100,22 +100,22 @@ const SysInfoDialog = (props) => {
   );
 
   // Calculate Time Remaining
-  useEffect(() => {
-    if (estTestEnd) {
-      setTimeRemaining(getTimeRemaining(estTestEnd));
-      const interval = setInterval(() => {
-        setTimeRemaining(getTimeRemaining(estTestEnd));
-      }, 60000);
-      return () => clearInterval(interval);
-    } else {
-      setTimeRemaining([0, 0]);
-    }
-  }, [estTestEnd]);
+  // useEffect(() => {
+  //   if (estTestEnd) {
+  //     setTimeRemaining(getTimeRemaining(estTestEnd));
+  //     const interval = setInterval(() => {
+  //       setTimeRemaining(getTimeRemaining(estTestEnd));
+  //     }, 60000);
+  //     return () => clearInterval(interval);
+  //   } else {
+  //     setTimeRemaining([0, 0]);
+  //   }
+  // }, [estTestEnd]);
 
   useEffect(
     () => {
       if (props.open) {
-        setStatus(sysStatus(props.sys));
+        setStatus(props.sys.stat);
       } else {
       }
       setReserving(false);
@@ -376,7 +376,7 @@ const SysInfoDialog = (props) => {
                           sx={{ marginTop: "10px", marginBottom: "10px" }}
                         />
                       </Grid>
-                      <Grid item xs={12}>
+                      {/* <Grid item xs={12}>
                         <Typography variant="subtitle2">
                           Test Details
                         </Typography>
@@ -430,7 +430,7 @@ const SysInfoDialog = (props) => {
                             Test Error Detected, please check system logs
                           </Typography>
                         </Grid>
-                      )}
+                      )} */}
                     </Grid>
                   </OutlinedCard>
                 </Grid>

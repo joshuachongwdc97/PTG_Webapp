@@ -12,7 +12,7 @@ import AddTestDialog from "./components/AddTestDialog/AddTestDialog";
 import TestCard from "./components/TestCard/TestCard";
 import TestsDialog from "./components/TestsDialog/TestsDialog";
 import NewQualDialog from "./components/NewQualDialog/NewQualDialog";
-import QualView from "./components/QualView/QualView";
+// import QualView from "./components/QualView/QualView";
 import ServerStorageCard from "./components/ServerStorageCard/ServerStorageCard";
 import QualSysDialog from "./components/QualSysDialog/QualSysDialog";
 
@@ -22,15 +22,15 @@ import SysSummCard from "./components/SysSummCard/SysSummCard";
 
 // FUNCTIONS
 import sysStatus from "../Shared/functions/sysStatus";
-import getTestDuration from "../Shared/functions/getTestDuration";
-import getEstTestEnd from "../Shared/functions/getEstTestEnd";
-import getTimeRemaining from "../Shared/functions/getTimeRemaining";
+// import getTestDuration from "../Shared/functions/getTestDuration";
+// import getEstTestEnd from "../Shared/functions/getEstTestEnd";
+// import getTimeRemaining from "../Shared/functions/getTimeRemaining";
 
 const System = (props) => {
   const { sendRequest } = useHttpClient();
   const [systems, setSystems] = useState([]);
   const [systems2, setSystems2] = useState([]);
-  const [quals, setQuals] = useState([]);
+  // const [quals, setQuals] = useState([]);
   const [invoices, setInvoices] = useState([]);
   const [tests, setTests] = useState([]);
   const [drvPrgms, setDrvPrgms] = useState([]);
@@ -52,14 +52,14 @@ const System = (props) => {
     } catch (err) {}
   };
 
-  const getQuals = async () => {
-    try {
-      let responseData = await sendRequest(
-        "http://" + serverName + "/api/qual/all"
-      );
-      setQuals(responseData.quals);
-    } catch (err) {}
-  };
+  // const getQuals = async () => {
+  //   try {
+  //     let responseData = await sendRequest(
+  //       "http://" + serverName + "/api/qual/all"
+  //     );
+  //     setQuals(responseData.quals);
+  //   } catch (err) {}
+  // };
 
   const getInvoices = async () => {
     try {
@@ -92,7 +92,7 @@ const System = (props) => {
     getInvoices();
     getTests();
     getDrvPrgms();
-    getQuals();
+    // getQuals();
     getSystems();
 
     setDataReady(true);
@@ -114,55 +114,56 @@ const System = (props) => {
 
   // Populate System State with Test Status
   useEffect(() => {
-    if (systems.length > 0 && quals.length > 0 && tests.length > 0) {
+    if (systems.length > 0 && tests.length > 0) {
       setSystems2(
         systems.map((sys) => {
-          if (sys.qual) {
-            let testID = quals.filter((qual) => {
-              return qual.id === sys.qual;
-            });
+          // if (sys.qual) {
+          //   let testID = quals.filter((qual) => {
+          //     return qual.id === sys.qual;
+          //   });
 
-            if (testID.length > 0) {
-              testID = testID[0].test;
+          //   if (testID.length > 0) {
+          //     testID = testID[0].test;
 
-              const test = tests.filter((test) => {
-                return test.id === testID.toString();
-              })[0];
+          //     const test = tests.filter((test) => {
+          //       return test.id === testID.toString();
+          //     })[0];
 
-              const stat = sysStatus(sys, test);
-              const testDur = getTestDuration(test, sys.testMode);
-              const estTestEnd = getEstTestEnd(sys.testStart, testDur);
-              const timeRem = getTimeRemaining(estTestEnd);
-              let modeProgress = Math.floor(
-                ((testDur * 60 - (timeRem[0] * 60 + timeRem[1])) /
-                  (testDur * 60)) *
-                  100
-              );
+          //     const stat = sysStatus(sys, test);
+          //     const testDur = getTestDuration(test, sys.testMode);
+          //     const estTestEnd = getEstTestEnd(sys.testStart, testDur);
+          //     const timeRem = getTimeRemaining(estTestEnd);
+          //     let modeProgress = Math.floor(
+          //       ((testDur * 60 - (timeRem[0] * 60 + timeRem[1])) /
+          //         (testDur * 60)) *
+          //         100
+          //     );
 
-              if (sys.testEnd && stat !== "test error") {
-                modeProgress = 100;
-              } else if (!sys.testEnd && modeProgress > 100) {
-                modeProgress = 99;
-              }
+          //     if (sys.testEnd && stat !== "test error") {
+          //       modeProgress = 100;
+          //     } else if (!sys.testEnd && modeProgress > 100) {
+          //       modeProgress = 99;
+          //     }
 
-              return {
-                ...sys,
-                stat,
-                testDur,
-                estTestEnd,
-                timeRem,
-                modeProgress,
-              };
-            } else {
-              return { ...sys, stat: sysStatus(sys) };
-            }
-          } else {
-            return { ...sys, stat: sysStatus(sys) };
-          }
+          //     return {
+          //       ...sys,
+          //       stat,
+          //       testDur,
+          //       estTestEnd,
+          //       timeRem,
+          //       modeProgress,
+          //     };
+          //   } else {
+          //     return { ...sys, stat: sysStatus(sys) };
+          //   }
+          // } else {
+          //   return { ...sys, stat: sysStatus(sys) };
+          // }
+          return { ...sys, stat: sysStatus(sys) };
         })
       );
     }
-  }, [systems, quals, tests]);
+  }, [systems, tests]);
 
   return (
     <React.Fragment>
@@ -215,7 +216,6 @@ const System = (props) => {
         systems={systems2}
         invoices={invoices}
         tests={tests}
-        quals={quals}
         getData={getData}
         getSystems={getSystems}
         getTests={getTests}
@@ -243,7 +243,6 @@ const System = (props) => {
         systems={systems2}
         invoices={invoices}
         tests={tests}
-        quals={quals}
         getSystems={getSystems}
       />
 
@@ -280,7 +279,7 @@ const System = (props) => {
           )}
         </Grid>
 
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <Divider>Ongoing Jobs</Divider>
         </Grid>
         <Grid item xs={12}>
@@ -299,7 +298,7 @@ const System = (props) => {
               />
             </Animate>
           )}
-        </Grid>
+        </Grid> */}
         <Grid item xs={12}>
           {dataReady && (
             <Divider sx={{ marginTop: "10px" }}>Server Info</Divider>
