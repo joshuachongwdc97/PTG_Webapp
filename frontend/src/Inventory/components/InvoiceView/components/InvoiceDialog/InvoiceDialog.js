@@ -36,6 +36,7 @@ const InvoiceDialog = (props) => {
     description: undefined,
     invFile: undefined,
     reqFormFile: undefined,
+    attention: undefined,
   });
   const [inputReady, setInputReady] = useState(false);
   const [drives, setDrives] = useState([]);
@@ -63,6 +64,7 @@ const InvoiceDialog = (props) => {
         inputState.description !== unmodifiedState.description ||
         inputState.invFile !== unmodifiedState.invFile ||
         inputState.reqFormFile !== unmodifiedState.reqFormFile ||
+        inputState.attention !== unmodifiedState.attention ||
         drives !== unmodifiedState.drives
       ) {
         setModifiable(true);
@@ -100,6 +102,7 @@ const InvoiceDialog = (props) => {
         description: invoiceData.description,
         invFile: invoiceData.invFile,
         reqFormFile: invoiceData.reqFormFile,
+        attention: invoiceData.attention,
       });
 
       setDrives(driveData);
@@ -162,7 +165,9 @@ const InvoiceDialog = (props) => {
       value = event.target.value.toUpperCase();
     }
     if (
-      ["description", "invFile", "reqFormFile"].includes(event.target.name) &&
+      ["description", "invFile", "reqFormFile", "attention"].includes(
+        event.target.name
+      ) &&
       event.target.value === ""
     ) {
       value = undefined;
@@ -208,6 +213,7 @@ const InvoiceDialog = (props) => {
       description: undefined,
       invFile: undefined,
       reqFormFile: undefined,
+      attention: undefined,
     });
     setDrives([]);
     setActiveTab("invoice");
