@@ -59,6 +59,7 @@ const addInvoice = async (req, res, next) => {
     description,
     invFile,
     reqFormFile,
+    attention,
   } = req.body;
 
   let existingInvoice;
@@ -88,6 +89,7 @@ const addInvoice = async (req, res, next) => {
     description,
     invFile,
     reqFormFile,
+    attention,
     schemaVersion,
   });
 
@@ -119,6 +121,7 @@ const updateInvoice = async (req, res, next) => {
     description,
     invFile,
     reqFormFile,
+    attention,
   } = req.body;
   const id = req.params.id;
 
@@ -142,6 +145,7 @@ const updateInvoice = async (req, res, next) => {
   updatedInvoice.description = description;
   updatedInvoice.invFile = invFile;
   updatedInvoice.reqFormFile = reqFormFile;
+  updatedInvoice.attention = attention;
 
   try {
     await updatedInvoice.save();
