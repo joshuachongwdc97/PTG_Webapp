@@ -54,7 +54,7 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-  .connect("mongodb://mps-ed-ptgval:27017/ptg_database", {
+  .connect("mongodb://localhost:27017/ptg_database", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
