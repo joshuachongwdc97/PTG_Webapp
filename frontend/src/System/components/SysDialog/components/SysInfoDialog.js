@@ -376,6 +376,18 @@ const SysInfoDialog = (props) => {
                           sx={{ marginTop: "10px", marginBottom: "10px" }}
                         />
                       </Grid>
+                      <Grid item xs={12}>
+                        <Typography variant="subtitle2">
+                          Test Details
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Typography variant="caption" color="textSecondary">
+                          {!props.sys.qual
+                            ? "No Jobs Detected"
+                            : props.sys.qual}
+                        </Typography>
+                      </Grid>
                       {/* <Grid item xs={12}>
                         <Typography variant="subtitle2">
                           Test Details
