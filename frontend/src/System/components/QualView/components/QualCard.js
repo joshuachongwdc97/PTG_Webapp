@@ -120,7 +120,7 @@ const QualCard = (props) => {
   const endQualHandler = async () => {
     try {
       await sendRequest(
-        "http://" + serverName + "/api/qual/end/" + props.qual.id,
+        "http://" + serverName + "/api/job/end/" + props.qual.id,
         "PATCH"
       );
     } catch (err) {}
@@ -134,7 +134,7 @@ const QualCard = (props) => {
 
     try {
       await sendRequest(
-        "http://" + serverName + "/api/system/test/reset",
+        "http://" + serverName + "/api/system/pending",
         "PATCH",
         JSON.stringify({ macs: qualSystems }),
         { "Content-Type": "application/json" }

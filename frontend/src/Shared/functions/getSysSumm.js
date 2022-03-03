@@ -6,6 +6,7 @@ const getSysSumm = (systems) => {
     "test in progress": 0,
     offline: 0,
     reserved: 0,
+    "pending removal": 0,
   };
 
   systems.forEach((sys) => {

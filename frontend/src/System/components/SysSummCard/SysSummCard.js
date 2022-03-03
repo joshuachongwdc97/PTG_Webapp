@@ -27,51 +27,61 @@ const SysSummCard = (props) => {
           </Typography>
         </Grid>
         <Grid item container xs={12}>
-          <Grid item xs={1.76}>
+          <Grid item xs={1.357}>
             <SysSummStat
               stat="Offline"
               value={sysSumm["offline"]}
               icon={<DesktopAccessDisabledRoundedIcon htmlColor="#b32b19" />}
             />
           </Grid>
-          <Grid item xs={0.8} alignSelf="center">
+          <Grid item xs={0.75} alignSelf="center">
             <Divider color="#636363" />
           </Grid>
-          <Grid item xs={1.76}>
+          <Grid item xs={1.375}>
             <SysSummStat
               stat="Reserved"
               value={sysSumm["reserved"]}
               icon={<BookmarkAddedRoundedIcon color="warning" />}
             />
           </Grid>
-          <Grid item xs={0.8} alignSelf="center">
+          <Grid item xs={0.75} alignSelf="center">
             <Divider color="#636363" />
           </Grid>
-          <Grid item xs={1.76}>
+          <Grid item xs={1.375}>
             <SysSummStat
               stat="In Progress"
               value={sysSumm["test in progress"]}
               icon={<SpeedRoundedIcon color="primary" />}
             />
           </Grid>
-          <Grid item xs={0.8} alignSelf="center">
+          <Grid item xs={0.75} alignSelf="center">
             <Divider color="#636363" />
           </Grid>
-          <Grid item xs={1.76}>
+          <Grid item xs={1.375}>
             <SysSummStat
               stat="Error"
               value={sysSumm["test error"]}
               icon={<WarningRoundedIcon color="error" />}
             />
           </Grid>
-          <Grid item xs={0.8} alignSelf="center">
+          <Grid item xs={0.75} alignSelf="center">
             <Divider color="#636363" />
           </Grid>
-          <Grid item xs={1.76}>
+          <Grid item xs={1.375}>
             <SysSummStat
               stat="Completed"
               value={sysSumm["test completed"]}
               icon={<CheckCircleRoundedIcon color="success" />}
+            />
+          </Grid>
+          <Grid item xs={0.75} alignSelf="center">
+            <Divider color="#636363" />
+          </Grid>
+          <Grid item xs={1.375}>
+            <SysSummStat
+              stat="Pending Removal"
+              value={sysSumm["pending removal"]}
+              icon={<CheckCircleRoundedIcon color="secondary" />}
             />
           </Grid>
         </Grid>

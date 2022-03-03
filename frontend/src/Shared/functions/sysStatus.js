@@ -27,7 +27,9 @@ const sysStatus = (sys, test) => {
     if (diffMin > 35) {
       return "offline";
     } else {
-      if (sys.testStart) {
+      if (sys.releaseDrv) {
+        return "pending removal";
+      } else if (sys.testStart) {
         if (!sys.testEnd) {
           if (timeRemMins < -60) {
             return "test error";

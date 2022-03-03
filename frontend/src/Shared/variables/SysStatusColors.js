@@ -5,4 +5,5 @@ export const SysStatusColors = {
   "test error": "error",
   "test in progress": "primary",
   "test completed": "primary",
+  "pending removal": "secondary",
 };
