@@ -27,6 +27,8 @@ router.patch("/test/end", systemController.testEnd);
 
 router.patch("/test/reset", systemController.testReset);
 
+router.patch("/pending", systemController.releaseDrv);
+
 router.delete("/", systemController.deleteSystems);
 
 module.exports = router;

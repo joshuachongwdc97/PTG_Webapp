@@ -160,6 +160,23 @@ const systemReport = async (req, res, next) => {
     system.lastSeen = date;
     system.ip = ip;
     system.os = os;
+
+    if (
+      (system.releaseDrv && drive == "None") ||
+      (system.releaseDrv && drive !== system.drive)
+    ) {
+      system.releaseDrv = undefined;
+
+      try {
+        const sess = await mongoose.startSession();
+        sess.startTransaction();
+        resettingTest([mac], sess);
+        await sess.commitTransaction();
+      } catch (err) {
+        return next(err);
+      }
+    }
+
     if (drive != "None") {
       system.drive = drive;
     } else {
@@ -257,6 +274,7 @@ const testStart = async (req, res, next) => {
     system.testMode = testMode;
     system.testStart = new Date();
     system.testEnd = undefined;
+    system.releaseDrv = undefined;
 
     try {
       await system.save();
@@ -310,6 +328,52 @@ const testReset = async (req, res, next) => {
   try {
     const sess = await mongoose.startSession();
     sess.startTransaction();
+    resettingTest(macs, sess);
+    await sess.commitTransaction();
+  } catch (err) {
+    return next(err);
+  }
+
+  res.status(201).json("Test Status Reset Successful");
+};
+
+const resettingTest = async (macs, sess) => {
+  macs.forEach(async (mac) => {
+    let system = [];
+
+    try {
+      system = await System.find({ mac: mac });
+    } catch (err) {
+      throw new HttpError("System Fetching Failed Using MAC", 500);
+    }
+
+    if (system.length > 0) {
+      try {
+        sysToUpdate = await System.findById(system[0].id);
+      } catch (err) {
+        throw new HttpError("System Fetching Failed using ID", 500);
+      }
+
+      sysToUpdate.qual = undefined;
+      sysToUpdate.testMode = undefined;
+      sysToUpdate.testStart = undefined;
+      sysToUpdate.testEnd = undefined;
+
+      try {
+        await sysToUpdate.save({ session: sess });
+      } catch (err) {
+        throw new HttpError("Test Status Reset Failed", 500);
+      }
+    }
+  });
+};
+
+const releaseDrv = async (req, res, next) => {
+  const { macs } = req.body;
+
+  try {
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
     macs.forEach(async (mac) => {
       let system = [];
 
@@ -326,15 +390,12 @@ const testReset = async (req, res, next) => {
           throw new HttpError("System Fetching Failed using ID", 500);
         }
 
-        sysToUpdate.qual = undefined;
-        sysToUpdate.testMode = undefined;
-        sysToUpdate.testStart = undefined;
-        sysToUpdate.testEnd = undefined;
+        sysToUpdate.releaseDrv = true;
 
         try {
           await sysToUpdate.save({ session: sess });
         } catch (err) {
-          throw new HttpError("Test Status Reset Failed", 500);
+          throw new HttpError("Pending Removal Failed", 500);
         }
       }
     });
@@ -343,7 +404,7 @@ const testReset = async (req, res, next) => {
     return next(err);
   }
 
-  res.status(201).json("Test Status Reset Successful");
+  res.status(201).json("Pending Removal Successful");
 };
 
 exports.addSystems = addSystems;
@@ -356,3 +417,4 @@ exports.testStart = testStart;
 exports.testEnd = testEnd;
 exports.testReset = testReset;
 exports.getStorage = getStorage;
+exports.releaseDrv = releaseDrv;

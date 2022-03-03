@@ -21,6 +21,7 @@ const systemSchema = new Schema({
   testMode: { type: String },
   testStart: { type: String },
   testEnd: { type: String },
+  releaseDrv: { type: Boolean },
 });
 
 systemSchema.plugin(uniqueValidator);
