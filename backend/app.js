@@ -10,6 +10,7 @@ const testRoutes = require("./routes/test-routes");
 const qualRoutes = require("./routes/qual-routes");
 const driveRoutes = require("./routes/drive-routes");
 const jobRoutes = require("./routes/job-routes");
+const userRoutes = require("./routes/user-routes");
 
 const app = express();
 
@@ -36,6 +37,7 @@ app.use("/api/qual", qualRoutes);
 app.use("/api/drvType", drvTypeRoutes);
 app.use("/api/drive", driveRoutes);
 app.use("/api/job", jobRoutes);
+app.use("/api/user", userRoutes);
 
 // Path Not Existant Error
 app.use((req, res, next) => {
