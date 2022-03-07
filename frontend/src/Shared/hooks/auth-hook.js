@@ -16,7 +16,7 @@ export const useAuth = () => {
     setRole(role);
 
     const tokenExpirationDate =
-      expirationDate || new Date(new Date().getTime() + 10000);
+      expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60);
 
     setTokenExpirationDate(tokenExpirationDate);
 
