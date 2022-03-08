@@ -165,6 +165,8 @@ const login = async (req, res, next) => {
     return next(error);
   }
 
+  // EncryptPassword.exe is a compiled C# program provided in WD confluence
+  // https://confluence.wdc.com/pages/viewpage.action?spaceKey=SWT&title=Single+Sign-On+Service+from+SWT
   exec("EncryptPassword.exe", [password], (err, data) => {
     if (err) {
       return next(err);
@@ -198,6 +200,7 @@ const login = async (req, res, next) => {
             token = jwt.sign(
               { userId: user.id, email: user.email, role: user.role },
               privateKey,
+              // expiry duration has to be set here and in the frontend's auth-hook
               { expiresIn: "1h" }
             );
           } catch (err) {
