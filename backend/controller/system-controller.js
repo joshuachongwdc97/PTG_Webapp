@@ -266,6 +266,8 @@ const testStart = async (req, res, next) => {
     }
 
     res.status(201).json("Test Start Tracked");
+  } else {
+    res.status(404).json("System Not Found");
   }
 };
 
@@ -301,6 +303,8 @@ const testEnd = async (req, res, next) => {
     }
 
     res.status(201).json("Test End Tracked");
+  } else {
+    res.status(404).json("System Not Found");
   }
 };
 
