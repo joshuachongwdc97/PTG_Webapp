@@ -76,9 +76,7 @@ const RequestCard = (props) => {
           )}
           <Grid item xs={12}>
             <FormControl variant="outlined" sx={{ width: "100%" }} required>
-              <InputLabel htmlFor="outlined-adornment-email">
-                Email Address
-              </InputLabel>
+              <InputLabel htmlFor="outlined-adornment-email">Email</InputLabel>
               <OutlinedInput
                 id="outlined-adornment-email"
                 value={inputState.email}
