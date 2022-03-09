@@ -19,7 +19,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { Tooltip, Grid } from "@mui/material";
+import { Tooltip, Grid, Badge } from "@mui/material";
 
 // ICONS
 import ViewQuiltRoundedIcon from "@mui/icons-material/ViewQuiltRounded";
@@ -233,7 +233,13 @@ const Layout = (props) => {
           {auth.role === "admin" && (
             <ListItem button key="admin" component={Link} to="/admin">
               <ListItemIcon>
-                <AdminPanelSettingsRoundedIcon />
+                <Badge
+                  color="error"
+                  variant="dot"
+                  invisible={!props.adminNotif}
+                >
+                  <AdminPanelSettingsRoundedIcon />
+                </Badge>
               </ListItemIcon>
               <ListItemText primary="admin" />
             </ListItem>

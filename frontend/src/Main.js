@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { DarkContext } from "./Shared/context/dark-context";
 import { AuthContext } from "./Shared/context/auth-context";
 import { useAuth } from "./Shared/hooks/auth-hook";
+import { useHttpClient } from "./Shared/hooks/http-hook";
 
 import Inventory from "./Inventory/Inventory";
 import System from "./System/System";
@@ -18,9 +19,13 @@ import "@fontsource/roboto/700.css";
 
 import Layout from "./Layout/Layout";
 
+import { serverName } from "./Shared/variables/Variables";
+
 const Main = () => {
+  const { sendRequest } = useHttpClient();
   const { userId, role, email, token, login, logout } = useAuth();
   const [dark, setDark] = useState(true);
+  const [adminNotif, setAdminNotif] = useState(false);
 
   const darkModeHandler = () => {
     setDark(!dark);
@@ -31,6 +36,37 @@ const Main = () => {
       mode: dark ? "dark" : "light",
     },
   });
+
+  const checkUsers = async () => {
+    try {
+      const responseData = await sendRequest(
+        "http://" + serverName + "/api/user/",
+        "GET",
+        null,
+        { Authorization: "Bearer " + token }
+      );
+
+      setAdminNotif(
+        responseData.users.map((user) => user.approved).includes(false)
+      );
+    } catch (err) {}
+  };
+
+  // check user data periodically for pending requests
+  useEffect(
+    () => {
+      if (role === "admin") {
+        checkUsers();
+
+        const interval = setInterval(() => {
+          checkUsers();
+        }, 1000 * 10);
+        return () => clearInterval(interval);
+      }
+    },
+    // eslint-disable-next-line
+    []
+  );
 
   return (
     <React.Fragment>
@@ -53,7 +89,7 @@ const Main = () => {
         >
           <ThemeProvider theme={theme}>
             <Router>
-              <Layout>
+              <Layout adminNotif={adminNotif}>
                 <Switch>
                   <Route path="/" exact={true}>
                     <Inventory />
