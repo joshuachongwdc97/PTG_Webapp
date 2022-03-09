@@ -60,12 +60,12 @@ const Main = () => {
 
         const interval = setInterval(() => {
           checkUsers();
-        }, 1000 * 10);
+        }, 1000 * 60 * 5);
         return () => clearInterval(interval);
       }
     },
     // eslint-disable-next-line
-    []
+    [role]
   );
 
   return (
