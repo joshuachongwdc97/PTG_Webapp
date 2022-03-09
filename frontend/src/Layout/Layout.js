@@ -230,12 +230,14 @@ const Layout = (props) => {
             </ListItemIcon>
             <ListItemText primary="Team" />
           </ListItem>
-          <ListItem button key="admin" component={Link} to="/admin">
-            <ListItemIcon>
-              <AdminPanelSettingsRoundedIcon />
-            </ListItemIcon>
-            <ListItemText primary="admin" />
-          </ListItem>
+          {auth.role === "admin" && (
+            <ListItem button key="admin" component={Link} to="/admin">
+              <ListItemIcon>
+                <AdminPanelSettingsRoundedIcon />
+              </ListItemIcon>
+              <ListItemText primary="admin" />
+            </ListItem>
+          )}
         </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>

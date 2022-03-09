@@ -67,9 +67,11 @@ const Main = () => {
                   <Route path="/auth" exact={true}>
                     <Auth />
                   </Route>
-                  <Route path="/admin" exact={true}>
-                    <Admin />
-                  </Route>
+                  {role === "admin" && (
+                    <Route path="/admin" exact={true}>
+                      <Admin />
+                    </Route>
+                  )}
                 </Switch>
               </Layout>
             </Router>
