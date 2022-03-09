@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Button, Grid, Typography } from "@mui/material";
 
 // COMPONENTS
@@ -8,6 +8,7 @@ import UserDialog from "./components/UserDialog";
 import AlertDialog from "../Shared/components/Dialog/AlertDialog";
 import OutlinedCard from "../Shared/components/Card/OutlinedCard";
 import Animate from "../Shared/transitions/Animate";
+import { AuthContext } from "../Shared/context/auth-context";
 
 // VARIABLES
 import { serverName } from "../Shared/variables/Variables";
@@ -16,6 +17,7 @@ import { serverName } from "../Shared/variables/Variables";
 import PersonAddAltRoundedIcon from "@mui/icons-material/PersonAddAltRounded";
 
 const Admin = () => {
+  const auth = useContext(AuthContext);
   const { sendRequest } = useHttpClient();
   const [users, setUsers] = useState();
   const [selection, setSelection] = useState([]);
@@ -31,7 +33,10 @@ const Admin = () => {
   const getUsers = async () => {
     try {
       const responseData = await sendRequest(
-        "http://" + serverName + "/api/user/"
+        "http://" + serverName + "/api/user/",
+        "GET",
+        null,
+        { Authorization: "Bearer " + auth.token }
       );
 
       setUsers(responseData.users);
@@ -43,7 +48,9 @@ const Admin = () => {
     try {
       await sendRequest(
         "http://" + serverName + "/api/user/" + selection[0],
-        "DELETE"
+        "DELETE",
+        null,
+        { Authorization: "Bearer " + auth.token }
       );
 
       getUsers();

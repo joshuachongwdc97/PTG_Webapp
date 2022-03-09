@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Alert } from "@mui/material";
 
 // COMPONENTS
@@ -7,11 +7,13 @@ import UserInputs from "./UserInputs";
 import UserDialogActions from "./UserDialogActions";
 import { useHttpClient } from "../../Shared/hooks/http-hook";
 import Animate from "../../Shared/transitions/Animate";
+import { AuthContext } from "../../Shared/context/auth-context";
 
 // VARIABLES
 import { serverName } from "../../Shared/variables/Variables";
 
 const UserDialog = (props) => {
+  const auth = useContext(AuthContext);
   const dialogTitle = {
     modify: "Edit User",
     new: "Add User",
@@ -130,7 +132,10 @@ const UserDialog = (props) => {
           "http://" + serverName + "/api/user/add",
           "POST",
           JSON.stringify(newUser),
-          { "Content-Type": "application/json" }
+          {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + auth.token,
+          }
         );
       } catch (err) {}
     } else {
@@ -142,7 +147,10 @@ const UserDialog = (props) => {
           `http://${serverName}/api/user/${props.selection[0]}`,
           "PATCH",
           JSON.stringify(newUser),
-          { "Content-Type": "application/json" }
+          {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + auth.token,
+          }
         );
       } catch (err) {}
     }
