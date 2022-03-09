@@ -9,6 +9,7 @@ import Inventory from "./Inventory/Inventory";
 import System from "./System/System";
 import Team from "./Team/Team";
 import Auth from "./Auth/Auth";
+import Admin from "./Admin/Admin";
 
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
@@ -65,6 +66,9 @@ const Main = () => {
                   </Route>
                   <Route path="/auth" exact={true}>
                     <Auth />
+                  </Route>
+                  <Route path="/admin" exact={true}>
+                    <Admin />
                   </Route>
                 </Switch>
               </Layout>

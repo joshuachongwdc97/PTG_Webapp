@@ -30,6 +30,7 @@ import GroupsRoundedIcon from "@mui/icons-material/GroupsRounded";
 import LoginRoundedIcon from "@mui/icons-material/LoginRounded";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
+import AdminPanelSettingsRoundedIcon from "@mui/icons-material/AdminPanelSettingsRounded";
 
 const drawerWidth = 240;
 
@@ -228,6 +229,12 @@ const Layout = (props) => {
               <GroupsRoundedIcon />
             </ListItemIcon>
             <ListItemText primary="Team" />
+          </ListItem>
+          <ListItem button key="admin" component={Link} to="/admin">
+            <ListItemIcon>
+              <AdminPanelSettingsRoundedIcon />
+            </ListItemIcon>
+            <ListItemText primary="admin" />
           </ListItem>
         </List>
       </Drawer>
