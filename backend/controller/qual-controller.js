@@ -40,30 +40,30 @@ const getQual = async (req, res, next) => {
 };
 
 const addQual = async (req, res, next) => {
-  const { soda, qual, test, invoice, plannedStart, plannedEnd } = req.body;
+  const { qualName, invoice, plannedStart, plannedEnd, dueDate, tests } =
+    req.body;
 
+  // Check for existing qual
   let existingQual;
-
   try {
-    existingQual = await Qual.findOne({ soda: soda });
+    existingQual = await Qual.findOne({ qualName: qualName });
+    if (existingQual) {
+      const error = new HttpError("Qual Exists", 422);
+      return next(error);
+    }
   } catch (err) {
     const error = new HttpError("Existing Qual Checking Failed", 500);
     return next(error);
   }
 
-  if (existingQual) {
-    const error = new HttpError("Qual Exists", 422);
-    return next(error);
-  }
-
   const status = "Pending";
   const newQual = new Qual({
-    soda,
-    qual,
-    test,
+    qualName,
     invoice,
     plannedStart,
     plannedEnd,
+    dueDate,
+    tests,
     status,
   });
 
@@ -84,8 +84,15 @@ const addQual = async (req, res, next) => {
 };
 
 const editQual = async (req, res, next) => {
-  const { soda, qual, test, invoice, status, plannedStart, plannedEnd } =
-    req.body;
+  const {
+    qualName,
+    invoice,
+    plannedStart,
+    plannedEnd,
+    dueDate,
+    tests,
+    status,
+  } = req.body;
   const id = req.params.id;
 
   let qualToUpdate;
@@ -97,13 +104,13 @@ const editQual = async (req, res, next) => {
     return next(error);
   }
 
-  qualToUpdate.soda = soda;
-  qualToUpdate.qual = qual;
-  qualToUpdate.test = test;
+  qualToUpdate.qualName = qualName;
   qualToUpdate.invoice = invoice;
-  qualToUpdate.status = status;
   qualToUpdate.plannedStart = plannedStart;
   qualToUpdate.plannedEnd = plannedEnd;
+  qualToUpdate.dueDate = dueDate;
+  qualToUpdate.tests = tests;
+  qualToUpdate.status = status;
 
   try {
     await qualToUpdate.save();
