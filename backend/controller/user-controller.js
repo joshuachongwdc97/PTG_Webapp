@@ -145,6 +145,46 @@ const deleteUser = async (req, res, next) => {
   res.status(200).json({ message: "Deleted User" });
 };
 
+const userRequest = async (req, res, next) => {
+  const { email } = req.body;
+
+  let existingUser;
+
+  try {
+    existingUser = await User.findOne({ email: email });
+  } catch (err) {
+    const error = new HttpError("User Adding Failed", 500);
+    return next(error);
+  }
+
+  if (existingUser) {
+    const error = new HttpError("User Already Exists", 422);
+    return next(error);
+  }
+
+  const createdDate = new Date().toLocaleString("default");
+  const createdUser = new User({
+    email,
+    role: "basic",
+    approved: false,
+    createdDate,
+  });
+
+  try {
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+    await createdUser.save({ session: sess });
+    sess.commitTransaction();
+  } catch (err) {
+    const error = new HttpError("Creating User Failed", 500);
+    return next(error);
+  }
+
+  res.status(201).json({
+    user: createdUser.toObject({ getters: true }),
+  });
+};
+
 const login = async (req, res, next) => {
   const { email, password } = req.body;
   let user;
@@ -226,4 +266,5 @@ exports.getUser = getUser;
 exports.addUser = addUser;
 exports.updateUser = updateUser;
 exports.deleteUser = deleteUser;
+exports.userRequest = userRequest;
 exports.login = login;

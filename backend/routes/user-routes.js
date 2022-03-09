@@ -9,6 +9,8 @@ const checkRole = require("../middleware/check-role").checkRole;
 
 router.post("/login", userController.login);
 
+router.post("/request", userController.userRequest);
+
 router.use(checkAuth);
 
 // can be applied to specific routes, e.g, router.get("/", checkRole("admin"), userController.getUsers);
