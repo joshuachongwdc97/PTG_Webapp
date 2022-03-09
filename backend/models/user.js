@@ -6,6 +6,7 @@ const userSchema = new Schema({
   email: { type: String, required: true },
   role: { type: String, required: true },
   approved: { type: Boolean, required: true },
+  createdDate: { type: String, required: true },
 });
 
 userSchema.plugin(uniqueValidator);

@@ -47,7 +47,7 @@ const getUser = async (req, res, next) => {
 };
 
 const addUser = async (req, res, next) => {
-  const { email } = req.body;
+  const { email, role, approved } = req.body;
 
   let existingUser;
 
@@ -63,12 +63,12 @@ const addUser = async (req, res, next) => {
     return next(error);
   }
 
-  const approved = false;
-  const role = "basic";
+  const createdDate = new Date().toLocaleString("default");
   const createdUser = new User({
     email,
-    role,
-    approved,
+    role: role ? role : "basic",
+    approved: approved ? approved : false,
+    createdDate,
   });
 
   try {
