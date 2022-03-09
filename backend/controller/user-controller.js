@@ -7,8 +7,7 @@ const exec = require("child_process").execFile;
 const jwt = require("jsonwebtoken");
 
 const User = require("../models/user");
-
-const privateKey = "privateKey_dont_share";
+const privateKey = require("../constants").privateKey;
 
 const getUsers = async (req, res, next) => {
   let users;
