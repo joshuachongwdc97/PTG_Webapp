@@ -1,7 +1,6 @@
 const jwt = require("jsonwebtoken");
 
 const HttpError = require("../models/http-error");
-const privateKey = require("../constants").privateKey;
 
 const checkAuth = (req, res, next) => {
   // browser sends OPTIONS request before sending actual request
@@ -14,7 +13,7 @@ const checkAuth = (req, res, next) => {
     if (!token) {
       throw new Error("Authentication Failed");
     }
-    const decodedToken = jwt.verify(token, privateKey);
+    const decodedToken = jwt.verify(token, process.env.JWT_KEY);
     req.userData = {
       userId: decodedToken.userId,
       email: decodedToken.email,

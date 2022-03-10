@@ -7,7 +7,6 @@ const exec = require("child_process").execFile;
 const jwt = require("jsonwebtoken");
 
 const User = require("../models/user");
-const privateKey = require("../constants").privateKey;
 
 const getUsers = async (req, res, next) => {
   let users;
@@ -238,7 +237,7 @@ const login = async (req, res, next) => {
             // private key can be changed to any string
             token = jwt.sign(
               { userId: user.id, email: user.email, role: user.role },
-              privateKey,
+              process.env.JWT_KEY,
               // expiry duration has to be set here and in the frontend's auth-hook
               { expiresIn: "1h" }
             );
