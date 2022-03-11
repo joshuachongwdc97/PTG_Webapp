@@ -11,6 +11,7 @@ import AddSysDialog from "./components/AddSysDialog/AddSysDialog";
 import AddTestDialog from "./components/AddTestDialog/AddTestDialog";
 import TestCard from "./components/TestCard/TestCard";
 import TestsDialog from "./components/TestsDialog/TestsDialog";
+import NewJobDialog from "./components/NewJobDialog/NewJobDialog";
 import NewQualDialog from "./components/NewQualDialog/NewQualDialog";
 // import QualView from "./components/QualView/QualView";
 import ServerStorageCard from "./components/ServerStorageCard/ServerStorageCard";
@@ -39,6 +40,7 @@ const System = (props) => {
   const [showAddSysDialog, setShowAddSysDialog] = useState(false);
   const [showAddTestDialog, setShowAddTestDialog] = useState(false);
   const [showTestsDialog, setShowTestsDialog] = useState(false);
+  const [showNewJobDialog, setShowNewJobDialog] = useState(false);
   const [showNewQualDialog, setShowNewQualDialog] = useState(false);
   const [showQualSysDialog, setShowQualSysDialog] = useState(false);
   const [selectedQual, setSelectedQual] = useState("");
@@ -88,6 +90,7 @@ const System = (props) => {
     } catch (err) {}
   };
 
+  // Get All Data
   const getData = async () => {
     getInvoices();
     getTests();
@@ -175,6 +178,9 @@ const System = (props) => {
         showAddTestHandler={() => {
           setShowAddTestDialog(true);
         }}
+        showNewJobHandler={() => {
+          setShowNewJobDialog(true);
+        }}
         showNewQualHandler={() => {
           setShowNewQualDialog(true);
         }}
@@ -186,6 +192,18 @@ const System = (props) => {
         close={() => {
           setShowNewQualDialog(false);
         }}
+        invoices={invoices}
+        tests={tests}
+      />
+
+      {/* NEW JOB DIALOG */}
+      <NewJobDialog
+        open={showNewJobDialog}
+        close={() => {
+          setShowNewJobDialog(false);
+        }}
+        tests={tests}
+        drvPrgms={drvPrgms}
         getData={getData}
       />
 
