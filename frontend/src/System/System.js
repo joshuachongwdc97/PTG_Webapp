@@ -34,6 +34,7 @@ const System = (props) => {
   // const [quals, setQuals] = useState([]);
   const [invoices, setInvoices] = useState([]);
   const [tests, setTests] = useState([]);
+  const [tests2, setTests2] = useState([]);
   const [drvPrgms, setDrvPrgms] = useState([]);
   const [showSysDialog, setShowSysDialog] = useState(false);
   const [dataReady, setDataReady] = useState(false);
@@ -50,6 +51,7 @@ const System = (props) => {
       let responseData = await sendRequest(
         "http://" + serverName + "/api/system"
       );
+
       setSystems(responseData.systems);
     } catch (err) {}
   };
@@ -77,6 +79,7 @@ const System = (props) => {
       let responseData = await sendRequest(
         "http://" + serverName + "/api/test/all"
       );
+
       setTests(responseData.tests);
     } catch (err) {}
   };
@@ -92,9 +95,9 @@ const System = (props) => {
 
   // Get All Data
   const getData = async () => {
+    getDrvPrgms();
     getInvoices();
     getTests();
-    getDrvPrgms();
     // getQuals();
     getSystems();
 
@@ -115,7 +118,7 @@ const System = (props) => {
     []
   );
 
-  // Populate System State with Test Status
+  // Populate System State with Test Status & Tests with Drv Programs
   useEffect(() => {
     if (systems.length > 0 && tests.length > 0) {
       setSystems2(
@@ -166,7 +169,22 @@ const System = (props) => {
         })
       );
     }
-  }, [systems, tests]);
+
+    if (drvPrgms.length > 0) {
+      setTests2(
+        tests.map((test) => {
+          const drvPrgm = drvPrgms.filter((prgm) => {
+            return prgm.id === test.drvPrgm;
+          })[0];
+
+          return {
+            ...test,
+            drvPrgmParsed: drvPrgm.alias,
+          };
+        })
+      );
+    }
+  }, [systems, tests, drvPrgms]);
 
   return (
     <React.Fragment>
@@ -193,7 +211,7 @@ const System = (props) => {
           setShowNewQualDialog(false);
         }}
         invoices={invoices}
-        tests={tests}
+        tests={tests2}
       />
 
       {/* NEW JOB DIALOG */}
@@ -202,7 +220,7 @@ const System = (props) => {
         close={() => {
           setShowNewJobDialog(false);
         }}
-        tests={tests}
+        tests={tests2}
         drvPrgms={drvPrgms}
         getData={getData}
       />
@@ -233,7 +251,7 @@ const System = (props) => {
         }}
         systems={systems2}
         invoices={invoices}
-        tests={tests}
+        tests={tests2}
         getData={getData}
         getSystems={getSystems}
         getTests={getTests}
@@ -248,7 +266,7 @@ const System = (props) => {
           setShowTestsDialog(false);
         }}
         drvPrgms={drvPrgms}
-        tests={tests}
+        tests={tests2}
       />
 
       {/* VIEW QUAL SYSTEMS DIALOG */}
@@ -260,7 +278,7 @@ const System = (props) => {
         selectedQual={selectedQual}
         systems={systems2}
         invoices={invoices}
-        tests={tests}
+        tests={tests2}
         getSystems={getSystems}
       />
 
@@ -269,7 +287,7 @@ const System = (props) => {
           {dataReady && (
             <Animate show={dataReady}>
               <SysCard
-                sys={systems}
+                sys={systems2}
                 onClick={() => {
                   setSelectedQual("");
                   setShowSysDialog(true);
@@ -306,7 +324,7 @@ const System = (props) => {
               <QualView
                 quals={quals}
                 invoices={invoices}
-                tests={tests}
+                tests={tests2}
                 drvPrgms={drvPrgms}
                 systems={systems2}
                 getQuals={getQuals}

@@ -47,6 +47,7 @@ const SelectMenu = (props) => {
         name={props.name}
         required={props.required}
         disabled={props.disabled}
+        multiple={props.multiple}
       >
         {MenuItems}
       </Select>

@@ -1,4 +1,4 @@
-const sortArrByDateReceived = (arr) => {
+const sortInv = (arr) => {
   arr = arr.sort((a, b) =>
     new Date(a.dateReceived) > new Date(b.dateReceived)
       ? -1
@@ -9,4 +9,4 @@ const sortArrByDateReceived = (arr) => {
   return arr;
 };
 
-export default sortArrByDateReceived;
+export default sortInv;

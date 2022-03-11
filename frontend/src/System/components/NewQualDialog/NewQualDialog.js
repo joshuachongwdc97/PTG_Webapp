@@ -14,27 +14,64 @@ import DatePicker from "../../../Shared/components/Input/DatePicker";
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
 import RestartAltRoundedIcon from "@mui/icons-material/RestartAltRounded";
 
+// FUNCTIONS
+import sortInv from "../../../Shared/functions/sortInv";
+
 const NewQualDialog = (props) => {
   const [submitting, setSubmitting] = useState(false);
   const [resetDisabled, setResetDisabled] = useState(true);
   const [addQualDisabled, setAddQualDisabled] = useState(true);
   const [selectInvoices, setSelectInvoices] = useState([]);
+  const [selectTests, setSelectTests] = useState([]);
   const [inputState, setInputState] = useState({
     invoice: "",
     qualName: "",
-    plannedStart: "",
-    plannedEnd: "",
-    dueDate: "",
+    plannedStart: new Date(),
+    plannedEnd: new Date(),
+    dueDate: new Date(),
     tests: [],
     description: "",
   });
 
-  //   Parse Invoices into Select Menu Format
+  //   Parse Invoices & Tests into Select Menu Format
   useEffect(() => {
     if (props.open) {
-      console.log(props.invoices);
+      // Filter Active Invoices
+      const actInv = sortInv(
+        props.invoices.filter((inv) => {
+          return inv.status === "Active";
+        })
+      );
+      setSelectInvoices(
+        actInv.map((inv) => {
+          return {
+            value: inv.id,
+            label: inv.name,
+          };
+        })
+      );
+
+      // Filter Tests
+      if (inputState.invoice) {
+        const drvPrgm = props.invoices.filter((inv) => {
+          return inv.id === inputState.invoice;
+        })[0].drvPrgm;
+
+        const testsFiltered = props.tests.filter((test) => {
+          return test.drvPrgm === drvPrgm;
+        });
+
+        setSelectTests(
+          testsFiltered.map((test) => {
+            return {
+              value: test.id,
+              label: test.drvPrgmParsed + " " + test.drvType + " " + test.test,
+            };
+          })
+        );
+      }
     }
-  }, [props.open, props.invoices]);
+  }, [props.open, props.invoices, props.tests, inputState.invoice]);
 
   const newQualHandler = () => {};
 
@@ -62,18 +99,27 @@ const NewQualDialog = (props) => {
       [event.target.name]: value,
     });
   };
-
   const plannedStartHandler = (value) => {
     setInputState({
       ...inputState,
       plannedStart: value.toString(),
     });
   };
-
   const plannedEndHandler = (value) => {
     setInputState({
       ...inputState,
       plannedEnd: value.toString(),
+    });
+  };
+
+  // MULTI SELECT HANDLER
+  const selectTestsHandler = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setInputState({
+      ...inputState,
+      tests: typeof value === "string" ? value.split(",") : value,
     });
   };
 
@@ -130,10 +176,10 @@ const NewQualDialog = (props) => {
           <SelectMenu
             required
             label="Select Invoice"
-            data={props.invoices}
+            data={selectInvoices}
             onChange={inputHandler}
             value={inputState.invoice}
-            name="qual"
+            name="invoice"
           />
         </Grid>
         <Grid item xs={12}>
@@ -143,6 +189,17 @@ const NewQualDialog = (props) => {
             name="qualName"
             onChange={inputHandler}
             value={inputState.qualName}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <SelectMenu
+            required
+            multiple
+            label="Select Tests To Run"
+            data={selectTests}
+            onChange={selectTestsHandler}
+            value={inputState.tests}
+            name="tests"
           />
         </Grid>
         <Grid item xs={12}>
