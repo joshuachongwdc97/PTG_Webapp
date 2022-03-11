@@ -15,9 +15,6 @@ import BasicCard from "../../Shared/components/Card/BasicCard";
 import Animate from "../../Shared/transitions/Animate";
 import { useHttpClient } from "../../Shared/hooks/http-hook";
 
-// VARIABLES
-import { serverName } from "../../Shared/variables/Variables";
-
 // ICONS
 import HowToRegRoundedIcon from "@mui/icons-material/HowToRegRounded";
 
@@ -37,7 +34,7 @@ const RequestCard = (props) => {
       }
 
       await sendRequest(
-        "http://" + serverName + "/api/user/add",
+        process.env.REACT_APP_BACKEND_URL + "/api/user/add",
         "POST",
         JSON.stringify({
           email: inputState.email,

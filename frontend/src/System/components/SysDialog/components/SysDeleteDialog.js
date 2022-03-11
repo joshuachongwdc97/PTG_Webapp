@@ -3,9 +3,6 @@ import { useHttpClient } from "../../../../Shared/hooks/http-hook";
 
 import AlertDialog from "../../../../Shared/components/Dialog/AlertDialog";
 
-// VARIABLES
-import { serverName } from "../../../../Shared/variables/Variables";
-
 const SysDeleteDialog = (props) => {
   const { sendRequest } = useHttpClient();
 
@@ -13,7 +10,7 @@ const SysDeleteDialog = (props) => {
     try {
       // DELETE SYSTEM FROM DATABASE
       await sendRequest(
-        "http://" + serverName + "/api/system",
+        process.env.REACT_APP_BACKEND_URL + "/api/system",
         "DELETE",
         JSON.stringify({ ids: [props.id] }),
         { "Content-Type": "application/json" }

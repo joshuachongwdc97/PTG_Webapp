@@ -9,9 +9,6 @@ import { useHttpClient } from "../../Shared/hooks/http-hook";
 import Animate from "../../Shared/transitions/Animate";
 import { AuthContext } from "../../Shared/context/auth-context";
 
-// VARIABLES
-import { serverName } from "../../Shared/variables/Variables";
-
 const UserDialog = (props) => {
   const auth = useContext(AuthContext);
   const dialogTitle = {
@@ -129,7 +126,7 @@ const UserDialog = (props) => {
 
       try {
         await sendRequest(
-          "http://" + serverName + "/api/user/add",
+          process.env.REACT_APP_BACKEND_URL + "/api/user/add",
           "POST",
           JSON.stringify(newUser),
           {
@@ -144,7 +141,7 @@ const UserDialog = (props) => {
 
       try {
         await sendRequest(
-          `http://${serverName}/api/user/${props.selection[0]}`,
+          `${process.env.REACT_APP_BACKEND_URL}/api/user/${props.selection[0]}`,
           "PATCH",
           JSON.stringify(newUser),
           {

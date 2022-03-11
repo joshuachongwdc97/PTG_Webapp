@@ -3,9 +3,6 @@ import { useHttpClient } from "../../../../../../Shared/hooks/http-hook";
 
 import AlertDialog from "../../../../../../Shared/components/Dialog/AlertDialog";
 
-// VARIABLES
-import { serverName } from "../../../../../../Shared/variables/Variables";
-
 const DeleteDialog = (props) => {
   const { sendRequest } = useHttpClient();
   const deleteInvHandler = async () => {
@@ -16,7 +13,7 @@ const DeleteDialog = (props) => {
     try {
       // DELETE DRIVES FROM DATABASE
       await sendRequest(
-        "http://" + serverName + "/api/DRIVE",
+        process.env.REACT_APP_BACKEND_URL + "/api/drive",
         "DELETE",
         JSON.stringify({ ids: drvToDel }),
         { "Content-Type": "application/json" }
@@ -24,7 +21,7 @@ const DeleteDialog = (props) => {
 
       // DELETE INVOICE
       await sendRequest(
-        `http://${serverName}/api/invoice/${props.id}`,
+        `${process.env.REACT_APP_BACKEND_URL}/api/invoice/${props.id}`,
         "DELETE"
       );
     } catch (err) {}

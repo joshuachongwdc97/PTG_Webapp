@@ -23,9 +23,6 @@ import PieChartCard from "./components/PieChartCard/PieChartCard";
 import getActiveInvDrv from "../Shared/functions/getActiveInvDrv";
 // import getDrv from "../Shared/functions/getDrv";
 import getActiveTypes from "./components/PieChartCard/getActiveTypes";
-
-// VARIABLES
-import { serverName } from "../Shared/variables/Variables";
 import getAgingSumm from "./components/LineGraphCard/getAgingSumm";
 
 const Inventory = () => {
@@ -49,15 +46,17 @@ const Inventory = () => {
     setChangeReady(false);
     try {
       let responseData = await sendRequest(
-        "http://" + serverName + "/api/invoice"
+        process.env.REACT_APP_BACKEND_URL + "/api/invoice"
       );
       setInvoices(responseData.invoices);
 
-      responseData = await sendRequest("http://" + serverName + "/api/drive");
+      responseData = await sendRequest(
+        process.env.REACT_APP_BACKEND_URL + "/api/drive"
+      );
       setDrives(responseData.drives);
 
       responseData = await sendRequest(
-        "http://" + serverName + "/api/drvProgram"
+        process.env.REACT_APP_BACKEND_URL + "/api/drvProgram"
       );
       setDrvPrgms(responseData.programs);
     } catch (err) {}

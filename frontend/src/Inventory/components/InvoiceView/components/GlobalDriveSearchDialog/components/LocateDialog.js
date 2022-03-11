@@ -20,9 +20,6 @@ import HttpRoundedIcon from "@mui/icons-material/HttpRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { red } from "@mui/material/colors";
 
-// VARIABLES
-import { serverName } from "../../../../../../Shared/variables/Variables";
-
 const LocateDialog = (props) => {
   const { sendRequest } = useHttpClient();
   const [systems, setSystems] = useState([]);
@@ -31,7 +28,7 @@ const LocateDialog = (props) => {
   const getData = async () => {
     try {
       let responseData = await sendRequest(
-        "http://" + serverName + "/api/system"
+        process.env.REACT_APP_BACKEND_URL + "/api/system"
       );
       setSystems(responseData.systems);
       setDataReady(true);

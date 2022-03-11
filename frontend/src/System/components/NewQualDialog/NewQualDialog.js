@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useHttpClient } from "../../../Shared/hooks/http-hook";
-import { serverName } from "../../../Shared/variables/Variables";
 
 import { Grid, Chip, Button } from "@mui/material";
 
@@ -59,7 +58,7 @@ const NewQualDialog = (props) => {
     console.log("Fetching Drive Programs");
     try {
       let responseData = await sendRequest(
-        "http://" + serverName + "/api/drvProgram"
+        process.env.REACT_APP_BACKEND_URL + "/api/drvProgram"
       );
       setDrvPrgms(responseData.programs);
 
@@ -72,7 +71,7 @@ const NewQualDialog = (props) => {
     console.log("Fetching Invoices");
     try {
       let responseData = await sendRequest(
-        "http://" + serverName + "/api/invoice"
+        process.env.REACT_APP_BACKEND_URL + "/api/invoice"
       );
 
       // Filter Active Invoices
@@ -104,7 +103,7 @@ const NewQualDialog = (props) => {
     console.log("Fetching Tests");
     try {
       let responseData = await sendRequest(
-        "http://" + serverName + "/api/test/all"
+        process.env.REACT_APP_BACKEND_URL + "/api/test/all"
       );
 
       let selectedInv = invoices.filter((inv) => {
@@ -205,7 +204,7 @@ const NewQualDialog = (props) => {
 
     try {
       await sendRequest(
-        "http://" + serverName + "/api/qual/add",
+        process.env.REACT_APP_BACKEND_URL + "/api/qual/add",
         "POST",
         JSON.stringify(newQual),
         { "Content-Type": "application/json" }

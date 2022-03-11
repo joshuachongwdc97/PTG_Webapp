@@ -15,9 +15,6 @@ import CreateNewFolderRoundedIcon from "@mui/icons-material/CreateNewFolderRound
 import PostAddRoundedIcon from "@mui/icons-material/PostAddRounded";
 import DeleteDialog from "./components/DeleteDialog";
 
-// VARIABLES
-import { serverName } from "../../../../../Shared/variables/Variables";
-
 const InvoiceDialog = (props) => {
   const { sendRequest } = useHttpClient();
 
@@ -278,7 +275,7 @@ const InvoiceDialog = (props) => {
     // update drives' status in database
     try {
       await sendRequest(
-        "http://" + serverName + "/api/drive/keep",
+        process.env.REACT_APP_BACKEND_URL + "/api/drive/keep",
         "PATCH",
         JSON.stringify({ ids: selectedDrvs }),
         { "Content-Type": "application/json" }
@@ -298,7 +295,7 @@ const InvoiceDialog = (props) => {
     // update drives' status in database
     try {
       await sendRequest(
-        "http://" + serverName + "/api/drive/unkeep",
+        process.env.REACT_APP_BACKEND_URL + "/api/drive/unkeep",
         "PATCH",
         JSON.stringify({ ids: selectedDrvs }),
         { "Content-Type": "application/json" }
@@ -333,7 +330,7 @@ const InvoiceDialog = (props) => {
 
     try {
       await sendRequest(
-        `http://${serverName}/api/invoice/${props.selection[0]}`,
+        `${process.env.REACT_APP_BACKEND_URL}/api/invoice/${props.selection[0]}`,
         "PATCH",
         JSON.stringify(NewInv),
         { "Content-Type": "application/json" }
@@ -342,7 +339,7 @@ const InvoiceDialog = (props) => {
 
     try {
       await sendRequest(
-        "http://" + serverName + "/api/drive/unkeep",
+        process.env.REACT_APP_BACKEND_URL + "/api/drive/unkeep",
         "PATCH",
         JSON.stringify({ ids: drives.map((drv) => drv.id) }),
         { "Content-Type": "application/json" }
@@ -365,7 +362,7 @@ const InvoiceDialog = (props) => {
       // CREATE NEW INVOICE
       try {
         const response = await sendRequest(
-          "http://" + serverName + "/api/invoice/add",
+          process.env.REACT_APP_BACKEND_URL + "/api/invoice/add",
           "POST",
           JSON.stringify(NewInv),
           { "Content-Type": "application/json" }
@@ -385,7 +382,7 @@ const InvoiceDialog = (props) => {
 
           try {
             await sendRequest(
-              "http://" + serverName + "/api/drive/add",
+              process.env.REACT_APP_BACKEND_URL + "/api/drive/add",
               "POST",
               JSON.stringify(newDrives),
               { "Content-Type": "application/json" }
@@ -401,7 +398,7 @@ const InvoiceDialog = (props) => {
       // MODIFY INVOICE
       try {
         await sendRequest(
-          `http://${serverName}/api/invoice/${props.selection[0]}`,
+          `${process.env.REACT_APP_BACKEND_URL}/api/invoice/${props.selection[0]}`,
           "PATCH",
           JSON.stringify(NewInv),
           { "Content-Type": "application/json" }
@@ -420,7 +417,7 @@ const InvoiceDialog = (props) => {
 
           try {
             await sendRequest(
-              "http://" + serverName + "/api/drive/add",
+              process.env.REACT_APP_BACKEND_URL + "/api/drive/add",
               "POST",
               JSON.stringify(newDrives),
               { "Content-Type": "application/json" }
@@ -445,7 +442,7 @@ const InvoiceDialog = (props) => {
 
         try {
           await sendRequest(
-            "http://" + serverName + "/api/drive",
+            process.env.REACT_APP_BACKEND_URL + "/api/drive",
             "DELETE",
             JSON.stringify(drvIDToRemove),
             { "Content-Type": "application/json" }
@@ -461,7 +458,7 @@ const InvoiceDialog = (props) => {
 
       try {
         await sendRequest(
-          "http://" + serverName + "/api/invoice/upload/invFile",
+          process.env.REACT_APP_BACKEND_URL + "/api/invoice/upload/invFile",
           "POST",
           fileData
         );
@@ -474,7 +471,7 @@ const InvoiceDialog = (props) => {
 
       try {
         await sendRequest(
-          "http://" + serverName + "/api/invoice/upload/reqFormFile",
+          process.env.REACT_APP_BACKEND_URL + "/api/invoice/upload/reqFormFile",
           "POST",
           fileData
         );
@@ -489,14 +486,14 @@ const InvoiceDialog = (props) => {
   const openFileHandler = async (fileType) => {
     try {
       await sendRequest(
-        `http://${serverName}/api/invoice/${invObjectId}/open/${fileType}`
+        `${process.env.REACT_APP_BACKEND_URL}/api/invoice/${invObjectId}/open/${fileType}`
       );
     } catch (err) {}
   };
 
   const downloadFileHandler = async (fileType) => {
     var popout = window.open(
-      `http://${serverName}/api/invoice/${invObjectId}/download/${fileType}`
+      `${process.env.REACT_APP_BACKEND_URL}/api/invoice/${invObjectId}/download/${fileType}`
     );
     window.setTimeout(function () {
       popout.close();

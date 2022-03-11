@@ -21,9 +21,6 @@ import Animate from "../../../../../../Shared/transitions/Animate";
 import AddDrvPrgmDialog from "./AddDrvPrgmDialog";
 import FileAttachment from "../../../../../../Shared/components/Input/FileAttachment";
 
-// VARIABLES
-import { serverName } from "../../../../../../Shared/variables/Variables";
-
 const InvoiceInputs = (props) => {
   const [drvPrgms, setDrvPrgms] = useState([]);
   const [dataReady, setDataReady] = useState(false);
@@ -53,7 +50,7 @@ const InvoiceInputs = (props) => {
     setDataReady(false);
     try {
       let responseData = await sendRequest(
-        "http://" + serverName + "/api/drvProgram"
+        process.env.REACT_APP_BACKEND_URL + "/api/drvProgram"
       );
       setDrvPrgms(responseData.programs);
     } catch (err) {}

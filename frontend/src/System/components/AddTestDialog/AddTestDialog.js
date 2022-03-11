@@ -12,9 +12,6 @@ import SelectMenu from "../../../Shared/components/Input/SelectMenu";
 import RestartAltRoundedIcon from "@mui/icons-material/RestartAltRounded";
 import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
 
-// VARIABLES
-import { serverName } from "../../../Shared/variables/Variables";
-
 const AddTestDialog = (props) => {
   const { sendRequest } = useHttpClient();
 
@@ -38,7 +35,7 @@ const AddTestDialog = (props) => {
     console.log("Fetching Drive Programs");
     try {
       let responseData = await sendRequest(
-        "http://" + serverName + "/api/drvProgram"
+        process.env.REACT_APP_BACKEND_URL + "/api/drvProgram"
       );
 
       const selectData = responseData.programs.map((prgm) => {
@@ -156,7 +153,7 @@ const AddTestDialog = (props) => {
 
     try {
       await sendRequest(
-        "http://" + serverName + "/api/test/add",
+        process.env.REACT_APP_BACKEND_URL + "/api/test/add",
         "POST",
         JSON.stringify(newTest),
         { "Content-Type": "application/json" }

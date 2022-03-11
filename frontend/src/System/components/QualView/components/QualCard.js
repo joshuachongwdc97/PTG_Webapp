@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useHttpClient } from "../../../../Shared/hooks/http-hook";
-import { serverName } from "../../../../Shared/variables/Variables";
 
 import AlertDialog from "../../../../Shared/components/Dialog/AlertDialog";
 
@@ -110,7 +109,7 @@ const QualCard = (props) => {
   const delQualHandler = async () => {
     try {
       await sendRequest(
-        "http://" + serverName + "/api/qual/" + props.qual.id,
+        process.env.REACT_APP_BACKEND_URL + "/api/qual/" + props.qual.id,
         "DELETE"
       );
       props.getQuals();
@@ -120,7 +119,7 @@ const QualCard = (props) => {
   const endQualHandler = async () => {
     try {
       await sendRequest(
-        "http://" + serverName + "/api/qual/end/" + props.qual.id,
+        process.env.REACT_APP_BACKEND_URL + "/api/qual/end/" + props.qual.id,
         "PATCH"
       );
     } catch (err) {}
@@ -134,7 +133,7 @@ const QualCard = (props) => {
 
     try {
       await sendRequest(
-        "http://" + serverName + "/api/system/test/reset",
+        process.env.REACT_APP_BACKEND_URL + "/api/system/test/reset",
         "PATCH",
         JSON.stringify({ macs: qualSystems }),
         { "Content-Type": "application/json" }

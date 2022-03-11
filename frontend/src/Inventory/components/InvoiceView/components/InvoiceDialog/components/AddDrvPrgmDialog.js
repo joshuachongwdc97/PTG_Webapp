@@ -8,9 +8,6 @@ import TextFieldWIcon from "../../../../../../Shared/components/Input/TextFieldW
 import { useHttpClient } from "../../../../../../Shared/hooks/http-hook";
 import Animate from "../../../../../../Shared/transitions/Animate";
 
-// VARIABLES
-import { serverName } from "../../../../../../Shared/variables/Variables";
-
 const AddDrvPrgmDialog = (props) => {
   const { sendRequest } = useHttpClient();
   const [showError, setShowError] = useState(false);
@@ -40,7 +37,7 @@ const AddDrvPrgmDialog = (props) => {
     let drvPrgmId;
     try {
       const response = await sendRequest(
-        "http://" + serverName + "/api/drvProgram/add",
+        process.env.REACT_APP_BACKEND_URL + "/api/drvProgram/add",
         "POST",
         JSON.stringify(inputState),
         { "Content-Type": "application/json" }

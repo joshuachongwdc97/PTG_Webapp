@@ -11,9 +11,6 @@ import TextFieldWIcon from "../../../../Shared/components/Input/TextFieldWIcon";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import BookmarkAddedRoundedIcon from "@mui/icons-material/BookmarkAddedRounded";
 
-// VARIABLES
-import { serverName } from "../../../../Shared/variables/Variables";
-
 const ReserveDialog = (props) => {
   const { sendRequest } = useHttpClient();
 
@@ -30,7 +27,7 @@ const ReserveDialog = (props) => {
 
     try {
       await sendRequest(
-        "http://" + serverName + "/api/system/reserve",
+        process.env.REACT_APP_BACKEND_URL + "/api/system/reserve",
         "PATCH",
         JSON.stringify({ IDs: [props.id], user: inputState }),
         { "Content-Type": "application/json" }

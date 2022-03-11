@@ -10,9 +10,6 @@ import OutlinedCard from "../Shared/components/Card/OutlinedCard";
 import Animate from "../Shared/transitions/Animate";
 import { AuthContext } from "../Shared/context/auth-context";
 
-// VARIABLES
-import { serverName } from "../Shared/variables/Variables";
-
 // ICONS
 import PersonAddAltRoundedIcon from "@mui/icons-material/PersonAddAltRounded";
 
@@ -33,7 +30,7 @@ const Admin = () => {
   const getUsers = async () => {
     try {
       const responseData = await sendRequest(
-        "http://" + serverName + "/api/user/",
+        process.env.REACT_APP_BACKEND_URL + "/api/user/",
         "GET",
         null,
         { Authorization: "Bearer " + auth.token }
@@ -47,7 +44,7 @@ const Admin = () => {
   const delUserHandler = async () => {
     try {
       await sendRequest(
-        "http://" + serverName + "/api/user/" + selection[0],
+        process.env.REACT_APP_BACKEND_URL + "/api/user/" + selection[0],
         "DELETE",
         null,
         { Authorization: "Bearer " + auth.token }

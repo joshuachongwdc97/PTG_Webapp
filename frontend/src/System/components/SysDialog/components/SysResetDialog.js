@@ -4,9 +4,6 @@ import React from "react";
 import { useHttpClient } from "../../../../Shared/hooks/http-hook";
 import AlertDialog from "../../../../Shared/components/Dialog/AlertDialog";
 
-// VARIABLES
-import { serverName } from "../../../../Shared/variables/Variables";
-
 const SysResetDialog = (props) => {
   const { sendRequest } = useHttpClient();
 
@@ -14,7 +11,7 @@ const SysResetDialog = (props) => {
     props.setResetting(true);
     try {
       await sendRequest(
-        "http://" + serverName + "/api/system/test/reset",
+        process.env.REACT_APP_BACKEND_URL + "/api/system/test/reset",
         "PATCH",
         JSON.stringify({ macs: [props.mac] }),
         { "Content-Type": "application/json" }

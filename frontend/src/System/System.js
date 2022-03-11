@@ -15,9 +15,6 @@ import NewQualDialog from "./components/NewQualDialog/NewQualDialog";
 // import QualView from "./components/QualView/QualView";
 import ServerStorageCard from "./components/ServerStorageCard/ServerStorageCard";
 import QualSysDialog from "./components/QualSysDialog/QualSysDialog";
-
-// VARIABLES
-import { serverName } from "../Shared/variables/Variables";
 import SysSummCard from "./components/SysSummCard/SysSummCard";
 
 // FUNCTIONS
@@ -46,7 +43,7 @@ const System = (props) => {
   const getSystems = async () => {
     try {
       let responseData = await sendRequest(
-        "http://" + serverName + "/api/system"
+        process.env.REACT_APP_BACKEND_URL + "/api/system"
       );
       setSystems(responseData.systems);
     } catch (err) {}
@@ -55,7 +52,7 @@ const System = (props) => {
   // const getQuals = async () => {
   //   try {
   //     let responseData = await sendRequest(
-  //       "http://" + serverName + "/api/qual/all"
+  //       process.env.REACT_APP_BACKEND_URL + "/api/qual/all"
   //     );
   //     setQuals(responseData.quals);
   //   } catch (err) {}
@@ -64,7 +61,7 @@ const System = (props) => {
   const getInvoices = async () => {
     try {
       let responseData = await sendRequest(
-        "http://" + serverName + "/api/invoice"
+        process.env.REACT_APP_BACKEND_URL + "/api/invoice"
       );
       setInvoices(responseData.invoices);
     } catch (err) {}
@@ -73,7 +70,7 @@ const System = (props) => {
   const getTests = async () => {
     try {
       let responseData = await sendRequest(
-        "http://" + serverName + "/api/test/all"
+        process.env.REACT_APP_BACKEND_URL + "/api/test/all"
       );
       setTests(responseData.tests);
     } catch (err) {}
@@ -82,7 +79,7 @@ const System = (props) => {
   const getDrvPrgms = async () => {
     try {
       let responseData = await sendRequest(
-        "http://" + serverName + "/api/drvProgram"
+        process.env.REACT_APP_BACKEND_URL + "/api/drvProgram"
       );
       setDrvPrgms(responseData.programs);
     } catch (err) {}

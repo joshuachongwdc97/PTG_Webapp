@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useHttpClient } from "../../../../Shared/hooks/http-hook";
-import { serverName } from "../../../../Shared/variables/Variables";
 import { SysStatusColors } from "../../../../Shared/variables/SysStatusColors";
 
 // Images
@@ -128,7 +127,7 @@ const SysInfoDialog = (props) => {
   const getDriveDetails = async () => {
     try {
       let responseData = await sendRequest(
-        "http://" + serverName + "/api/drive/sn/" + props.sys.drive
+        process.env.REACT_APP_BACKEND_URL + "/api/drive/sn/" + props.sys.drive
       );
       setDrive(responseData.drive);
     } catch (err) {}
@@ -138,7 +137,7 @@ const SysInfoDialog = (props) => {
     setReleasing(true);
     try {
       await sendRequest(
-        "http://" + serverName + "/api/system/release",
+        process.env.REACT_APP_BACKEND_URL + "/api/system/release",
         "PATCH",
         JSON.stringify({ IDs: [props.sys.id] }),
         { "Content-Type": "application/json" }

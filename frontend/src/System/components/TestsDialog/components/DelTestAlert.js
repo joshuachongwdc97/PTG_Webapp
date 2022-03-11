@@ -1,10 +1,8 @@
 import React from "react";
 import { useHttpClient } from "../../../../Shared/hooks/http-hook";
 
+// COMPONENTS
 import AlertDialog from "../../../../Shared/components/Dialog/AlertDialog";
-
-// VARIABLES
-import { serverName } from "../../../../Shared/variables/Variables";
 
 const DeleteDialog = (props) => {
   const { sendRequest } = useHttpClient();
@@ -13,7 +11,7 @@ const DeleteDialog = (props) => {
     try {
       // DELETE TEST FROM DATABASE
       await sendRequest(
-        "http://" + serverName + "/api/test/" + props.id,
+        process.env.REACT_APP_BACKEND_URL + "/api/test/" + props.id,
         "DELETE",
         {
           "Content-Type": "application/json",

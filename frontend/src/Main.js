@@ -19,8 +19,6 @@ import "@fontsource/roboto/700.css";
 
 import Layout from "./Layout/Layout";
 
-import { serverName } from "./Shared/variables/Variables";
-
 const Main = () => {
   const { sendRequest } = useHttpClient();
   const { userId, role, email, token, login, logout } = useAuth();
@@ -40,7 +38,7 @@ const Main = () => {
   const checkUsers = async () => {
     try {
       const responseData = await sendRequest(
-        "http://" + serverName + "/api/user/",
+        process.env.REACT_APP_BACKEND_URL + "/api/user/",
         "GET",
         null,
         { Authorization: "Bearer " + token }

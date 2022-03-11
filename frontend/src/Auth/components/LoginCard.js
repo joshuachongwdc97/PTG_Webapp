@@ -23,9 +23,6 @@ import LockOpenRoundedIcon from "@mui/icons-material/LockOpenRounded";
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
 import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
 
-// VARIABLES
-import { serverName } from "../../Shared/variables/Variables";
-
 const LoginCard = (props) => {
   const auth = useContext(AuthContext);
   const { sendRequest } = useHttpClient();
@@ -50,7 +47,7 @@ const LoginCard = (props) => {
   const loginHandler = async () => {
     try {
       const responseData = await sendRequest(
-        "http://" + serverName + "/api/user/login",
+        process.env.REACT_APP_BACKEND_URL + "/api/user/login",
         "POST",
         JSON.stringify({
           email: inputState.email,
