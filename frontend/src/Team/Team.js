@@ -17,6 +17,9 @@ const Team = () => {
       phoneNo: "+60 11-2345 6801",
       location: "KL COE, Malaysia",
     },
+  ];
+
+  const acknowledgements = [
     {
       name: "Shian Wei Liew",
       avatarName: "SW",
@@ -27,8 +30,6 @@ const Team = () => {
       location: "KL COE, Malaysia",
     },
   ];
-
-  const acknowledgements = [];
 
   const [showMbrInfoDialog, setShowMbrInfoDialog] = useState(false);
   const [selectedMbrInfo, setSelectedMbrInfo] = useState();
