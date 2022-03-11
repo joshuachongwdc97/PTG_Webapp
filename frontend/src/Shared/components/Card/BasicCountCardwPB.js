@@ -2,6 +2,7 @@ import React from "react";
 import { Typography, Grid, Avatar, LinearProgress } from "@mui/material";
 import CountUp from "react-countup";
 
+// COMPONENTS
 import BasicCard from "./BasicCard";
 
 const CountCard = (props) => {

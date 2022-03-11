@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { Grid } from "@mui/material";
 
 // COMPONENTS
-import { Grid } from "@mui/material";
 import BasicDialog from "../../../Shared/components/Dialog/Dialog";
 import SysRackCard from "./components/SysRackCard";
 import SysInfoDialog from "./components/SysInfoDialog";

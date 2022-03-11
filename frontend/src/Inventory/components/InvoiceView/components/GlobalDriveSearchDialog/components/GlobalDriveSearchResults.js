@@ -4,8 +4,10 @@ import { GridActionsCellItem } from "@mui/x-data-grid";
 
 // COMPONENTS
 import Table from "../../../../../../Shared/components/Table/Table";
-import getInvBySn from "../../../../../../Shared/functions/getInvBySn";
 import LocateDialog from "./LocateDialog";
+
+// FUNCTIONS
+import getInvBySn from "../../../../../../Shared/functions/getInvBySn";
 
 // ICONS
 import GpsFixedRoundedIcon from "@mui/icons-material/GpsFixedRounded";

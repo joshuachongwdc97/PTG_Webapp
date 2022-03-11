@@ -1,3 +1,4 @@
+// FUNCTIONS
 import getTestDuration from "./getTestDuration";
 import getEstTestEnd from "./getEstTestEnd";
 import getTimeRemaining from "./getTimeRemaining";

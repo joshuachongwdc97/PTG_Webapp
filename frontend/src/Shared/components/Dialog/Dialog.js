@@ -10,8 +10,8 @@ import {
   Typography,
   Divider,
   Grid,
+  Slide,
 } from "@mui/material";
-import Slide from "@mui/material/Slide";
 
 // COMPONENTS
 import TextFieldWIcon from "../../../Shared/components/Input/TextFieldWIcon";

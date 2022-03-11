@@ -1,10 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useHttpClient } from "../../../../Shared/hooks/http-hook";
-import { SysStatusColors } from "../../../../Shared/variables/SysStatusColors";
-
-// Images
-import GIF from "../../../../Shared/assets/comp_hw.gif";
-
 import {
   Button,
   Grid,
@@ -15,13 +9,15 @@ import {
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 
+// ASSETS
+import GIF from "../../../../Shared/assets/comp_hw.gif";
+
 // COMPONENTS
 import Dialog from "../../../../Shared/components/Dialog/Dialog";
 import MediaCard from "../../../../Shared/components/Card/MediaCard";
 import OutlinedCard from "../../../../Shared/components/Card/OutlinedCard";
 import SysDeleteDialog from "./SysDeleteDialog";
 import ReserveDialog from "./ReserveDialog";
-import Animate from "../../../../Shared/transitions/Animate";
 import SysResetDialog from "./SysResetDialog";
 
 // FUNCTIONS
@@ -30,6 +26,15 @@ import { capFirstLetter } from "../../../../Shared/functions/CapFirstLetter";
 // import getTestDuration from "../../../../Shared/functions/getTestDuration";
 // import getEstTestEnd from "../../../../Shared/functions/getEstTestEnd";
 // import getTimeRemaining from "../../../../Shared/functions/getTimeRemaining";
+
+// HOOKS
+import { useHttpClient } from "../../../../Shared/hooks/http-hook";
+
+// TRANSITIONS
+import Animate from "../../../../Shared/transitions/Animate";
+
+// VARIABLES
+import { SysStatusColors } from "../../../../Shared/variables/SysStatusColors";
 
 // ICONS
 import MyLocationRoundedIcon from "@mui/icons-material/MyLocationRounded";

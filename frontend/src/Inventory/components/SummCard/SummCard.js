@@ -1,11 +1,11 @@
 import React from "react";
-
 import { Grid, Typography, Chip } from "@mui/material";
 import CountUp from "react-countup";
 
+// COMPONENTS
 import BasicCard from "../../../Shared/components/Card/BasicCard";
 
-// Import Functions
+// FUNCTIONS
 import getDrv from "../../../Shared/functions/getDrv";
 
 const SummCard = (props) => {

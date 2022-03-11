@@ -1,7 +1,7 @@
 import React from "react";
-
 import { Grid } from "@mui/material";
 
+// COMPONENTS
 import OutlinedCard from "../../../Shared/components/Card/OutlinedCard";
 import QualCard from "./components/QualCard";
 

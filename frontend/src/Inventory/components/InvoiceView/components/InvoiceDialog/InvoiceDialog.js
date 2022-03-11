@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useHttpClient } from "../../../../../Shared/hooks/http-hook";
 import { Button, Grid, Divider, Alert } from "@mui/material";
 
 // COMPONENTS
@@ -8,12 +7,17 @@ import InvoiceInputs from "./components/InvoiceInputs";
 import DriveUpload from "./components/DriveUpload";
 import OutlinedCard from "../../../../../Shared/components/Card/OutlinedCard";
 import InvDialogActions from "./components/InvDialogActions";
+import DeleteDialog from "./components/DeleteDialog";
+
+// HOOKS
+import { useHttpClient } from "../../../../../Shared/hooks/http-hook";
+
+// TRANSITIONS
 import Animate from "../../../../../Shared/transitions/Animate";
 
 // ICONS
 import CreateNewFolderRoundedIcon from "@mui/icons-material/CreateNewFolderRounded";
 import PostAddRoundedIcon from "@mui/icons-material/PostAddRounded";
-import DeleteDialog from "./components/DeleteDialog";
 
 const InvoiceDialog = (props) => {
   const { sendRequest } = useHttpClient();

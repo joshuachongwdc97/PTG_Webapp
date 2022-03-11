@@ -2,7 +2,10 @@ import React, { useContext } from "react";
 import { ResponsivePie } from "@nivo/pie";
 import { Grid } from "@mui/material";
 
+// COMPONENTS
 import BasicCard from "../../../Shared/components/Card/BasicCard";
+
+// CONTEXTS
 import { DarkContext } from "../../../Shared/context/dark-context";
 
 const PieChartCard = (props) => {

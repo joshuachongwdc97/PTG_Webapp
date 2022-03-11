@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useHttpClient } from "../Shared/hooks/http-hook";
 import { Grid, Divider } from "@mui/material";
 
 // COMPONENTS
 import SysCard from "./components/SysCard/SysCard";
-import Animate from "../Shared/transitions/Animate";
 import SysDialog from "./components/SysDialog/SysDialog";
 import FloatingActions from "./components/FloatingActions/FloatingActions";
 import AddSysDialog from "./components/AddSysDialog/AddSysDialog";
@@ -22,6 +20,12 @@ import sysStatus from "../Shared/functions/sysStatus";
 // import getTestDuration from "../Shared/functions/getTestDuration";
 // import getEstTestEnd from "../Shared/functions/getEstTestEnd";
 // import getTimeRemaining from "../Shared/functions/getTimeRemaining";
+
+// HOOKS
+import { useHttpClient } from "../Shared/hooks/http-hook";
+
+// TRANSITIONS
+import Animate from "../Shared/transitions/Animate";
 
 const System = (props) => {
   const { sendRequest } = useHttpClient();

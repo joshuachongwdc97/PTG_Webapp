@@ -3,8 +3,10 @@ import { Grid, Typography, Divider } from "@mui/material";
 
 // COMPONENTS
 import OutlinedCard from "../../Shared/components/Card/OutlinedCard";
-import Animate from "../../Shared/transitions/Animate";
 import MemberCard from "./MemberCard";
+
+// TRANSITIONS
+import Animate from "../../Shared/transitions/Animate";
 
 const TeamCard = (props) => {
   return (

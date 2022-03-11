@@ -1,8 +1,10 @@
 import React from "react";
 
 // COMPONENTS
-import { useHttpClient } from "../../../../Shared/hooks/http-hook";
 import AlertDialog from "../../../../Shared/components/Dialog/AlertDialog";
+
+// HOOKS
+import { useHttpClient } from "../../../../Shared/hooks/http-hook";
 
 const SysResetDialog = (props) => {
   const { sendRequest } = useHttpClient();

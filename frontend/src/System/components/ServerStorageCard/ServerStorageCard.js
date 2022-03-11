@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Grid, Typography } from "@mui/material";
 
 // COMPONENTS
-import { useHttpClient } from "../../../Shared/hooks/http-hook";
 import BasicCard from "../../../Shared/components/Card/BasicCard";
 import StorageGrid from "./StorageGrid";
+
+// HOOKS
+import { useHttpClient } from "../../../Shared/hooks/http-hook";
 
 const ServerStorageCard = () => {
   const { sendRequest } = useHttpClient();

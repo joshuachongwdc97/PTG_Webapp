@@ -1,23 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { DarkContext } from "./Shared/context/dark-context";
-import { AuthContext } from "./Shared/context/auth-context";
-import { useAuth } from "./Shared/hooks/auth-hook";
-import { useHttpClient } from "./Shared/hooks/http-hook";
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
 
+// PAGES
 import Inventory from "./Inventory/Inventory";
 import System from "./System/System";
 import Team from "./Team/Team";
 import Auth from "./Auth/Auth";
 import Admin from "./Admin/Admin";
 
-import "@fontsource/roboto/300.css";
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
-import "@fontsource/roboto/700.css";
-
+// LAYOUTS
 import Layout from "./Layout/Layout";
+
+// CONTEXTS
+import { DarkContext } from "./Shared/context/dark-context";
+import { AuthContext } from "./Shared/context/auth-context";
+
+// HOOKS
+import { useAuth } from "./Shared/hooks/auth-hook";
+import { useHttpClient } from "./Shared/hooks/http-hook";
 
 const Main = () => {
   const { sendRequest } = useHttpClient();

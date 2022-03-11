@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useHttpClient } from "../../../Shared/hooks/http-hook";
-
 import { Grid, Button, Divider, Chip } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 
+// COMPONENTS
 import BasicDialog from "../../../Shared/components/Dialog/Dialog";
 import TextFieldWIcon from "../../../Shared/components/Input/TextFieldWIcon";
 import SelectMenu from "../../../Shared/components/Input/SelectMenu";
+
+// HOOKS
+import { useHttpClient } from "../../../Shared/hooks/http-hook";
 
 // ICONS
 import RestartAltRoundedIcon from "@mui/icons-material/RestartAltRounded";

@@ -1,9 +1,10 @@
 import React from "react";
 import Chip from "@mui/material/Chip";
 
+// COMPONENTS
 import Table from "../../../../Shared/components/Table/Table";
 
-// IMPORT FUNCTIONS
+// FUNCTIONS
 import getDrvPrgm from "../../../../Shared/functions/getDrvPrgm";
 import getDrv from "../../../../Shared/functions/getDrv";
 import getDays from "../../../../Shared/functions/getDays";

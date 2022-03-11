@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-
 import { Grid, Divider, Button, Chip } from "@mui/material";
-import Table from "../../../../../../Shared/components/Table/Table";
 
 // COMPONENTS
+import Table from "../../../../../../Shared/components/Table/Table";
 import CSVUpload from "../../../../../../Shared/components/Input/CSVUpload";
+
+// TRANSITIONS
 import Animate from "../../../../../../Shared/transitions/Animate";
 
 // ICONS

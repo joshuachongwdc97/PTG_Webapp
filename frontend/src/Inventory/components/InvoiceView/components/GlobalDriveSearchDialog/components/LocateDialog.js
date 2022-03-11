@@ -1,24 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { Divider, Grid } from "@mui/material";
+import { Divider, Grid, Typography, Avatar } from "@mui/material";
+import { red } from "@mui/material/colors";
 
-// ANIMATIONS
+// ASSETS
 import GIF from "../../../../../../Shared/assets/comp.gif";
-import Animate from "../../../../../../Shared/transitions/Animate";
 
 // COMPONENTS
 import Dialog from "../../../../../../Shared/components/Dialog/Dialog";
-import { useHttpClient } from "../../../../../../Shared/hooks/http-hook";
 import getDrvLocation from "../../../../../../Shared/functions/getDrvLocation";
 import OutlinedCard from "../../../../../../Shared/components/Card/OutlinedCard";
 import MediaCard from "../../../../../../Shared/components/Card/MediaCard";
-import { Typography, Avatar } from "@mui/material";
+
+// HOOKS
+import { useHttpClient } from "../../../../../../Shared/hooks/http-hook";
+
+// TRANSITIONS
+import Animate from "../../../../../../Shared/transitions/Animate";
 
 // ICONS
 import DesktopWindowsRoundedIcon from "@mui/icons-material/DesktopWindowsRounded";
 import MyLocationRoundedIcon from "@mui/icons-material/MyLocationRounded";
 import HttpRoundedIcon from "@mui/icons-material/HttpRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import { red } from "@mui/material/colors";
 
 const LocateDialog = (props) => {
   const { sendRequest } = useHttpClient();

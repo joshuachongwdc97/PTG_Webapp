@@ -3,7 +3,10 @@ import { ResponsiveLine } from "@nivo/line";
 import { Grid } from "@mui/material";
 import { Button } from "@mui/material";
 
+// COMPONENTS
 import BasicCard from "../../../Shared/components/Card/BasicCard";
+
+// CONTEXTS
 import { DarkContext } from "../../../Shared/context/dark-context";
 
 const LineGraphCard = (props) => {

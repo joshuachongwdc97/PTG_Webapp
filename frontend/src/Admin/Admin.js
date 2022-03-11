@@ -2,13 +2,19 @@ import React, { useState, useEffect, useContext } from "react";
 import { Button, Grid, Typography } from "@mui/material";
 
 // COMPONENTS
-import { useHttpClient } from "../Shared/hooks/http-hook";
 import UsersTable from "./components/UsersTable";
 import UserDialog from "./components/UserDialog";
 import AlertDialog from "../Shared/components/Dialog/AlertDialog";
 import OutlinedCard from "../Shared/components/Card/OutlinedCard";
-import Animate from "../Shared/transitions/Animate";
+
+// CONTEXTS
 import { AuthContext } from "../Shared/context/auth-context";
+
+// HOOKS
+import { useHttpClient } from "../Shared/hooks/http-hook";
+
+// TRANSITIONS
+import Animate from "../Shared/transitions/Animate";
 
 // ICONS
 import PersonAddAltRoundedIcon from "@mui/icons-material/PersonAddAltRounded";

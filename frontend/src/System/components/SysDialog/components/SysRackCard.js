@@ -1,12 +1,12 @@
 import React from "react";
+import { Chip, Grid, Divider } from "@mui/material";
 
 // COMPONENTS
-import { Chip, Grid, Divider } from "@mui/material";
 import OutlinedCard from "../../../../Shared/components/Card/OutlinedCard";
 import SysRow from "./SysRow";
 import SysRackSumm from "./SysRackSumm";
 
-// VARIABLES
+// FUNCTIONS
 import getSysSumm from "../../../../Shared/functions/getSysSumm";
 
 const SysRackCard = (props) => {

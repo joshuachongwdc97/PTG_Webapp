@@ -14,9 +14,15 @@ import {
 
 // COMPONENTS
 import BasicCard from "../../Shared/components/Card/BasicCard";
-import Animate from "../../Shared/transitions/Animate";
+
+// CONTEXTS
 import { AuthContext } from "../../Shared/context/auth-context";
+
+// HOOKS
 import { useHttpClient } from "../../Shared/hooks/http-hook";
+
+// TRANSITIONS
+import Animate from "../../Shared/transitions/Animate";
 
 // ICONS
 import LockOpenRoundedIcon from "@mui/icons-material/LockOpenRounded";

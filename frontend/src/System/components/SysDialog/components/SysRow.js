@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid } from "@mui/material";
 
-// VARIABLES
+// COMPONENTS
 import SysRowCard from "./SysRowCard";
 
 const SysRow = (props) => {

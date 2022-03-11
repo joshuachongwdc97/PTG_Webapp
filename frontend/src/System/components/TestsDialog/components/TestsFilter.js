@@ -1,9 +1,11 @@
 import React from "react";
-import Checkbox from "@mui/material/Checkbox";
-import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
-import { MenuItem } from "@mui/material";
-import { Grid } from "@mui/material";
+import {
+  MenuItem,
+  Grid,
+  Autocomplete,
+  TextField,
+  Checkbox,
+} from "@mui/material";
 
 // COMPONENTS
 import TestDetCard from "./TestDetCard";

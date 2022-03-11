@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 
+// COMPONENTS
 import Table from "../../../../Shared/components/Table/Table";
 
 const SysTable = (props) => {

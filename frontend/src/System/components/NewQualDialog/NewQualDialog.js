@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useHttpClient } from "../../../Shared/hooks/http-hook";
-
 import { Grid, Chip, Button } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 
+// COMPONENTS
 import BasicDialog from "../../../Shared/components/Dialog/Dialog";
 import TextFieldWIcon from "../../../Shared/components/Input/TextFieldWIcon";
 import SelectMenu from "../../../Shared/components/Input/SelectMenu";
 import DatePicker from "../../../Shared/components/Input/DatePicker";
-import { LoadingButton } from "@mui/lab";
+
+// HOOKS
+import { useHttpClient } from "../../../Shared/hooks/http-hook";
 
 // ICONS
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";

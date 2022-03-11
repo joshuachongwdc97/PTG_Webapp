@@ -1,7 +1,10 @@
 import React from "react";
-import { useHttpClient } from "../../../../Shared/hooks/http-hook";
 
+// COMPONENTS
 import AlertDialog from "../../../../Shared/components/Dialog/AlertDialog";
+
+// HOOKS
+import { useHttpClient } from "../../../../Shared/hooks/http-hook";
 
 const SysDeleteDialog = (props) => {
   const { sendRequest } = useHttpClient();

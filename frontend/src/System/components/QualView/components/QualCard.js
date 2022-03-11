@@ -1,13 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useHttpClient } from "../../../../Shared/hooks/http-hook";
-
-import AlertDialog from "../../../../Shared/components/Dialog/AlertDialog";
-
-// FUNCTIONS
-import getTimeRemaining from "../../../../Shared/functions/getTimeRemaining";
-import getDuration from "../../../../Shared/functions/getDuration";
-import average from "../../../../Shared/functions/averageArr";
-
 import {
   Chip,
   Grid,
@@ -17,12 +8,22 @@ import {
   Tooltip,
 } from "@mui/material";
 
+// COMPONENTS
+import AlertDialog from "../../../../Shared/components/Dialog/AlertDialog";
+import BasicCard from "../../../../Shared/components/Card/BasicCard";
+
+// FUNCTIONS
+import getTimeRemaining from "../../../../Shared/functions/getTimeRemaining";
+import getDuration from "../../../../Shared/functions/getDuration";
+import average from "../../../../Shared/functions/averageArr";
+
+// HOOKS
+import { useHttpClient } from "../../../../Shared/hooks/http-hook";
+
 // ICONS
 import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
 import DesktopWindowsRoundedIcon from "@mui/icons-material/DesktopWindowsRounded";
 import DoneAllRoundedIcon from "@mui/icons-material/DoneAllRounded";
-
-import BasicCard from "../../../../Shared/components/Card/BasicCard";
 
 const QualCard = (props) => {
   const { sendRequest } = useHttpClient();

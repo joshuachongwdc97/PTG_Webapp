@@ -12,8 +12,12 @@ import {
 
 // COMPONENTS
 import BasicCard from "../../Shared/components/Card/BasicCard";
-import Animate from "../../Shared/transitions/Animate";
+
+// HOOKS
 import { useHttpClient } from "../../Shared/hooks/http-hook";
+
+// TRANSITIONS
+import Animate from "../../Shared/transitions/Animate";
 
 // ICONS
 import HowToRegRoundedIcon from "@mui/icons-material/HowToRegRounded";

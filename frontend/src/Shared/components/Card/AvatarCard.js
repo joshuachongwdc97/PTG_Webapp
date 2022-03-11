@@ -1,7 +1,7 @@
 import React from "react";
-
 import { Grid, Avatar, Typography } from "@mui/material";
 
+// COMPONENTS
 import OutlinedCard from "./OutlinedCard";
 
 const AvatarCard = (props) => {

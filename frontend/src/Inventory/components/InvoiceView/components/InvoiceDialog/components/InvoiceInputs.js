@@ -1,25 +1,28 @@
 import React, { useState, useEffect } from "react";
-
-import { useHttpClient } from "../../../../../../Shared/hooks/http-hook";
 import { Grid, Divider } from "@mui/material";
+
+// COMPONENTS
+import TextFieldWIcon from "../../../../../../Shared/components/Input/TextFieldWIcon";
+import SelectMenu from "../../../../../../Shared/components/Input/SelectMenu";
+import DatePicker from "../../../../../../Shared/components/Input/DatePicker";
+import AddDrvPrgmDialog from "./AddDrvPrgmDialog";
+import FileAttachment from "../../../../../../Shared/components/Input/FileAttachment";
+
+// HOOKS
+import { useHttpClient } from "../../../../../../Shared/hooks/http-hook";
+
+// TRANSITIONS
+import Animate from "../../../../../../Shared/transitions/Animate";
+
+// ICONS
 import {
   AccountCircle,
   BadgeRounded,
   AccountBoxRounded,
   LocationOnRounded,
 } from "@mui/icons-material";
-
-// ICONS
 import DescriptionRoundedIcon from "@mui/icons-material/DescriptionRounded";
 import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
-
-// COMPONENTS
-import TextFieldWIcon from "../../../../../../Shared/components/Input/TextFieldWIcon";
-import SelectMenu from "../../../../../../Shared/components/Input/SelectMenu";
-import DatePicker from "../../../../../../Shared/components/Input/DatePicker";
-import Animate from "../../../../../../Shared/transitions/Animate";
-import AddDrvPrgmDialog from "./AddDrvPrgmDialog";
-import FileAttachment from "../../../../../../Shared/components/Input/FileAttachment";
 
 const InvoiceInputs = (props) => {
   const [drvPrgms, setDrvPrgms] = useState([]);

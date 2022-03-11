@@ -5,9 +5,15 @@ import { Alert } from "@mui/material";
 import Dialog from "../../Shared/components/Dialog/Dialog";
 import UserInputs from "./UserInputs";
 import UserDialogActions from "./UserDialogActions";
-import { useHttpClient } from "../../Shared/hooks/http-hook";
-import Animate from "../../Shared/transitions/Animate";
+
+// CONTEXTS
 import { AuthContext } from "../../Shared/context/auth-context";
+
+// HOOKS
+import { useHttpClient } from "../../Shared/hooks/http-hook";
+
+// TRANSITIONS
+import Animate from "../../Shared/transitions/Animate";
 
 const UserDialog = (props) => {
   const auth = useContext(AuthContext);

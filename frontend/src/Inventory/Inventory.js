@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { useHttpClient } from "../Shared/hooks/http-hook";
 import ReactCardFlip from "react-card-flip";
-
 import { Grid, Divider } from "@mui/material";
 
-// Assets
+// ASSETS
 import GIF from "../Shared/assets/factory.gif";
 
-// Self Built Components
+// COMPONENTS
 import DrvCard from "./components/DrvCard/DrvCard";
 import InvCard from "./components/InvCard/InvCard";
 import SummCard from "./components/SummCard/SummCard";
-import Animate from "../Shared/transitions/Animate";
 import InvoiceView from "./components/InvoiceView/InvoiceView";
 import MediaCard from "../Shared/components/Card/MediaCard";
 import ActiveDrvDialog from "./components/DrvCard/ActiveDrvDialog";
@@ -19,11 +16,17 @@ import ActiveInvDialog from "./components/InvCard/ActiveInvDialog";
 import LineGraphCard from "./components/LineGraphCard/LineGraphCard";
 import PieChartCard from "./components/PieChartCard/PieChartCard";
 
-// Self Built Functions
+// FUNCTIONS
 import getActiveInvDrv from "../Shared/functions/getActiveInvDrv";
 // import getDrv from "../Shared/functions/getDrv";
 import getActiveTypes from "./components/PieChartCard/getActiveTypes";
 import getAgingSumm from "./components/LineGraphCard/getAgingSumm";
+
+// HOOKS
+import { useHttpClient } from "../Shared/hooks/http-hook";
+
+// TRANSITIONS
+import Animate from "../Shared/transitions/Animate";
 
 const Inventory = () => {
   const { sendRequest } = useHttpClient();
