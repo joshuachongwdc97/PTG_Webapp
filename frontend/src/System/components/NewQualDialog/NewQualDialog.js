@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useHttpClient } from "../../../Shared/hooks/http-hook";
+import { serverName } from "../../../Shared/variables/Variables";
 
 // REACT
 import { Grid, Button, Chip } from "@mui/material";
@@ -18,6 +20,8 @@ import RestartAltRoundedIcon from "@mui/icons-material/RestartAltRounded";
 import sortInv from "../../../Shared/functions/sortInv";
 
 const NewQualDialog = (props) => {
+  const { sendRequest } = useHttpClient();
+
   const [submitting, setSubmitting] = useState(false);
   const [resetDisabled, setResetDisabled] = useState(true);
   const [addQualDisabled, setAddQualDisabled] = useState(true);
@@ -73,20 +77,60 @@ const NewQualDialog = (props) => {
     }
   }, [props.open, props.invoices, props.tests, inputState.invoice]);
 
-  const newQualHandler = () => {};
+  const newQualHandler = async () => {
+    setSubmitting(true);
+    const newQual = {
+      invoice: inputState.invoice,
+      qualName: inputState.qualName,
+      tests: inputState.tests,
+      plannedStart: inputState.plannedStart,
+      plannedEnd: inputState.plannedEnd,
+      dueDate: inputState.dueDate,
+      description: inputState.description ? inputState.description : undefined,
+    };
+
+    try {
+      await sendRequest(
+        "http://" + serverName + "/api/qual/add",
+        "POST",
+        JSON.stringify(newQual),
+        { "Content-Type": "application/json" }
+      );
+    } catch (err) {}
+    setSubmitting(false);
+  };
 
   //   RESET INPUTS HANDLER
   const resetInputHandler = () => {
     setInputState({
       invoice: "",
       qualName: "",
-      plannedStart: "",
-      plannedEnd: "",
-      dueDate: "",
+      plannedStart: new Date(),
+      plannedEnd: new Date(),
+      dueDate: new Date(),
       tests: [],
       description: "",
     });
   };
+
+  // qualName autofill on invoice select
+  useEffect(
+    () => {
+      if (inputState.invoice) {
+        // Get Invoice Name
+        let qualFromInv = selectInvoices.filter((inv) => {
+          return inv.value === inputState.invoice;
+        })[0].label;
+
+        setInputState({
+          ...inputState,
+          qualName: qualFromInv,
+        });
+      }
+    },
+    // eslint-disable-next-line
+    [inputState.invoice]
+  );
 
   //   INPUT HANDLER
   const inputHandler = (event) => {
@@ -94,6 +138,15 @@ const NewQualDialog = (props) => {
     if (event.target.name === "qualName") {
       value = event.target.value.toUpperCase();
     }
+
+    // CLEAR qualName & Tests when invoice changed
+    if (event.target.name === "invoice") {
+      setInputState({
+        ...inputState,
+        tests: [],
+      });
+    }
+
     setInputState({
       ...inputState,
       [event.target.name]: value,
@@ -109,6 +162,12 @@ const NewQualDialog = (props) => {
     setInputState({
       ...inputState,
       plannedEnd: value.toString(),
+    });
+  };
+  const dueDateHandler = (value) => {
+    setInputState({
+      ...inputState,
+      dueDate: value.toString(),
     });
   };
 
@@ -152,6 +211,32 @@ const NewQualDialog = (props) => {
       </Grid>
     </Grid>
   );
+
+  // SIDE EFFECTS
+  useEffect(() => {
+    // RESET ENABLER
+    if (
+      inputState.invoice ||
+      inputState.qualName ||
+      inputState.tests.length !== 0 ||
+      inputState.description
+    ) {
+      setResetDisabled(false);
+    } else {
+      setResetDisabled(true);
+    }
+
+    if (
+      inputState.invoice &&
+      inputState.qualName &&
+      inputState.tests.length > 0
+    ) {
+      setAddQualDisabled(false);
+    } else {
+      setAddQualDisabled(true);
+    }
+  }, [inputState]);
+
   return (
     <BasicDialog
       open={props.open}
@@ -160,6 +245,7 @@ const NewQualDialog = (props) => {
       actions={DialogActions}
     >
       <Grid container spacing={2}>
+        {/* QUAL DETAILS */}
         <Grid item xs={12}>
           <Chip
             label="Qual Details"
@@ -180,6 +266,7 @@ const NewQualDialog = (props) => {
             onChange={inputHandler}
             value={inputState.invoice}
             name="invoice"
+            disabled={inputState.tests.length > 0 ? true : false}
           />
         </Grid>
         <Grid item xs={12}>
@@ -189,6 +276,7 @@ const NewQualDialog = (props) => {
             name="qualName"
             onChange={inputHandler}
             value={inputState.qualName}
+            disabled={inputState.invoice === ""}
           />
         </Grid>
         <Grid item xs={12}>
@@ -200,6 +288,7 @@ const NewQualDialog = (props) => {
             onChange={selectTestsHandler}
             value={inputState.tests}
             name="tests"
+            disabled={inputState.invoice === ""}
           />
         </Grid>
         <Grid item xs={12}>
@@ -214,7 +303,7 @@ const NewQualDialog = (props) => {
             }}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={4}>
           <DatePicker
             required
             label="Planned Start Date"
@@ -222,12 +311,43 @@ const NewQualDialog = (props) => {
             onChange={plannedStartHandler}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={4}>
           <DatePicker
             required
             label="Planned Completion Date"
             value={new Date(inputState.plannedEnd)}
             onChange={plannedEndHandler}
+          />
+        </Grid>
+        <Grid item xs={4}>
+          <DatePicker
+            required
+            label="Due Date"
+            value={new Date(inputState.dueDate)}
+            onChange={dueDateHandler}
+          />
+        </Grid>
+
+        {/* ADDITIONAL INFO */}
+        <Grid item xs={12}>
+          <Chip
+            label="Additional Information"
+            variant="contained"
+            sx={{
+              borderRadius: "5px",
+              marginTop: "15px",
+              marginBottom: "5px",
+              minWidth: "100%",
+            }}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextFieldWIcon
+            label="Description (Optional)"
+            name="description"
+            onChange={inputHandler}
+            value={inputState.description}
+            multiline
           />
         </Grid>
       </Grid>
