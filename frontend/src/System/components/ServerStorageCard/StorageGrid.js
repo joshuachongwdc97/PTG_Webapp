@@ -21,16 +21,17 @@ const StorageGrid = (props) => {
       container
       xs={12}
       alignSelf={"center"}
-      paddingTop={3}
+      paddingTop={2}
       spacing={1}
+      alignItems={"flex-end"}
     >
       <Grid item xs={4}>
-        <Typography variant="subtitle">
+        <Typography variant="subtitle2">
           {props.drive === "D:" ? "PTG" : "PTG_B"}
         </Typography>
       </Grid>
       <Grid item xs={8} textAlign={"right"} alignSelf={"center"}>
-        <Typography variant="subtitle2" color="textSecondary">
+        <Typography variant="caption" color="textSecondary">
           <CountUp
             start={0}
             end={props.totalSpace - props.freeSpace}

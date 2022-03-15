@@ -9,7 +9,6 @@ import SysDialog from "./components/SysDialog/SysDialog";
 import FloatingActions from "./components/FloatingActions/FloatingActions";
 import AddSysDialog from "./components/AddSysDialog/AddSysDialog";
 import AddTestDialog from "./components/AddTestDialog/AddTestDialog";
-import TestCard from "./components/TestCard/TestCard";
 import TestsDialog from "./components/TestsDialog/TestsDialog";
 import NewJobDialog from "./components/NewJobDialog/NewJobDialog";
 import NewQualDialog from "./components/NewQualDialog/NewQualDialog";
@@ -202,6 +201,9 @@ const System = (props) => {
         showNewQualHandler={() => {
           setShowNewQualDialog(true);
         }}
+        showTestsHandler={() => {
+          setShowTestsDialog(true);
+        }}
       />
 
       {/* NEW QUAL DIALOG */}
@@ -299,18 +301,14 @@ const System = (props) => {
         <Grid item>
           {dataReady && (
             <Animate show={dataReady}>
-              <TestCard
-                onClick={() => {
-                  setShowTestsDialog(true);
-                }}
-              />
+              <SysSummCard sys={systems2} />
             </Animate>
           )}
         </Grid>
         <Grid item>
           {dataReady && (
             <Animate show={dataReady}>
-              <SysSummCard sys={systems2} />
+              <ServerStorageCard />
             </Animate>
           )}
         </Grid>
@@ -337,14 +335,7 @@ const System = (props) => {
         </Grid> */}
         <Grid item xs={12}>
           {dataReady && (
-            <Divider sx={{ marginTop: "10px" }}>Server Info</Divider>
-          )}
-        </Grid>
-        <Grid item>
-          {dataReady && (
-            <Animate show={dataReady}>
-              <ServerStorageCard />
-            </Animate>
+            <Divider sx={{ marginTop: "10px" }}>Qual Workspace</Divider>
           )}
         </Grid>
       </Grid>

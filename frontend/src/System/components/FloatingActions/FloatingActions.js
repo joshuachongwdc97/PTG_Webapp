@@ -7,6 +7,7 @@ import AddToQueueRoundedIcon from "@mui/icons-material/AddToQueueRounded";
 import BuildCircleRoundedIcon from "@mui/icons-material/BuildCircleRounded";
 import WorkOutlineRoundedIcon from "@mui/icons-material/WorkOutlineRounded";
 import AllInboxRoundedIcon from "@mui/icons-material/AllInboxRounded";
+import PreviewRoundedIcon from "@mui/icons-material/PreviewRounded";
 
 const FloatingActions = (props) => {
   return (
@@ -19,6 +20,11 @@ const FloatingActions = (props) => {
         icon={<AddToQueueRoundedIcon />}
         tooltipTitle="New System(s)"
         onClick={props.showAddSysHandler}
+      />
+      <SpeedDialAction
+        icon={<PreviewRoundedIcon />}
+        tooltipTitle="View Tests"
+        onClick={props.showTestsHandler}
       />
       <SpeedDialAction
         icon={<BuildCircleRoundedIcon />}
